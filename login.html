@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/ydui.css">
+		<link rel="stylesheet" href="css/main.css">
+		<style>
+			.login_wx {position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #f2f2f2 url("./image/login-bg.jpg") no-repeat 0 0; background-size: 100%;}
+			.login_wx button {position: absolute; left: 50%; margin-left: -90px; bottom: 58px;; width: 180px; height: 54px; background: url("./image/wx-login.png") no-repeat 0 0; background-size: 105% 105%; border: 0;}
+		</style>
+	</head>
+	<body>
+		<div class="login_wx">
+	        <button type="button" @click="login" class="mui-btn"></button>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/jQuery.v2.1.4.js"></script>
+		<script src="js/ydui.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			new Vue({
+				el: ".login_wx",
+				data: {
+					authService: null, // 授权登录认证服务对象
+					userInfo: app.getState(LOCAL.keys),
+				},	
+				created: function(){
+					var _this = this;
+					mui.init();
+					mui.plusReady(function(){
+						console.log(_this.userInfo.unionId)
+						if(_this.userInfo.unionId){
+//							_this.getServerInfo(_this.userInfo.unionId)
+							_this.getServerInfo("oogiuwGonIrIb5ht3mlHG1V2J1Gc")
+//							plus.navigator.closeSplashscreen();
+							return;
+						}
+						// 设置沉浸式
+						plus.navigator.setFullscreen(true);
+						// 设置系统状态栏背景颜色
+						plus.navigator.setStatusBarBackground("#973932");
+						// 关闭 hubilder loading
+						plus.navigator.closeSplashscreen();
+						
+					});
+				},
+				methods: {
+					
+					// 获取登录授权对象 =>微信登入 => 获取微信用户信息 => 获取服务器用户信息 => 存入localstorage => 进入主页
+					login: function(){
+						var _this = this;
+//						!function(){
+//							_this.userInfo = {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"};
+//							app.setState(LOCAL.keys, _this.userInfo)
+//							console.log(JSON.stringify(app.getState(LOCAL.keys)))
+//							
+//							if(plus.webview.getWebviewById(PAGE.index.id)){
+//								plus.webview.getWebviewById(PAGE.index.id).show()
+//							}else{
+//								var index = mui.preload(PAGE.index);
+//								index.show();
+//							}
+//						}()
+//						return;
+						app.getServices("weixin")
+						.then(function(authService){
+							return app.wxLogin(authService)
+						})
+						.then(function(data){
+							_this.getServerInfo(_this.userInfo.unionId = data.userInfo.unionid);
+						})
+						.catch(function(e){
+							mui.alert(e)
+						})
+						
+					},
+					getServerInfo: function(unionId){
+						//用unionid去获取服务器用户信息
+						var _this = this;
+						app.request(API.login, {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"}) // {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"}
+						.then(function(data){
+							if(data.not_player == 1){
+								YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
+								return;
+							}
+							mui.extend(true, _this.userInfo, data);
+							app.setState(LOCAL.keys, _this.userInfo);
+							index = mui.preload(PAGE.index);
+							log("本地缓存："+ app.getState(LOCAL.keys))
+						})
+						.catch(function(e){
+							mui.alert(e)
+						})
+					},
+					logout: function(){
+						app.authLogout(this.authService)
+						.then(function(res){
+							mui.toast(res)
+						})
+						.catch(function(e){
+							mui.toast(e)
+						})
+					}
+					
+				}
+			});
+			
+		</script>
+	</body>
+</html>

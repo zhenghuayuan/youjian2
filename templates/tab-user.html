@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/ydui.css">
+		<style>
+			.mui-table-view li a {text-indent: 0.6em; color: #2a2a2a;}
+			.auth_logout {padding: 10px 0 !important; text-align: center; color: #a1a1a1 !important;}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">个人中心</h1>
+		</header>
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+		<!---->
+			<div class="mui-content">
+			    <div class="user_wrap">
+			    	<div class="pic"><img src="https://pub.froup.net/hoomic/publicJs/test.png"></div>
+			    	<div class="info_wrap">
+			    		<div class="name">{{userInfo.nickname}}</div>
+			    		<div class="userid">: {{userInfo.uid}}</div>
+			    		<div class="phone">: {{userInfo.mobile}}<button type="button" @click="mui.openWindow(PAGE['bind-phone'])" class="mui-btn mui-btn-warning">修改</button></div>
+			    	</div>
+			    	<div class="userother clearfix">
+			    		<div><span>房卡: </span>{{userInfo.roomcard}}</div>
+			    		<div><span>礼券: </span>{{userInfo.voucher}}</div>
+			    	</div>
+			    </div>
+		    	<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
+					<li class="mui-table-view-cell">
+						<a href="#account" class="mui-navigate-right">兑换记录</a>
+					</li>
+				</ul>
+			    <ul class="mui-table-view mui-table-view-chevron" style=" margin-top: 30px;">
+					<li class="mui-table-view-cell auth_logout" @click="yudiConfirm">退出登录</li>
+				</ul>
+			</div>
+		<!---->
+		</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/jQuery.v2.1.4.js"></script>
+	<script src="../js/ydui.js"></script>
+	<script src="../js/public.js"></script>
+	
+	<script>
+		// 监听事件
+		window.addEventListener("getUserInfo", function(data){
+			vm.userInfo = event.detail;
+			setTimeout(function(){
+				if(mui('#refreshContainer').pullRefresh()){
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+				}
+			}, 500)
+		})	
+		// 派发事件
+		window.getUserInfo = function(){
+			plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
+		}
+		var vm = new Vue({
+			el: ".mui-content",
+			data: {
+				currentWebview: null,
+				active: 0,
+				items: [],
+				userInfo: {},
+				dialog: null,
+			},
+			created: function(){
+				var _this = this;
+				mui.init({
+					pullRefresh: {
+						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+						down: {
+							height: 50, //可选,默认50.触发下拉刷新拖动距离,
+							auto: false, //可选,默认false.自动下拉刷新一次
+							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+							callback: getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+//				mui.plusReady(function() {
+					_this.currentWebview = plus.webview.currentWebview();
+					// 首次本地数据填充
+					mui.fire(plus.webview.getWebviewById(PAGE.sub[2].id),"getUserInfo", app.getState(LOCAL.keys));
+//				});
+			},
+			methods: {
+				yudiConfirm: function(){
+					YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
+//		               YDUI.dialog.toast('你点了确定', 'none', 1000);
+//						调用退出
+//						init方案 1 close || 2全局init
+//						app.authLogout(this.authService)
+//						.then(function(res){
+//							mui.toast(res)
+//							app.clearState(LOCAL.keys);
+//							plus.webview.getWebviewById(PAGE.index.id).close();
+//						})
+//						.catch(function(e){
+//							mui.toast(e)
+//						})
+		            });
+				}
+				
+			}
+		})
+	</script>
+</html>

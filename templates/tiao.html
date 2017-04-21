@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="./js/mui.min.css">
+		<script src="./js/mui.min.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">支付完成</h1>
+		</header>
+		<div class="mui-content">
+		  
+		</div>
+		<script>
+			mui.init();
+			mui.plusReady(function(){
+				plus.webview.currentWebview().close()
+//				plus.webview.currentWebview().hide();
+				plus.webview.getWebviewById("tab-webview-subpage-home.html").show();
+			})
+			
+		</script>
+	</body>
+</html>

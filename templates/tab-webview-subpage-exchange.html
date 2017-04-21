@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>s</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon icon-back mui-pull-left"></a>
+			<h1 class="mui-title">兑换礼券</h1>
+		</header>
+		<div  id="pullrefresh"  class="detail mui-content mui-scroll-wrapper">
+			<div class="myRedeem">
+	            <p>当前礼券: <span id="voucher">0</span></p>
+	        </div>
+	        <div class="myRoomcard">
+	            <p>兑换商品:</p>
+	            <div class="product">
+	                <div>
+	                    <img id="product_src" src="">
+	                </div>
+	            </div>
+	            
+	        </div>
+	        <ul class="user-detail">
+	            <li>
+	                <label>姓名：</label>
+	                <input id="nickname" type="text" value="" maxlength ="12">  <!-- 请输入您的真实姓名 -->
+	            </li>
+	            <li>
+	                <label>充值电话：</label>
+	                <input id="mobile" type="number" value=""  maxlength ="11">  <!-- 请输入您的电话号码 -->
+	            </li>
+	            <li>
+	                <p>需要礼券：<span id="redeem_point">1000</span>张</p>
+	            </li>
+	        </ul>
+	        <div id="redeemButton">
+	        	<button class="button button-assertive redeemButton">立即兑换</button>
+	        </div>
+	        <div class="prompt">
+	            <p>友情提示</p>
+	            <p>虚拟类奖品：（话费充值卡），提交订单后，24小时内为您充值到账。</p>
+	        </div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+						var self = plus.webview.currentWebview();
+				
+					
+					var userInfo = app.getState();
+					//var unionid = 'oogiuwGonIrIb5ht3mlHG1V2J1Gc';
+					var unionid = userInfo.unionid;
+					var voucher = doc.getElementById('voucher');
+					var item = doc.getElementById('item');
+					var product_src = doc.getElementById('product_src');
+					var redeem_point = doc.getElementById('redeem_point');
+					var nickname = doc.getElementById('nickname');
+					var mobile = doc.getElementById('mobile');
+					var redeemButton = doc.getElementById('redeemButton');
+					//商品ID
+					var self = plus.webview.currentWebview();
+					var product_id = self.product_id;
+					voucher.innerText = userInfo.voucher;
+					nickname.value = userInfo.nickname;
+					mobile.value = userInfo.mobile;
+					
+					if(mui.os.plus){
+						var network = true;
+						if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
+							network = false;
+						}
+						if(network){
+							mui.get('https://dcyouxi.com/index.php/Product/get_item',{id:product_id},function(data){
+									if(data){
+										redeem_point.innerHTML = data.redeem_point;
+										product_src.src = data.img_url;
+									}
+								},'json'
+							);
+						}else{
+							mui.toast("当前网络不给力，请稍后再试");
+						}
+					}
+					mui(redeemButton).on('tap', '.redeemButton', function(e) {
+						var incomeMobile = mobile.value;
+						if(incomeMobile == ''){
+							mui.toast("手机号码不能为空");
+							return;
+						}
+						if(!/^1[34578]\d{9}$/.test(incomeMobile)){
+							mui.toast("请输入正确的手机号码");
+							return false;
+						}
+						var redeem_data = {
+							uid:userInfo.uid,
+							unionid:unionid,
+							product_id:product_id,
+							mobile:incomeMobile,
+							
+						};
+						if(mui.os.plus){
+							if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
+								network = false;
+							}
+							if(network){
+								mui.post('https://dcyouxi.com/index.php/Product/redeem',redeem_data,function(data){
+									console.log(JSON.stringify(data))
+										if(data){
+											if(data.code == 1){
+												mui.toast(data.message);
+												var url = 'https://dcyouxi.com/index.php/index/app_login';
+												//发送数据
+												var data = {
+													unionId:unionid
+												};
+												mui.get(url,data,function(data){
+														//非系统用户
+														if(data.not_player == 1){
+															mui.toast("您还没有成为友间麻将的游戏用户。");
+														}else{
+															//重新设置全局变量userInfo
+															userInfo.uid = data.uid;
+															userInfo.roomcard = data.roomcard;
+															userInfo.voucher = data.voucher;
+															userInfo.mobile = data.mobile;
+															console.log(JSON.stringify(userInfo))
+															app.createState(userInfo, function() {
+																
+															});
+															voucher.innerHTML = data.voucher;
+														}
+													},'json'
+												);
+											}else{
+												mui.toast(data.message);
+											}
+										}
+									},'json'
+								);					
+							}else{
+								mui.toast("当前网络不给力，请稍后再试");
+							}
+						}
+					});
+					
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

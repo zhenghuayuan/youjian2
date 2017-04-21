@@ -1,0 +1,38 @@
+/*公共头部样式*/
+.mui-bar-nav {background-color: #fff; -webkit-box-shadow: none;-webkit-box-shadow: none;}
+.mui-bar-nav h1{color: #2a2a2a;}
+/*个人中心*/
+.user_wrap {background-color: #fff; padding: 10px 10px 0;} 
+.user_wrap .pic {position: absolute; margin-top: 2px; width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #fff;}
+.info_wrap {margin-left: 88px; font-size: 16px;}
+.info_wrap div {position: relative; height: 24px; line-height: 24px;} 
+.info_wrap .name {font-size: 16px; color: #2a2a2a;}
+.info_wrap .userid{padding-left: 20px; color: #2a2a2a; background: url("../image/id-icon.png") no-repeat 0 center; background-size: 16px;}
+.info_wrap .phone{padding-left: 20px; color: #2a2a2a; background: url("../image/phone-icon.png") no-repeat 2px center; background-size: 15px;}
+.info_wrap div button {float: right; padding: 2px 8px; margin-right: 10px;}
+.userother {padding: 15px 0;}
+.userother div {float: left;  text-align: center; width: 50%; font-size: 16px; color: #2a2a2a; }
+.userother div span {padding-left: 24px; text-align: left; color: #2a2a2a; background: url("../image/card-icon.png") no-repeat 0 center; background-size: 22px;}
+.userother div:nth-child(1) {border-right: 1px solid #a15854;}
+.userother div:nth-child(2) span {background: url("../image/gift-icon.png") no-repeat 2px center; background-size: 20px;}
+.mui-table-view-cell {padding: 10px; font-size: 16px; color: #2a2a2a;}
+
+/*input*/
+/*.mui-input-row input {height:40px; border: 1px solid rgba(0,0,0,0.2) !important; margin: 10px 0 0 0;}*/
+.from_wrap {padding: 20px 0; font-family: "微软雅黑"; color: #2a2a2a;}
+.from_wrap .cell {position: relative; font-size: 14px; padding: 0 10px; margin-bottom: 10px;}
+.from_wrap .cell > * {float: left;}
+.from_wrap .cell label {float: left; width: 28%; height: 40px; line-height: 40px; font-size: 16px }
+.from_wrap .cell input {float: left; width: 72%; height: 40px; font-size: 16px; text-indent: 8px;}
+.get_verify {width: 30%; height: 30px; line-height: 30px; font-size: 12px; margin-left: 2%; text-align: center; background-color: #FFB400; color: #fff; border-radius: 4px;}
+.clear_input {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/clear_input.png) no-repeat center; background-size: 100% 100%;}
+.open_address_list {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/address_list_icon.png) no-repeat center; background-size: 100% 100%;}
+
+/*列表*/
+.recharge_type {width: 100%; padding: 30px 10px 10px; background-color: #fff; font-size: 16px; color: #2a2a2a;}
+.recharge_wrap {background-color: #fff; padding: 0 12px;}
+.recharge_wrap .mui-btn-primary {padding: 12px 25px; font-size: 18px;}
+.recharge_wrap .mui-btn-primary span {float: left;}
+.recharge_wrap .mui-btn-primary em {float: right;}
+.recharge_wrap .mui-btn-primary:nth-last-child(1) {margin-bottom: 0 !important;}
+			

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>兑换话费</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/ydui.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<style type="text/css">
+			/**/
+			.recharge_other {padding: 0 10px 10px; background-color: #fff;}
+			.recharge_other span {float: left; width: 25%; padding: 36px 0 5px; font-size: 14px;color: #2a2a2a; text-align: center;}
+			.recharge_other span.huafei_icon {background: url("../image/huafei_icon.png") no-repeat center 2px; background-size: 28px;}
+			.recharge_other span.liuliang_icon {background: url("../image/liuliang_icon.png") no-repeat center 2px; background-size: 28px;}
+			/*input*/
+			.tips {position: absolute; top: 100%; left: 22%; font-size: 12px; color: #FF3B30;}
+			.mui-content {background: #fff;}
+		</style>
+	</head>
+	<body >
+		<div id="wrap" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			    <h1 class="mui-title">{{title}}</h1>
+			</header>
+			
+			<div class="mui-content">
+				<div class="from_wrap" style="padding: 10px 0 0 0; margin-bottom: 20px;">
+					<div class="cell clearfix">
+						<label style="width: 18%;">手机号:</label>
+						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" id="aa" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
+						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
+						<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>
+						<p class="tips" style="visibility: hide;">请输入正确的用户手机号</p>
+					</div>
+				</div>
+				<div class="recharge_type" style="padding-top: 10px;">充{{title.slice(2,4)}}</div>
+				<div class="recharge_wrap">
+					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+				</div>
+				<div class="recharge_type">更多充值</div>
+				<div class="recharge_other clearfix">
+					<span class="huafei_icon" v-if="curProductType != 1" @click="curProductType = 1">充话费</span>
+					<span class="liuliang_icon" v-if="curProductType != 2" @click="curProductType = 2">充流量</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/jQuery.v2.1.4.js"></script>
+	<script src="../js/ydui.js"></script>
+	<script src="../js/public.js"></script>
+	<script>
+			var vm = new Vue({
+				el: "#wrap",
+				data: {
+					usernumber: 123456, //用户输入的ID v-model
+					userInfo: {},
+					isFocus: false,
+					curProductType: 1, // type 1 话费 type 2 流量
+					productPhone: [], // 话费
+					productFlow: [], // 流量
+				},
+				created: function(){
+					var _this = this;
+					mui.init();
+					mui.plusReady(function(){
+						_this.getProductList();
+						_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
+						console.log(_this.title)
+					})
+				},
+				computed: {
+					title: function(){
+						return this.curProductType == 1?"兑换话费":"兑换流量";
+					}
+				},
+				methods: {
+					inputFocus: function(isFocusBool){
+						// isFocusBool String
+						var _this = this;
+						setTimeout(function(){
+							_this[isFocusBool] = true;
+						}, 16)
+					},
+					inputBlur: function(isFocusBool){
+						// isFocusBool String
+						var _this = this;
+						setTimeout(function(){
+							_this[isFocusBool] = false;
+						})
+					},
+					clearInput: function(data, refName){
+						// data v-data
+						// refName String
+						this[data] = '';
+						this.$refs[refName].focus();
+					},
+					getProductList: function(){
+						var _this = this;
+						app.request(API.productList, {})
+						.then(function(data){
+							console.log("兑换列表："+ JSON.stringify(data));
+//							_this.items = data;
+							_this.productPhone = [];
+							_this.productFlow = [];
+							data.forEach(function(item, index){
+								if(item.type == "1"){
+									_this.productPhone.push(item);
+								}else{
+									_this.productFlow.push(item);
+								}
+							})
+						})
+							
+					},
+					openAddressList: function(){
+						var _this = this;
+						new Promise(function(reject, resolve){
+							plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, reject, resolve);
+						})
+						.then(function(addressbook){
+							return new Promise(function(reject, resolve){
+								addressbook.find(null, reject, resolve)
+							})
+						})
+						.then(function(res){
+							var usernumber = res[0]["phoneNumbers"][0].value;
+//							console.log(usernumber)
+							_this.usernumber = usernumber;
+						})
+						.catch(function(e){
+							alert("获取通讯录错误："+e)
+						})
+					},
+					confirmRecharge: function(item){
+					 	YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
+			            	YDUI.dialog.toast('你点了确定', 'none', 1000);
+			         	})
+					}
+					
+				}
+			})
+
+	</script>
+</html>

@@ -1,0 +1,855 @@
+li{
+	list-style: none;
+}
+
+@font-face {font-family: "iconfont";
+  src: url('../fonts/redeem/iconfont.eot?t=1490062282311'); /* IE9*/
+  src: url('../fonts/redeem/iconfont.eot?t=1490062282311#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/redeem/iconfont.woff?t=1490062282311') format('woff'), /* chrome, firefox */
+  url('../fonts/redeem/iconfont.ttf?t=1490062282311') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../fonts/redeem/iconfont.svg?t=1490062282311#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {font-family: "iconfont";
+  src: url('../fonts/card/iconfont.eot?t=1490065717709'); /* IE9*/
+  src: url('../fonts/card/iconfont.eot?t=1490065717709#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/card/iconfont.woff?t=1490065717709') format('woff'), /* chrome, firefox */
+  url('../fonts/card/iconfont.ttf?t=1490065717709') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../fonts/card/iconfont.svg?t=1490065717709#iconfont') format('svg'); /* iOS 4.1- */
+}
+.icon-back:before{
+	color:#fff;
+	content: '\e471';
+}
+.icon-card:before { content: "\e614"; }
+.icon-redeem:before { content: "\e698"; }
+.tab {
+    float: left;
+    margin-top: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+}
+.tabs{
+    background-color: #973932;
+}
+.home{
+    background: url(../img/home.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #f88888;
+}
+.home.tab-item-active{
+    background: url(../img/home_active.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #fff;
+}
+.shop{
+    background: url(../img/shop.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #f88888;
+}
+.shop.tab-item-active{
+    background: url(../img/shop_active.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #fff;
+}
+.redeem{
+    background: url(../img/redeem.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #f88888;
+}
+.redeem.tab-item-active{
+    background: url(../img/redeem_active.png) no-repeat top;
+    background-size: 25px 25px;
+    padding-top: 10px;
+    color: #fff;
+}
+
+.loginname {
+    float: left;
+    margin-top: 5px;
+    color: #cccccc;
+    margin-left: 10px;
+}
+
+.agotime {
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: #cccccc;
+}
+
+.reply {
+    float: right;
+}
+
+.reply .button {
+    min-height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.reply .button.icon:before {
+    font-size: 20px;
+    line-height: 22px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+}
+
+.copyright {
+    text-align: center;
+}
+
+.markdown-text img {
+    width: 100%;
+
+#topicContent .item-avatar a{
+    text-decoration: none;
+}
+
+#comment .item-avatar a{
+    text-decoration: none;
+}
+
+#favorite .item-avatar a{
+    text-decoration: none;
+}
+
+/**
+ * Action Sheets for Android
+ * --------------------------------------------------
+ */
+.platform-android .action-sheet-backdrop {
+    -webkit-transition: background-color 150ms ease-in-out;
+    transition: background-color 150ms ease-in-out;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.platform-android .action-sheet-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.platform-android .action-sheet-wrapper {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    -webkit-transition: all cubic-bezier(0.36, 0.66, 0.04, 1) 500ms;
+    transition: all cubic-bezier(0.36, 0.66, 0.04, 1) 500ms;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.platform-android .action-sheet-up {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.platform-android .action-sheet {
+    margin-left: 8px;
+    margin-right: 8px;
+    width: auto;
+    z-index: 11;
+    overflow: hidden;
+}
+
+.platform-android .action-sheet .button {
+    display: block;
+    padding: 1px;
+    width: 100%;
+    border-radius: 0;
+    border-color: #d1d3d6;
+    background-color: transparent;
+    color: #007aff;
+    font-size: 21px;
+}
+
+.platform-android .action-sheet .button:hover {
+    color: #007aff;
+}
+
+.platform-android .action-sheet .button.destructive {
+    color: #ff3b30;
+}
+
+.platform-android .action-sheet .button.destructive:hover {
+    color: #ff3b30;
+}
+
+.platform-android .action-sheet .button.active, .platform-android .action-sheet .button.activated {
+    box-shadow: none;
+    border-color: #d1d3d6;
+    color: #007aff;
+    background: #e4e5e7;
+}
+
+.platform-android .action-sheet-has-icons .icon {
+    position: absolute;
+    left: 16px;
+}
+
+.platform-android .action-sheet-title {
+    padding: 16px;
+    color: #8f8f8f;
+    text-align: center;
+    font-size: 13px;
+}
+
+.platform-android .action-sheet-group {
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.platform-android .action-sheet-group .button {
+    border-width: 1px 0px 0px 0px;
+}
+
+.platform-android .action-sheet-group .button:first-child:last-child {
+    border-width: 0;
+}
+
+.platform-android .action-sheet-options {
+    background: #f1f2f3;
+}
+
+.platform-android .action-sheet-cancel .button {
+    font-weight: 500;
+}
+
+.platform-android .action-sheet-open {
+    pointer-events: none;
+}
+
+.platform-android .action-sheet-open.modal-open .modal {
+    pointer-events: none;
+}
+
+.platform-android .action-sheet-open .action-sheet-backdrop {
+    pointer-events: auto;
+}
+
+.platform-android .action-sheet .action-sheet-title, .platform-android .action-sheet .button {
+    text-align: center;
+}
+
+.platform-android .action-sheet-cancel {
+    display: block;
+}
+
+.bar.bar-dc-bg {
+    background: #973932;
+}
+/*==================登录页面=======================*/
+.login-bg{
+    background: url(../img/login-bg.jpg) no-repeat;
+    background-size: 100% 100%;
+}
+.login-wx{
+	height: 667px;
+}
+.login-bg .toHome{
+    width: 60%;
+    display: block;
+    margin: auto;
+    position: relative;
+    top: 84%;
+}
+.login-bg .button{
+    width: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    background: url(../img/weixin.png) #b04444 no-repeat 22px center;
+    background-size: 22%;
+    color: #fff;
+    height: 60px;
+}
+@media(min-width: 320px){
+	.login-wx{
+		height: 568px;
+	}
+	.login-bg .button{
+		font-size: 24px;
+	}
+}
+@media(min-width: 375px){
+	.login-wx{
+		height: 667px;
+	}
+	.login-bg .button{
+		font-size: 24px;
+	}
+}
+@media(min-width: 414px){
+    .login-wx{
+		height: 667px;
+	}
+	.login-bg .button{
+		font-size: 24px;
+	}
+}
+@media(min-width: 768px){
+    .login-wx{
+		height: 1024px;
+	}
+	.login-bg .button{
+		height: 100px;
+		font-size: 40px;
+	}
+}
+
+
+
+#tabbar{
+	z-index: -1
+}
+
+/*====================首页========================*/
+.myHome .list {
+    background: #973932;
+}
+.content-bg{
+    background: #973932;
+	
+}
+.head{
+    overflow: hidden;
+    margin-bottom: 10px;
+    padding-top: 15px;
+    width: 98%;
+    margin: auto;
+    padding-bottom: 22px;
+}
+.head-left{
+	width: 32%;
+    float: left;
+    text-align: center;
+}
+.head-left img{
+    width: 65%;
+    border-radius: 50%;
+    border: 2px solid #fff;
+	
+}
+.head-right{
+    width: 68%;
+    float: left;
+}
+
+.head-right h5{
+    font-size: 18px;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+.head-right .ID{
+    color: #f88888;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.head-right .phone{
+    overflow: hidden;
+    width: 100%;
+}
+.head-right .phone img{
+    width: 4.5%;
+    display: block;
+    float: left;
+    margin-top: 2px;
+}
+.head-right .phone span{
+    color: #f88888;
+    display: block;
+    float: left;
+    margin-left: 2px;
+}
+.head-right input{
+    display: block;
+    float: left;
+    width: 48%;
+    height: 20px;
+    margin-left: 8px;
+    background: #973932;
+    border: none;
+    color: #f88888;
+    padding:0;
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+.head-right .phone input::-webkit-input-placeholder{
+    color: #f88888;
+}
+.head-right button{
+    width: 25%;
+    /*height: 20px;*/
+    line-height: 10px;
+    color: #a9493a;
+    margin-left: 10px;
+    border: none;
+    /*outline: none;*/
+    border-radius: 4px; 
+
+    background: -webkit-linear-gradient(#fff0aa, #ffaf4f); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#fff0aa, #ffaf4f); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#fff0aa, #ffaf4f); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#fff0aa, #ffaf4f); /* 标准的语法 */
+}
+.head-content{
+    overflow: hidden;
+    color:#f88888;
+    width: 98%;
+    margin: auto;
+    padding-bottom: 10px;
+}
+.content-left{
+    float: left;
+    width: 49%;
+    overflow: hidden;
+    height: 26px;
+    line-height: 26px;
+}
+.content-left img{
+	margin-left: 20%;
+    width: 10%;
+    display: block;
+    float: left;
+    margin-top: 5px;
+    position: relative;
+    top: -1px;
+}
+.l-sign{
+	float: left;
+    margin-left: 6px;
+}
+.color-fff{
+	color:#fff;
+}
+
+.myHome .home-line{
+    width: 100%;
+    height: 7px;
+    background: #eee;
+    border-bottom: 1px solid #d5d4d4;
+}
+
+.myHome .reminder{
+    width: 100%;
+    padding: 10px 0; 
+    overflow: hidden;
+}
+.myHome .reminder img{
+    width: 5%;
+    display: block;
+    float: left;
+    margin-left: 3.5%;
+}
+.myHome .reminder h3{
+    font-size: 18px;
+    color: #c24b42;
+    float: left;
+    margin: 0 10px;
+}
+
+/*==========================购买房卡=============================*/
+.list{
+    position: relative;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+.myShop{
+    background: #eee;
+}
+.myShop .myRoomcard{
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    margin-top: 7px;
+    margin-bottom: 30px;
+}
+.myShop .myRoomcard p{
+    color: #f88888;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-bottom: 0;
+}
+.myShop .myRoomcard p span{
+    margin-left: 22px;
+}
+
+.myShop ul li{
+    width: 90%;
+    margin: auto;
+    position: relative;
+    border: 1px solid #d8bcbc;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #444;
+    z-index: 2;
+    display: block;
+    font-size: 16px;
+    overflow: hidden;
+}
+.myShop ul .activeli{
+    background: #973932;
+}
+.myShop ul li .shopList-l{
+    width: 9%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.myShop ul li .shopList-r{
+    width: 9%;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.myShop ul li .room-card{
+    display: block;
+    float: left;
+    margin: 16px 0 16px 11.5%;
+    color: #f88888;
+}
+.myShop ul li .price{
+    display: block;
+    float: right;
+    margin: 16px 15% 16px 0;
+    color: #f88888;
+}
+.myShop .imformation{
+    margin-left: 5%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.myShop .imformation p{
+    color: #f88888;
+}
+.myShop .imformation p span{
+    color: #cf1608;
+}
+.myShop .button{
+    width: 55%;
+    /*margin-left: 22.5%;*/
+   margin: auto;
+    border-color: #28a54c;
+    background-color: #33cd5f;
+    color: #fff;
+    position: relative;
+    display: block;
+    padding: 0 12px;
+   	/*min-width: 52px;*/
+    min-height: 47px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    vertical-align: top;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 42px;
+}
+@media(max-width: 320px){
+	.myShop .button{
+		width: 58px;	
+	}
+}
+/*=================礼品兑换====================*/
+.exchange{
+    background: #eee;
+}
+.exchange .myRoomcard{
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    margin-top: 7px;
+    margin-bottom: 10px;
+}
+.exchange .myRoomcard p{
+    color: #f88888;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-bottom: 0;
+}
+.exchange .myRoomcard p span{
+    margin-left: 22px;
+}
+.exchange .reminder{
+    width: 100%;
+    padding: 10px 0; 
+    overflow: hidden;
+}
+.exchange .reminder img{
+    width: 5%;
+    display: block;
+    float: left;
+    margin-left: 3.5%;
+}
+.exchange .reminder h3{
+    font-size: 18px;
+    color: #c24b42;
+    float: left;
+    margin: 0 12px;
+}
+
+.exchange .list .item{
+    background: #e1e1e1;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 10px;
+    padding: 16px;
+}
+.exchange .list .item .item-top{
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.exchange .list .item .item-top .name{
+    float: left;
+    width: 50%;
+    color: #c67878;
+    font-size: 18px;
+}
+.exchange .list .item .item-top .require-redeem{
+    float: right;
+    overflow: hidden;
+    width: 50%;
+    color: #c67878;
+}
+.exchange .list .item .item-top .require-redeem img{
+    width: 9%;
+    display: block;
+    float: left;
+    margin-top: 3px;
+    margin-left: 30%;
+}
+.exchange .list .item .item-top .require-redeem span{
+    display: block;
+    float: left;
+    margin-left: 6px;
+    text-align: right;
+}
+
+.exchange .list .item .item-bottom{
+    width: 94%;
+    margin-left: 3%;
+    background: #fff;
+    padding: 16px 0 30px 0;
+    position: relative;
+}
+.exchange .list .item .item-bottom .cost-bg{
+    width: 50%;
+    margin: auto;
+    position: relative;
+}
+.exchange .list .item .item-bottom .cost-bg img{
+    width: 100%;
+}
+.exchange .list .item .item-bottom .cost-bg .exchange-name{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 12px;
+    padding: 5px 0;
+    /*background: #75bdda;*/
+    /*opacity: .6;*/
+}
+.exchange .list .item .item-bottom .cost-bg .exchange-name P{
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 8px;
+}
+.exchange .list .item .item-bottom .cost-bg span{
+    display: block;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    color: #fff;
+}
+.exchange .list .item .item-bottom .button{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 27%;
+    min-height: 30px;
+    border-radius: 20px;
+    background: #973932;
+    color: #fff;
+    font-size: 14px;
+}
+
+/*=====================兑换详情==========================*/
+.detail{
+    background: #eee;
+    padding-top: 45px;
+}
+.detail .myRedeem{
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    margin-top: 7px;
+    margin-bottom: 10px;
+}
+.detail .myRedeem p{
+    color: #f88888;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-bottom: 0;
+}
+.detail .myRedeem p span{
+    margin-left: 22px;
+}
+
+.detail .myRoomcard{
+    width: 100%;
+    background: #e1e1e1;
+    padding: 10px 0;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.detail .myRoomcard p{
+    width: 25%;
+    color: #f88888;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-bottom: 0;
+    float: left;
+}
+.detail .myRoomcard .product{
+    float: left;
+    background: #fff;
+    width: 25%;
+}
+.detail .myRoomcard .product div{
+    width: 94%;
+    margin: 8px 3%;
+    position: relative;
+}
+.detail .myRoomcard .product div img{
+    display: block;
+    width: 100%;
+}
+.detail .myRoomcard .product div p{
+    width: 80%;
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    font-size: 10px;
+    color: #fff;
+}
+.detail .myRoomcard .product div span{
+    font-size: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    color: #fff;
+}
+.detail .user-detail{
+    background: #e1e1e1;
+    padding-top: 20px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    margin: auto;
+    padding-left: 0px;
+}
+.detail .user-detail li{
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.detail .user-detail li label{
+    width: 25%;
+    height: 36px;
+    line-height: 36px;
+    display: block;
+    float: left;
+    font-size: 16px;
+    color: #f88888;
+    margin-left: 4%;
+}
+.detail .user-detail li input{
+    width: 65%;
+    height: 36px;
+    display: block;
+    float: right;
+    margin-right: 5%;
+    padding-left: 8px;
+    color: #f88888;
+    font-size: 14px;
+}
+.detail .user-detail li p{
+    font-size: 16px;
+    color: #f88888;
+    margin-left: 4%;
+}
+.detail .user-detail li p span{
+    margin-left: 5%;
+}
+
+.detail .button{
+    width: 50%;
+    display: block;
+    margin: 20px auto;
+    border-radius: 20px;
+    background: #973932;
+    margin-bottom: 20px;
+    color: #fff;
+    line-height: 42px;
+    padding: 0;
+}
+.detail .prompt p{
+    font-size: 14px;
+    color: #f88888;
+    margin-bottom: 5px;
+    margin-left: 4%;
+}
+.recommend-img{
+    margin:0 10px;
+    display: inline-block;
+}
+.recommend-img img{
+    width: 100%;
+    padding-bottom: 5px;
+}
+.re-line{
+    height: 16px;
+    background: #eeeeee;
+    border-bottom: 1px #d5d4d4 solid;
+    border-top: 1px #d5d4d4 solid;
+}
+.ion-left{
+    line-height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

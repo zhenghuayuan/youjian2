@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>首页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<style type="text/css">
+			.mui-title {height: 100%;background: url("../image/home_title.png") no-repeat center;background-size: 120px;}
+			.userother {background: #fff; color: #2a2a2a;}
+			.userother div {color: #2a2a2a;}
+			.userother div span {color: #2a2a2a; font-family: "微软雅黑";}
+			.userother div:nth-child(1) {border-color: #2a2a2a;}
+			.pic_list {padding: 20px 0;}
+			.pic_list div {width: 93%;height: 110px; height: 30vw; margin: 0 auto 12px;}
+			.mui-slider-group {height: 155px; height: 49vw;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title"></h1>
+		</header>
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" v-cloak>
+			<div class="mui-scroll">
+
+				<div class="mui-content">
+					<div class="userother clearfix">
+						<div><span>房卡: </span>{{userInfo.roomcard}}</div>
+						<div><span>礼券: </span>{{userInfo.voucher}}</div>
+					</div>
+					<!--轮播图-->
+					<div id="slider" class="mui-slider">
+						<div class="mui-slider-group mui-slider-loop">
+							<div class="mui-slider-item mui-slider-item-duplicate"><img src="../image/pic_01.jpg"></div>
+							<div class="mui-slider-item"><img src="../image/pic_01.jpg"></div>
+							<div class="mui-slider-item"><img src="../image/pic_02.jpg"></div>
+							<div class="mui-slider-item"><img src="../image/pic_03.jpg"></div>
+							<div class="mui-slider-item mui-slider-item-duplicate"><img src="../image/pic_01.jpg"></div>
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator mui-active"></div>
+							<div class="mui-indicator"></div>
+							<div class="mui-indicator"></div>
+						</div>
+					</div>
+					<!--卡片视图-->
+					<div class="pic_list">
+						<div @click="openWebview('兑换话费')"><img src="../image/recharge-phone.png"></div>
+						<div @click="openWebview('兑换流量')"><img src="../image/recharge-flow.png"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/public.js"></script>
+	<script>
+		// 监听事件
+		window.addEventListener("getUserInfo", function(data){
+			vm.userInfo = event.detail;
+			setTimeout(function(){
+				if(mui('#refreshContainer').pullRefresh()){
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+				}
+			}, 500)
+		})
+		// 派发事件
+		window.getUserInfo = function(){
+			plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
+		}
+		var vm = new Vue({
+			el: ".mui-content",
+			data: {
+				currentWebview: null,
+				userInfo: {},
+			},
+			created: function() {
+				var _this = this;
+				mui.init({
+					pullRefresh: {
+						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+						down: {
+							height: 50, //可选,默认50.触发下拉刷新拖动距离,
+							auto: false, //可选,默认false.自动下拉刷新一次
+							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+							callback: getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+//				mui.plusReady(function() {
+					_this.currentWebview = plus.webview.currentWebview();
+					mui("#slider").slider({
+						interval: 2000
+					});
+					// 首次本地数据填充
+					mui.fire(plus.webview.getWebviewById(PAGE.sub[0].id),"getUserInfo", app.getState(LOCAL.keys));
+					_this.currentWebview.addEventListener("loaded", function(){
+						plus.navigator.setFullscreen(false);
+						plus.navigator.setStatusBarBackground("#fff");
+						plus.navigator.closeSplashscreen();
+						_this.currentWebview.show();
+						plus.webview.getWebviewById(PAGE.index.id).show();
+					})
+
+//				})
+			},
+			methods: {
+				openWebview: function(text){
+					PAGE['recharge'].extras = {title: text};
+					mui.openWindow(PAGE['recharge'])
+				}
+			}
+
+		})
+	</script>
+
+</html>
