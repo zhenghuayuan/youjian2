@@ -80,7 +80,7 @@
 			el: ".mui-content",
 			data: {
 				currentWebview: null,
-				userInfo: {},
+				userInfo: app.getState(LOCAL.keys),
 			},
 			created: function() {
 				var _this = this;
@@ -97,22 +97,23 @@
 						}
 					}
 				});
-//				mui.plusReady(function() {
+				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
 					mui("#slider").slider({
 						interval: 2000
 					});
 					// 首次本地数据填充
-					mui.fire(plus.webview.getWebviewById(PAGE.sub[0].id),"getUserInfo", app.getState(LOCAL.keys));
-					_this.currentWebview.addEventListener("loaded", function(){
-						plus.navigator.setFullscreen(false);
-						plus.navigator.setStatusBarBackground("#fff");
-						plus.navigator.closeSplashscreen();
-						_this.currentWebview.show();
-						plus.webview.getWebviewById(PAGE.index.id).show();
-					})
+//					mui.fire(plus.webview.getWebviewById(PAGE.sub[0].id), "getUserInfo", app.getState(LOCAL.keys));
+					plus.navigator.setFullscreen(false);
+					plus.navigator.setStatusBarBackground("#fff");
+					plus.navigator.closeSplashscreen();
+//					_this.currentWebview.show();
+//					plus.webview.getWebviewById(PAGE.index.id).show();
+//					_this.currentWebview.addEventListener("loaded", function(){
+//						
+//					})
 
-//				})
+				})
 			},
 			methods: {
 				openWebview: function(text){

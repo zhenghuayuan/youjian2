@@ -26,12 +26,18 @@
 			"js/public.js",
 			"js/vue.min.js",
 			"image/wx-login.png",
-			"image/login-bg.jpg"
+			"image/login-bg.jpg",
+			"css/ydui.css",
+			"js/jQuery.v2.1.4.js",
+			"js/ydui.js"
 		],
 		"refer": [
 			"main.html",
 			"reg.html",
-			"templates/index.html"
+			"templates/index.html",
+			"templates/tab-home.html",
+			"templates/tab-user.html",
+			"templates/tab-card.html"
 		]
 	},
 	"setting.html": {
@@ -74,7 +80,8 @@
 			"image/home_icon_active.png",
 			"image/wo_icon_active.png",
 			"image/card_icon_active.png",
-			"js/public.js"
+			"js/public.js",
+			"templates/tab-home.html"
 		],
 		"refer": [
 			"templates/tab-webview-subpage-about.html",

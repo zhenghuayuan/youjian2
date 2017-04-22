@@ -18,7 +18,7 @@
 			.recharge_other span.liuliang_icon {background: url("../image/liuliang_icon.png") no-repeat center 2px; background-size: 28px;}
 			/*input*/
 			.tips {position: absolute; top: 100%; left: 22%; font-size: 12px; color: #FF3B30;}
-			.mui-content {background: #fff;}
+			.mui-content {background: #fff; }
 		</style>
 	</head>
 	<body >
@@ -35,13 +35,13 @@
 						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" id="aa" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
 						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
 						<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>
-						<p class="tips" style="visibility: hide;">请输入正确的用户手机号</p>
+						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
 					</div>
 				</div>
 				<div class="recharge_type" style="padding-top: 10px;">充{{title.slice(2,4)}}</div>
 				<div class="recharge_wrap">
-					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
-					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 				</div>
 				<div class="recharge_type">更多充值</div>
 				<div class="recharge_other clearfix">
@@ -57,11 +57,15 @@
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
+				// 派发事件
+			window.getUserInfo = function(){
+				plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
+			}
 			var vm = new Vue({
 				el: "#wrap",
 				data: {
-					usernumber: 123456, //用户输入的ID v-model
-					userInfo: {},
+					usernumber: "", //用户输入的ID v-model
+					userInfo: app.getState(LOCAL.keys),
 					isFocus: false,
 					curProductType: 1, // type 1 话费 type 2 流量
 					productPhone: [], // 话费
@@ -70,15 +74,18 @@
 				created: function(){
 					var _this = this;
 					mui.init();
+					_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
+					_this.getProductList();
 					mui.plusReady(function(){
-						_this.getProductList();
 						_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
-						console.log(_this.title)
 					})
 				},
 				computed: {
 					title: function(){
 						return this.curProductType == 1?"兑换话费":"兑换流量";
+					},
+					numberIsTrue: function(){
+						return /^[1][356789][0-9]{9}$/.test(this.usernumber);
 					}
 				},
 				methods: {
@@ -106,7 +113,7 @@
 						var _this = this;
 						app.request(API.productList, {})
 						.then(function(data){
-							console.log("兑换列表："+ JSON.stringify(data));
+//							console.log("兑换列表："+ JSON.stringify(data));
 //							_this.items = data;
 							_this.productPhone = [];
 							_this.productFlow = [];
@@ -139,11 +146,44 @@
 							alert("获取通讯录错误："+e)
 						})
 					},
+					getIsClub: function(){
+						
+					},
 					confirmRecharge: function(item){
-					 	YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
-			            	YDUI.dialog.toast('你点了确定', 'none', 1000);
-			         	})
-					}
+						// YDUI.dialog.toast('你点了确定', 'none', 1000);
+						// YDUI.dialog.toast('鼠标不错哟！', 'success', 1000);
+						// YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
+						// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
+						var _this = this;
+						if(!_this.numberIsTrue){
+							return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
+						}
+						
+						new Promise(function(reject, resolve){
+						 	return YDUI.dialog.confirm("", "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"", reject);
+						})
+						.then(function(){
+							return app.request(API.recharge, {
+								uid: _this.userInfo.uid,
+								unionid: _this.userInfo.unionid,
+								product_id: item.id, 
+								mobile: _this.usernumber,
+							}, "post");
+						})
+						.then(function(data){
+							if(data && data.code == 0){
+								YDUI.dialog.toast("礼券不足或不是友间会员", 'none', 1000);
+								return;
+							}
+							// 更新
+							getUserInfo();
+							YDUI.dialog.toast('兑换成功', 'success', 1500);
+						})
+						.catch(function(e){
+							alert(e)
+						})
+					},
+					
 					
 				}
 			})

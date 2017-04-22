@@ -34,9 +34,11 @@
 					var _this = this;
 					mui.init();
 					mui.plusReady(function(){
-						console.log(_this.userInfo.unionId)
-						if(_this.userInfo.unionId){
-//							_this.getServerInfo(_this.userInfo.unionId)
+						// 模拟 待删除
+						console.log("存在unionid？："+_this.userInfo.unionid)
+						app.setState(LOCAL.keys, {unionid: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"});
+						if(_this.userInfo.unionid){
+//							_this.getServerInfo(_this.userInfo.unionid)
 							_this.getServerInfo("oogiuwGonIrIb5ht3mlHG1V2J1Gc")
 //							plus.navigator.closeSplashscreen();
 							return;
@@ -51,39 +53,28 @@
 					});
 				},
 				methods: {
-					
 					// 获取登录授权对象 =>微信登入 => 获取微信用户信息 => 获取服务器用户信息 => 存入localstorage => 进入主页
 					login: function(){
 						var _this = this;
-//						!function(){
-//							_this.userInfo = {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"};
-//							app.setState(LOCAL.keys, _this.userInfo)
-//							console.log(JSON.stringify(app.getState(LOCAL.keys)))
-//							
-//							if(plus.webview.getWebviewById(PAGE.index.id)){
-//								plus.webview.getWebviewById(PAGE.index.id).show()
-//							}else{
-//								var index = mui.preload(PAGE.index);
-//								index.show();
-//							}
-//						}()
-//						return;
+						// 模拟登陆 待删除
+						_this.getServerInfo("oogiuwGonIrIb5ht3mlHG1V2J1Gc")
+						return;
 						app.getServices("weixin")
 						.then(function(authService){
 							return app.wxLogin(authService)
 						})
 						.then(function(data){
-							_this.getServerInfo(_this.userInfo.unionId = data.userInfo.unionid);
+							_this.getServerInfo(_this.userInfo.unionid = data.userInfo.unionid);
 						})
 						.catch(function(e){
 							mui.alert(e)
 						})
 						
 					},
-					getServerInfo: function(unionId){
+					getServerInfo: function(unionid){
 						//用unionid去获取服务器用户信息
 						var _this = this;
-						app.request(API.login, {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"}) // {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"}
+						app.request(API.login, {unionId: unionid}) 
 						.then(function(data){
 							if(data.not_player == 1){
 								YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
@@ -91,8 +82,22 @@
 							}
 							mui.extend(true, _this.userInfo, data);
 							app.setState(LOCAL.keys, _this.userInfo);
+							console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
 							index = mui.preload(PAGE.index);
-							log("本地缓存："+ app.getState(LOCAL.keys))
+							// 预加载子页面 及 展示逻辑
+							index.addEventListener("loaded", function(){
+								PAGE.sub.forEach(function(item){
+									var sub = mui.preload(item)
+									index.append(sub)
+								});
+								var firstSub = plus.webview.getWebviewById(PAGE.sub[0].id);
+//								var index = index;
+								// 主页 及 第一个子页面加载好 展示
+								firstSub.addEventListener("loaded", function(){
+									firstSub.show()
+									index.show();
+								})
+							}, false);
 						})
 						.catch(function(e){
 							mui.alert(e)
@@ -107,6 +112,8 @@
 							mui.toast(e)
 						})
 					}
+					
+					
 					
 				}
 			});

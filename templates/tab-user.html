@@ -53,7 +53,6 @@
 	<script src="../js/jQuery.v2.1.4.js"></script>
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
-	
 	<script>
 		// 监听事件
 		window.addEventListener("getUserInfo", function(data){
@@ -74,7 +73,7 @@
 				currentWebview: null,
 				active: 0,
 				items: [],
-				userInfo: {},
+				userInfo: app.getState(LOCAL.keys),
 				dialog: null,
 			},
 			created: function(){
@@ -92,16 +91,16 @@
 						}
 					}
 				});
-//				mui.plusReady(function() {
+				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
 					// 首次本地数据填充
-					mui.fire(plus.webview.getWebviewById(PAGE.sub[2].id),"getUserInfo", app.getState(LOCAL.keys));
-//				});
+//					mui.fire(plus.webview.getWebviewById(PAGE.sub[2].id),"getUserInfo", app.getState(LOCAL.keys));
+				});
 			},
 			methods: {
 				yudiConfirm: function(){
 					YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
-//		               YDUI.dialog.toast('你点了确定', 'none', 1000);
+		               YDUI.dialog.toast('你点了确定', 'none', 1000);
 //						调用退出
 //						init方案 1 close || 2全局init
 //						app.authLogout(this.authService)
@@ -113,6 +112,8 @@
 //						.catch(function(e){
 //							mui.toast(e)
 //						})
+						app.clearState(LOCAL.keys);
+						plus.webview.getWebviewById(PAGE.index.id).close();
 		            });
 				}
 				

@@ -1,4 +1,9 @@
-
+/*
+ * 开发环境：development 
+ * 生产环境：production
+ * */
+var ENV = "development"; 
+//var ENV = "production"; 
 /**
  * 所有页面信息
  **/
@@ -57,10 +62,15 @@ var LOCAL = {
  * API
  **/
 var DOMAIN = "https://dcyouxi.com";
-var API = {
+var API = { 
+	// 用户信息
 	login: "https://dcyouxi.com/index.php/index/app_login",
+	// 售卡列表
 	cardList: "https://dcyouxi.com/index.php/Product/get_goods",
-	productList: "https://dcyouxi.com/index.php/Product/index",
+	// 兑换产品列表
+	productList: "http://192.168.1.55/dcxcx/index.php/Product",
+	// 兑换
+	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
 };
 /**
  * 自定义事件
@@ -173,11 +183,15 @@ var EVENT = function(){
 //			},"json");
 //		});
 		return new Promise(function(resolve, reject){
+			console.log("【请求地址】："+url);
+			console.log("【请求参数】："+JSON.stringify(data));
+			
 			mui.ajax(url, {
 				data: data,
 				dataType:'json',//服务器返回json格式数据
 				type: type || "get",//HTTP请求类型
 				success:function(data){
+					console.log("【请求结果】："+JSON.stringify(data));
 					resolve(data);
 				},
 				error: function(e){

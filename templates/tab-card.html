@@ -42,7 +42,7 @@
 							<label style="width: 20%;">用户ID:</label>
 							<input type="tel" ref="inputUserid" class="" style="width: 76%;" id="aa" v-model="userid" :value="userid" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
 							<em :class="{'clear_input': isFocus && String(userid).length>0}" @click="clearInput(userid,'inputUserid')" style="right: 8%;"></em>
-							<p class="tips" style="visibility: hide;">请输入正确的用户ID</p>
+							<p class="tips" style="visibility: hidden;">请输入正确的用户ID</p>
 						</div>
 					</div>   
 					<div class="recharge_type" style="padding-top: 10px;">当前房卡:{{userInfo.roomcard}}</div>
@@ -81,10 +81,10 @@
 				el: ".mui-content",
 				data: {
 					currentWebview: null,
-					userid: 6002809, //用户输入的ID v-model
+					userid: "", //用户输入的ID v-model
 					active: 0,
 					items: [],
-					userInfo: {},
+					userInfo: app.getState(LOCAL.keys),
 					isFocus: false,
 				},
 				created: function(){
@@ -103,15 +103,21 @@
 						}
 					});
 					_this.getCardList();
-//					mui.plusReady(function() {
+					_this.userid = "uid" in _this.userInfo?_this.userInfo.uid:"";
+					mui.plusReady(function() {
 						_this.currentWebview = plus.webview.currentWebview();
 						// 首次本地数据填充
-						mui.fire(plus.webview.getWebviewById(PAGE.sub[1].id),"getUserInfo", app.getState(LOCAL.keys));
-//					});
+//						mui.fire(plus.webview.getWebviewById(PAGE.sub[1].id), "getUserInfo", app.getState(LOCAL.keys));
+					});
+				},
+				computed: {
+					useridIsTrue: function(){
+						return /^[0-9]{7,7}$/.test(this.userid)
+					}
 				},
 				watch: {
-					active: function(news, old){
-						
+					userid: function(news){
+						console.log(this.useridIsTrue)
 					}
 				},
 				methods: {
@@ -139,12 +145,16 @@
 						var _this = this;
 						app.request(API.cardList, "")
 						.then(function(data){
-							console.log("房卡列表"+JSON.stringify(data))
+//							console.log("房卡列表"+JSON.stringify(data))
 							_this.items = data;
 						})
 					},
 					payConfirm: function(){
 						var _this = this;
+						
+						if(!_this.useridIsTrue) {
+							return YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
+						}
 						YDUI.dialog.confirm('选填标题', "是否确定为<span style='color: red'>"+_this.userid+"</span>充值房卡×"+_this.items[_this.active].card, function () {
 							console.log(1)
 			            });
@@ -164,7 +174,7 @@
 			                		url: res.pay_info,
 			                		id: res.pay_info,
 			                	})
-								console.log(res.pay_info)
+//								console.log(res.pay_info)
 			                }
 						})
 						.catch(function(e){

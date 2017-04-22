@@ -40,21 +40,22 @@
 				},
 				created: function(){
 					var _this = this;
-//					mui.init();
-					plus.webview.currentWebview().addEventListener("loaded", function(){
-//						plus.webview.currentWebview().show();
-					}, false)
-//					mui.plusReady(function() {
-//					plus.navigator.setFullscreen(false);
-//					plus.navigator.setStatusBarBackground("#fff");
-					_this.currentWebview = plus.webview.currentWebview();
-					// 预加载子页面
-					PAGE.sub.forEach(function(item){
-						var sub = mui.preload(item)
-//							_this.subWebview.push(sub);
-						_this.currentWebview.append(sub)
-						
-					});
+					mui.init();
+				
+					mui.plusReady(function() {
+//						plus.webview.currentWebview().addEventListener("loaded", function(){
+	//						plus.webview.currentWebview().show();
+//						}, false)
+	//					plus.navigator.setFullscreen(false);
+	//					plus.navigator.setStatusBarBackground("#fff");
+//						_this.currentWebview = plus.webview.currentWebview();
+						// 预加载子页面
+//						PAGE.sub.forEach(function(item){
+//							var sub = mui.preload(item)
+//	//							_this.subWebview.push(sub);
+//							_this.currentWebview.append(sub)
+//							
+//						});
 						
 						// 显示页面 
 						// 显示主页面
@@ -83,7 +84,7 @@
 //						        return false;
 //						    };
 //						}(mui));
-//					})
+					})
 				},
 				watch: {
 					"active": function(news, old){
