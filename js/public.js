@@ -71,6 +71,10 @@ var API = {
 	productList: "http://192.168.1.55/dcxcx/index.php/Product",
 	// 兑换
 	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
+	// 威富通支付
+	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
+	// 识别是否友间会员
+	isInClub: "http://192.168.1.55/dcxcx/index.php/Login/playerExist?uid=1",
 };
 /**
  * 自定义事件

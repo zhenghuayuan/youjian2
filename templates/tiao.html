@@ -10,19 +10,22 @@
 		<script src="./js/mui.min.js"></script>
 	</head>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title">支付完成</h1>
-		</header>
-		<div class="mui-content">
-		  
-		</div>
 		<script>
 			mui.init();
 			mui.plusReady(function(){
+				
+				plus.webview.getWebviewById("tab-card.html").evalJS("payResult(1)")
 				plus.webview.currentWebview().close()
-//				plus.webview.currentWebview().hide();
-				plus.webview.getWebviewById("tab-webview-subpage-home.html").show();
 			})
+			var getUrlData = function(attr){ 
+				var url = location.search; 
+				var obj = {}; 
+				var arr = url.substr(1).split("&") 
+				for (var i = 0; i < arr.length; i++) { 
+					obj[arr[i].split("=")[0]] = arr[i].split("=")[1];
+				} 
+				return obj[attr]; 
+			}
 			
 		</script>
 	</body>

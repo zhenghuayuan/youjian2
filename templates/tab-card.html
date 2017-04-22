@@ -76,6 +76,14 @@
 			window.getUserInfo = function(){
 				plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
 			}
+			
+			// 支付结果回调
+			function payResult(res){
+//				pulldownRefresh();
+//				plus.webview.getWebviewById("tab-webview-subpage-home.html").evalJS("pulldownRefresh()");
+				getUserInfo();
+				alert("支付结果:"+res)
+			}
 		
 			var vm = new Vue({
 				el: ".mui-content",
@@ -155,26 +163,26 @@
 						if(!_this.useridIsTrue) {
 							return YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
 						}
-						YDUI.dialog.confirm('选填标题', "是否确定为<span style='color: red'>"+_this.userid+"</span>充值房卡×"+_this.items[_this.active].card, function () {
-							console.log(1)
-			            });
-			            return;
-						app.request("http://192.168.1.133/wap/request.php", {
-							userid: _this.userid,
-							cardid: _this.items[_this.active].id,
-						}, "post")
+						new Promise(function(resolve, reject){
+							return YDUI.dialog.confirm('选填标题', "是否确定为<span style='color: red'>"+_this.userid+"</span>充值房卡×"+_this.items[_this.active].card, resolve); 
+						})
+						.then(function(){
+							return app.request(API.wftPay, {
+								userid: _this.userid,
+								id: _this.items[_this.active].id,
+							}, "post")
+						})
 						.then(function(res){
 							 if(typeof(res) === 'string'){
 			                    res = JSON.parse(res);
 			                }
 			                if(res.status == 500) {
-			                	console.log("err:"+res.status)
+			                	return YDUI.dialog.toast(res.status, "none", 1000);
 			                }else{
 			                	mui.openWindow({
 			                		url: res.pay_info,
 			                		id: res.pay_info,
 			                	})
-//								console.log(res.pay_info)
 			                }
 						})
 						.catch(function(e){
