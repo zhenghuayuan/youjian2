@@ -16,11 +16,11 @@ var PAGE = {
 		createNew: true,
 		styles: {
 			background: "RGBA(0, 0, 0, 1)",
-			popGesture: "close"
+			popGesture: "none"
 		},
 		extras: {title: "我的首页"},
 	},
-	sub: [
+	sub: [ 
 		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "0", bottom: "56px"}},
 		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "0", bottom: "56px"}},
 		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "0", bottom: "56px"}},
@@ -39,14 +39,27 @@ var PAGE = {
 	"bind-phone": {
 		url: "/templates/bind-phone.html", 
 		id: "bind-phone.html", 
-		show: {autoShow: true},
+		show: {
+			autoShow: true,
+			aniShow: "",
+//			aniShow:"zoom-fade-out",
+		},
 		styles: {
 			background: "transparent",
 			popGesture: "none",
 		},
-		show:{
-			aniShow:"zoom-fade-out",
-		}
+	},
+	"mask": {
+		url: "/templates/mask.html", 
+		id: "mask.html", 
+		show: {
+			autoShow: true
+		},
+		styles: {
+			background: "transparent",
+			popGesture: "hide",
+		},
+		
 	}
 	
 	
@@ -68,38 +81,55 @@ var API = {
 	// 售卡列表
 	cardList: "https://dcyouxi.com/index.php/Product/get_goods",
 	// 兑换产品列表
-	productList: "http://192.168.1.55/dcxcx/index.php/Product",
+//	productList: "http://192.168.1.55/dcxcx/index.php/Product",
+	productList: "https://dcyouxi.com/index.php/Product",
 	// 兑换
 	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
 	// 威富通支付
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
-	isInClub: "http://192.168.1.55/dcxcx/index.php/Login/playerExist?uid=1",
+	isInClub: "http://192.168.1.55/dcxcx/index.php/Login/playerExist",
 };
 /**
  * 自定义事件
  **/
 var EVENT = function(){
+	var getUserInfo = function(){
+		//	var unionId = app.getState(LOCAL.keys).sv.unionId;
+		app.request(API.login,  {unionId: app.getState(LOCAL.keys).unionid}) //app.getState(LOCAL.keys)
+		.then(function(data){
+			console.log("用户信息"+JSON.stringify(data))
+			// 传递消息给各个页面
+			for(var i=0; i<3; i++){
+				var item = plus.webview.getWebviewById(PAGE.sub[i].id);
+				item && mui.fire(item,"getUserInfo", data);
+			}
+			
+		})
+		.catch(function(e){
+			alert(e)
+		})
+	} 
+	// 给各个页面提供调用方法
 	return {
 		// 获取用户信息
-		getUserInfo: function(){
-			//	var unionId = app.getState(LOCAL.keys).sv.unionId;
-			app.request(API.login,  {unionId: "oogiuwGonIrIb5ht3mlHG1V2J1Gc"}) //app.getState(LOCAL.keys)
-			.then(function(data){
-				console.log("用户信息"+JSON.stringify(data))
-				// 订阅者对象
-				for(var i=1; i<3; i++){
-					var item = plus.webview.getWebviewById(PAGE.sub[i].id);
-					item && mui.fire(item,"getUserInfo", data);
-				}
-				
-			})
-			.catch(function(e){
-				alert(e)
-			})
-		}
+		getUserInfo: getUserInfo,
+		
 	}
 }();
+/**
+ * 调用全屏蒙版弹窗
+ * fromId webviewId
+ * text 内容
+ * YUDIConfirmCallback 回调函数
+ **/
+var MASKCONFIRM = function(fromId, text){
+	return new Promise(function(resolve, reject){
+		window.YUDIConfirmCallback = resolve;
+		plus.webview.getWebviewById(PAGE.mask.id).evalJS("yudiConfirm('"+fromId+"','"+text+"',"+"'YUDIConfirmCallback')");
+	})
+}
+
 /**
  * 常用工具
  **/
@@ -109,7 +139,7 @@ var EVENT = function(){
 	 * 获取当前状态
 	 **/
 	app.getState = function(key) {
-		var stateText = localStorage.getItem(key) || "";
+		var stateText = localStorage.getItem(key) ||"{}";
 		return stateText?JSON.parse(stateText):stateText;
 	};
 	/**
@@ -137,10 +167,10 @@ var EVENT = function(){
 				resolve(services.filter(function(item){
 					for(var i in item){
 						return item[i] == (keyword || "weixin");
-				}
-			})[0]);
-		}, function(e){
-				reject("获取分享服务列表失败："+ e.message);
+					}
+				})[0]);
+			}, function(e){
+				reject("获取登录认证失败："+ e.message);
 			});
 		})
 	}
@@ -212,15 +242,15 @@ var EVENT = function(){
 	 */
 	app.authLogout = function(authService){
 		return new Promise(function(resolve, reject){
-			if(!authService || !authService.authResult) {
-				reject("尚未登入");
-		}else{
-			authService.logout(function(e){
-				resolve("注销登录成功："+e);
-			}, function(e){
-				resolve("注销登录失败："+e);
+//			if(typeof authService.AuthInfo == "undefined") {
+//				resolve("登陆过期或尚未登陆");
+//			}else{
+				authService.logout(function(e){
+					resolve("注销登录成功："+e);
+				}, function(e){
+					resolve("注销登录失败："+e);
 				});
-			}
+//			}
 		});
 	}
 	/**

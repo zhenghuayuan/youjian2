@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>蒙版</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="../css/ydui.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<style type="text/css">
+			html,body {background: rgba(0,0,0,0);}
+		</style>
+	</head>
+	<body></body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	<script src="../js/jQuery.v2.1.4.js"></script>
+	<script src="../js/ydui.js"></script>
+	<script src="../js/public.js"></script>
+	<script>
+			var currentWebview = null;
+			mui.init();
+			mui.plusReady(function(){
+				currentWebview = plus.webview.currentWebview();
+			});
+			var yudiConfirm = function(fromId, text, cbName){
+				currentWebview.show();
+				YDUI.dialog.confirm('', text, [
+	                {
+	                    txt: '取消',
+	                    color: false,
+	                    callback: function () {
+	                     	currentWebview.hide();
+	                    }
+	                },
+	                {
+	                    txt: '确定',
+	                    color: true,
+	                    callback: function () {
+	                    	currentWebview.hide();
+							if(cbName){
+								plus.webview.getWebviewById(fromId).evalJS(cbName+"()");
+							}
+	                    }
+	                }
+	            ]);
+			}
+
+	</script>
+</html>

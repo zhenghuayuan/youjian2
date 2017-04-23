@@ -53,6 +53,7 @@
 					<div class="pic_list">
 						<div @click="openWebview('兑换话费')"><img src="../image/recharge-phone.png"></div>
 						<div @click="openWebview('兑换流量')"><img src="../image/recharge-flow.png"></div>
+						
 					</div>
 				</div>
 
@@ -72,10 +73,7 @@
 				}
 			}, 500)
 		})
-		// 派发事件
-		window.getUserInfo = function(){
-			plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
-		}
+
 		var vm = new Vue({
 			el: ".mui-content",
 			data: {
@@ -83,6 +81,7 @@
 				userInfo: app.getState(LOCAL.keys),
 			},
 			created: function() {
+				console.log(1)
 				var _this = this;
 				mui.init({
 					pullRefresh: {
@@ -93,7 +92,7 @@
 							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
 							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
 							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
-							callback: getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+							callback: EVENT.getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 						}
 					}
 				});
@@ -102,27 +101,24 @@
 					mui("#slider").slider({
 						interval: 2000
 					});
-					// 首次本地数据填充
-//					mui.fire(plus.webview.getWebviewById(PAGE.sub[0].id), "getUserInfo", app.getState(LOCAL.keys));
-					plus.navigator.setFullscreen(false);
-					plus.navigator.setStatusBarBackground("#fff");
-					plus.navigator.closeSplashscreen();
-//					_this.currentWebview.show();
-//					plus.webview.getWebviewById(PAGE.index.id).show();
-//					_this.currentWebview.addEventListener("loaded", function(){
-//						
-//					})
-
 				})
 			},
 			methods: {
 				openWebview: function(text){
 					PAGE['recharge'].extras = {title: text};
 					mui.openWindow(PAGE['recharge'])
+				},
+				fn: function(){
+//					plus.webview.getWebviewById(PAGE.mask.id).show();
+					
 				}
 			}
 
 		})
+		var MASKCONFIRM = function(fromId, text, cbName){
+			window.YUDIConfirmCallback = cbName || new Function();
+			plus.webview.getWebviewById(PAGE.mask.id).evalJS("yudiConfirm('"+fromId+"','"+text+"',"+"'YUDIConfirmCallback')");
+		}
 	</script>
 
 </html>

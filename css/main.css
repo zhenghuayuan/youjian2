@@ -3,9 +3,9 @@
 .mui-bar-nav h1{color: #2a2a2a;}
 /*个人中心*/
 .user_wrap {background-color: #fff; padding: 10px 10px 0;} 
-.user_wrap .pic {position: absolute; margin-top: 2px; width: 70px; height: 70px; border-radius: 50%; overflow: hidden; border: 2px solid #fff;}
-.info_wrap {margin-left: 88px; font-size: 16px;}
-.info_wrap div {position: relative; height: 24px; line-height: 24px;} 
+.user_wrap .pic {position: absolute; margin-top: 2px; width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 2px solid #fff;}
+.info_wrap {margin-left: 100px; font-size: 16px;}
+.info_wrap div {position: relative; height: 28px; line-height: 28px;} 
 .info_wrap .name {font-size: 16px; color: #2a2a2a;}
 .info_wrap .userid{padding-left: 20px; color: #2a2a2a; background: url("../image/id-icon.png") no-repeat 0 center; background-size: 16px;}
 .info_wrap .phone{padding-left: 20px; color: #2a2a2a; background: url("../image/phone-icon.png") no-repeat 2px center; background-size: 15px;}
@@ -20,11 +20,11 @@
 /*input*/
 /*.mui-input-row input {height:40px; border: 1px solid rgba(0,0,0,0.2) !important; margin: 10px 0 0 0;}*/
 .from_wrap {padding: 20px 0; font-family: "微软雅黑"; color: #2a2a2a;}
-.from_wrap .cell {position: relative; font-size: 14px; padding: 0 10px; margin-bottom: 10px;}
+.from_wrap .cell {position: relative; font-size: 14px; padding: 0 8px 0 0px; margin-bottom: 10px;}
 .from_wrap .cell > * {float: left;}
 .from_wrap .cell label {float: left; width: 28%; height: 40px; line-height: 40px; font-size: 16px; text-align: center; }
 .from_wrap .cell input {float: left; width: 72%; height: 40px; font-size: 16px; text-indent: 8px;}
-.get_verify {width: 30%; height: 30px; line-height: 30px; font-size: 12px; margin-left: 2%; margin-top: 5px; text-align: center; background-color: #FFB400; color: #fff; border-radius: 4px;}
+.get_verify {width: 30%; height: 36px; line-height: 36px; font-size: 12px; margin-left: 2%; margin-top: 2px; text-align: center; background-color: #FFB400; color: #fff; border-radius: 4px;}
 .clear_input {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/clear_input.png) no-repeat center; background-size: 100% 100%;}
 .open_address_list {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/address_list_icon.png) no-repeat center; background-size: 100% 100%;}
 

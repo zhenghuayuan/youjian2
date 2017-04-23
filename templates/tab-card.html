@@ -21,9 +21,9 @@
 			/*.card_tipls{color: #2a2a2a; font-size: 14px;}*/
 			.mui-btn-success {width: 80%; margin: 20px auto; background-color: #319254; border-color: #319254;}
 			.active {background-color: #007aff; color: #fff !important;}
-			.tips {position: absolute; top: 100%; left: 25%; font-size: 12px; color: #FF3B30;}
+			.tips {position: absolute; top: 100%; left: 23%; font-size: 12px; color: #FF3B30;}
 			/*.mask-black-dialog {background: rgba(0,0,0,0);}*/
-			.mui-scroll {background: #fff !important;}
+			.mui-scroll {background: #fff !important; padding-bottom: 30px;}
 			.buy_btn {width: 80%; margin: 0 auto 30px; padding: 10px;}
 		</style>
 	</head>
@@ -42,7 +42,7 @@
 							<label style="width: 20%;">用户ID:</label>
 							<input type="tel" ref="inputUserid" class="" style="width: 76%;" id="aa" v-model="userid" :value="userid" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
 							<em :class="{'clear_input': isFocus && String(userid).length>0}" @click="clearInput(userid,'inputUserid')" style="right: 8%;"></em>
-							<p class="tips" style="visibility: hidden;">请输入正确的用户ID</p>
+							<p class="tips" :style="{'visibility': isInClub?'hidden':''}">请在游戏大厅主界面左上角核对ID后填写</p>
 						</div>
 					</div>   
 					<div class="recharge_type" style="padding-top: 10px;">当前房卡:{{userInfo.roomcard}}</div>
@@ -72,16 +72,13 @@
 					}
 				}, 500)
 			})	
-			// 派发事件
-			window.getUserInfo = function(){
-				plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
-			}
+
 			
 			// 支付结果回调
 			function payResult(res){
 //				pulldownRefresh();
 //				plus.webview.getWebviewById("tab-webview-subpage-home.html").evalJS("pulldownRefresh()");
-				getUserInfo();
+				EVENT.getUserInfo()
 				alert("支付结果:"+res)
 			}
 		
@@ -94,6 +91,7 @@
 					items: [],
 					userInfo: app.getState(LOCAL.keys),
 					isFocus: false,
+					isInClub: true, // 是否友间会员
 				},
 				created: function(){
 					var _this = this;
@@ -106,7 +104,7 @@
 								contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
 								contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
 								contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
-								callback: getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+								callback: EVENT.getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 							}
 						}
 					});
@@ -124,8 +122,20 @@
 					}
 				},
 				watch: {
-					userid: function(news){
-						console.log(this.useridIsTrue)
+					useridIsTrue: function(news){
+						var _this = this;
+						if(news){
+							app.request(API.isInClub, {uid: _this.userid})
+							.then(function(data){
+								if(data.code){
+									_this.isInClub = true;
+								}else{
+									_this.isInClub = false;
+								}
+							})
+						}else{
+							_this.isInClub = false;
+						}
 					}
 				},
 				methods: {
@@ -153,19 +163,18 @@
 						var _this = this;
 						app.request(API.cardList, "")
 						.then(function(data){
-//							console.log("房卡列表"+JSON.stringify(data))
 							_this.items = data;
 						})
 					},
+
 					payConfirm: function(){
 						var _this = this;
 						
-						if(!_this.useridIsTrue) {
+						if(!_this.isInClub) {
 							return YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
-						}
-						new Promise(function(resolve, reject){
-							return YDUI.dialog.confirm('选填标题', "是否确定为<span style='color: red'>"+_this.userid+"</span>充值房卡×"+_this.items[_this.active].card, resolve); 
-						})
+						};
+						
+						MASKCONFIRM("tab-card.html","是否为<span style=\\'color: red\\'>"+_this.userid+"（昵称）</span>充值房卡×"+_this.items[_this.active].card+"？")
 						.then(function(){
 							return app.request(API.wftPay, {
 								userid: _this.userid,

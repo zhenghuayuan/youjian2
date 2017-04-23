@@ -37,7 +37,8 @@
 			"templates/index.html",
 			"templates/tab-home.html",
 			"templates/tab-user.html",
-			"templates/tab-card.html"
+			"templates/tab-card.html",
+			"templates/mask.html"
 		]
 	},
 	"setting.html": {
@@ -306,6 +307,19 @@
 			"css/reset.css",
 			"image/back_icon.png",
 			"image/clear_input.png"
+		]
+	},
+	"templates/mask.html": {
+		"resources": [
+			"css/ydui.css",
+			"css/main.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/vue.min.js",
+			"css/reset.css",
+			"js/jQuery.v2.1.4.js",
+			"js/public.js",
+			"js/ydui.js"
 		]
 	}
 }

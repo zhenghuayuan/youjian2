@@ -32,7 +32,7 @@
 				<div class="from_wrap" style="padding: 10px 0 0 0; margin-bottom: 20px;">
 					<div class="cell clearfix">
 						<label style="width: 18%;">手机号:</label>
-						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" id="aa" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
+						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
 						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
 						<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
@@ -57,10 +57,6 @@
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
-				// 派发事件
-			window.getUserInfo = function(){
-				plus.webview.getWebviewById(PAGE.index.id).evalJS("EVENT.getUserInfo()")
-			}
 			var vm = new Vue({
 				el: "#wrap",
 				data: {
@@ -159,9 +155,7 @@
 							return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
 						}
 						
-						new Promise(function(reject, resolve){
-						 	return YDUI.dialog.confirm("", "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"", reject);
-						})
+						MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"")
 						.then(function(){
 							return app.request(API.recharge, {
 								uid: _this.userInfo.uid,
@@ -176,7 +170,7 @@
 								return;
 							}
 							// 更新
-							getUserInfo();
+							EVENT.getUserInfo();
 							YDUI.dialog.toast('兑换成功', 'success', 1500);
 						})
 						.catch(function(e){

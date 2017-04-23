@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../css/main.css">
 		<style type="text/css">
 			html,body {background: rgba(0,0,0,0.3);}
-			.content {position: absolute; top: 50%; margin-top: -140px; width: 90%; left: 5%;  background-color: #fff; border-radius: 4px;}
+			.content {position: absolute; top: 50%; margin-top: -120px; width: 90%; left: 5%;  background-color: #fff; border-radius: 4px;}
 			.bind_title {position: relative; height: 40px; line-height: 40px; font-size: 18px; text-align: center; border-bottom: 1px solid rgba(0,0,0,.2);}
 			.bind_title span {position: absolute; right: 0; top: 0; width: 40px; height: 40px; background: url(../image/back_icon.png) no-repeat center; background-size: 22px;} 
 			/*确定按钮*/
@@ -20,23 +20,26 @@
 			/*验证码灰色*/
 			.disabled_color {background-color: rgba(0,0,0,0.2);}
 			/*边框无*/
-			.border_none {border-color: rgba(0,0,0,0) !important;}
+			.from_wrap .cell .border_none {width: 50% !important; border-color: rgba(0,0,0,0) !important;}
 			/*清除input*/
 			.clear_input {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/clear_input.png) no-repeat center; background-size: 100% 100%;}
+			/**/
+			.from_wrap .cell .tips {font-size: 12px; margin-left: 30%; color: red;}
 		</style>
 	</head>
 	<body >
-		<div class="content">
+		<div class="content" v-cloak>
 			<div class="bind_title">绑定手机 <span class="mui-action-back"></span></div>
 			<div class="from_wrap">
-			    <div class="cell clearfix" v-if="oldUsernumber">
+			    <div class="cell clearfix" > <!--v-if="oldUsernumber"-->
 					<label>原手机号</label>
 					<input type="tel" class="border_none" disabled="disabled" :value="oldUsernumber" >
+					<span class="tips">（验证码会发到原手机上）</span>
 				</div>
 				<div class="cell clearfix">
 					<label>{{oldUsernumber?"新手机号":"手机号"}}</label>
-					<!--<input type="tel" placeholder="请输入新手机号" >-->
-					<input type="tel" ref="inputUserNumber" class="" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')">
+					<input v-if="oldUsernumber" type="tel" ref="inputUserNumber" class="" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入新手机号">
+					<input v-else type="tel" ref="inputUserNumber" class="" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入手机号">
 					<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
 				</div>
 				<div class="cell clearfix">
@@ -119,10 +122,9 @@
 				countdownStart: function(){
 					var _this = this;
 					if(_this.countdown>0) return;
-					_this.countdown = 5;
+					_this.countdown = 60;
 					_this.timer = setInterval(function(){
 						_this.countdown --
-						console.log(_this.timer)
 						if(_this.countdown <= 0){
 							_this.timer && clearInterval(_this.timer);
 							_this.countdown = 0;
