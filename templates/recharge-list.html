@@ -11,27 +11,30 @@
 		<link rel="stylesheet" href="../css/ydui.css">
 		<link rel="stylesheet" href="../css/main.css">
 		<style type="text/css">
+			html,body {background-color: #fff;}
+			#refreshContainer {margin-top: 72px;}
+			.mui-pull-top-pocket {top: 0 !important; }
+			.mui-scroll {position: relative; z-index: 2 !important; }
 			/**/
 			.mui-content {background: #fff;}
 			.table_title > div {overflow: hidden;}
-			.table_title > div strong {float: left; text-align: center;}
+			.table_title > div strong {float: left; text-align: center; font-size: 14px; height: 28px; line-height: 28px;}
 			.table_title > div strong:nth-child(1) {width: 22%; }
-			.table_title > div strong:nth-child(2) {width: 22%; }
+			.table_title > div strong:nth-child(2) {width: 18%; }
 			.table_title > div strong:nth-child(3) {width: 30%; }
-			.table_title > div strong:nth-child(4) {width: 26%; }
+			.table_title > div strong:nth-child(4) {width: 30%; }
 			/**/
 			.table_body  li {border-bottom: 1px solid #ccc; overflow: hidden;}
 			.table_body  li:nth-child(1) {border-top: 1px solid #ccc;}
 			.table_body  li span {float: left; height: 40px; border-left: 1px solid #ccc; line-height: 40px; text-align: center;}
 			.table_body  li span:nth-child(1) {width: 22%; border-left: 0;}
-			.table_body  li span:nth-child(2) {width: 20%;}
+			.table_body  li span:nth-child(2) {width: 18%;}
 			.table_body  li span:nth-child(3) {width: 30%;}
-			.table_body  li span:nth-child(4) {width: 28%; line-height: normal; vertical-align: middle; padding-top: 5px;}
+			.table_body  li span:nth-child(4) {width: 30%; line-height: normal; vertical-align: middle; padding-top: 5px;}
 			
 		</style>
 	</head>
 	<body >
-		<div id="wrap">
 			<header class="mui-bar mui-bar-nav">
 			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			    <h1 class="mui-title">兑换记录</h1>
@@ -45,64 +48,79 @@
 						<strong>日期</strong>
 					</div>
 				</div>
-				<ul class="table_body">
-					<li>
-						<span>500M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>500M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>500M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-					<li>
-						<span>50M流量</span>
-						<span>300</span>
-						<span>18959271550</span>
-						<span>2017-10-30<br>17:59</span>
-					</li>
-				</ul>
+				<div id="refreshContainer" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="table_body">
+							<li>
+								<span>500M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>500M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>500M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+							<li>
+								<span>50M流量</span>
+								<span>300</span>
+								<span>18959271550</span>
+								<span>2017-10-30<br>17:59</span>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
-		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/vue.min.js"></script>
@@ -110,22 +128,38 @@
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
-//		 var page = 1, pageSize = 10;
-//		$('#J_List').infiniteScroll({
-//          binder: '#J_List',
-//          pageSize: pageSize,
-//          initLoad: true,
-//          loadingHtml: '<img src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>',
-//          loadListFn: function () {
-//           	console.log("genduo")
-//          }
-//      });
-		$(document).scroll(function(){
-		    var maxScroll = $(".supper_leaveMsg_ul").height() - h;
-		    if($("body").scrollTop()+20 > maxScroll && leaveMsgRequset.bool) {
-		        leaveMsgRequset.bool = false;
-		        leaveMsgStart();
-		    }
+		var vm = new Vue({
+			el: "#wrap",
+			data: {},
+			created:function(){
+				mui.init({
+					pullRefresh: {
+						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height:50,//可选.默认50.触发上拉加载拖动距离
+							auto:false,//可选,默认false.自动上拉加载一次
+							contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: function(){
+							  	console.log("up")
+							  	setTimeout(function(){
+									if(mui('#refreshContainer').pullRefresh()){
+										mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+									}
+								}, 1000)
+							} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+			},
+			
 		})
+//		$(document).scroll(function(){
+//		    var maxScroll = $(".supper_leaveMsg_ul").height() - h;
+//		    if($("body").scrollTop()+20 > maxScroll && leaveMsgRequset.bool) {
+//		        leaveMsgRequset.bool = false;
+//		        leaveMsgStart();
+//		    }
+//		})
 	</script>
 </html>
