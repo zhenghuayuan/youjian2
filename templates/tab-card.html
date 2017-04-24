@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../css/main.css">
 		<style type="text/css">
 			/*.mui-bar-nav {border-bottom: 1px solid rgba(0,0,0,0.2) !important;}*/
-			
+			html,body {background: #fff;}
 			.mui-btn-warning {position: relative; width: 96%; padding: 10px 35px; margin: 0 auto 10px; border-color: #d8bcbc; text-align: left; background: #fff;}
 			.mui-btn-warning span {float: left; color: #c24b42;}
 			.mui-btn-warning em {float: right; color: #f4a56d;}
@@ -29,34 +29,35 @@
 	</head>
 	
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title">购买房卡</h1>
-		</header>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
-			<!---->
-			<!---->
-			<div class="mui-scroll">
-				<!--content-->
-					<div class="from_wrap" style="padding: 10px 0 0 0; margin-bottom: 20px;">
-						<div class="cell clearfix">
-							<label style="width: 20%;">用户ID:</label>
-							<input type="tel" ref="inputUserid" class="" style="width: 76%;" id="aa" v-model="userid" :value="userid" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
-							<em :class="{'clear_input': isFocus && String(userid).length>0}" @click="clearInput(userid,'inputUserid')" style="right: 8%;"></em>
-							<p class="tips" :style="{'visibility': isInClub?'hidden':''}">请在游戏大厅主界面左上角核对ID后填写</p>
+		<div class="wrap">	
+			<header class="mui-bar mui-bar-nav">
+				<h1 id="title" class="mui-title">购买房卡</h1>
+			</header>
+		<!---->
+		<!---->
+			<!--content-->
+			<div class="from_wrap" style="padding: 10px 0 0 0; position: fixed; top: 44px; width: 100%; z-index: 9;">
+				<div class="cell clearfix">
+					<label style="width: 20%;">用户ID:</label>
+					<input type="tel" ref="inputUserid" class="" style="width: 76%;" v-model="userid" :value="userid" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
+					<em :class="{'clear_input': isFocus && String(userid).length>0}" @click="clearInput(userid,'inputUserid')" style="right: 8%;"></em>
+					<p class="tips" :style="{'visibility': isInClub?'hidden':''}">请在游戏大厅主界面左上角核对ID后填写</p>
+				</div>
+				<div class="recharge_type" style="padding-top: 10px;">当前房卡:{{userInfo.roomcard}}</div>
+			</div>   
+			<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="margin-top: 100px;">
+				<div class="mui-scroll">
+						<div class="recharge_wrap">
+							<button v-for="(item,index) in items" @click="active = index" :class="{'active': index == active}" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>房卡×{{item.card}}</span><em>{{parseInt(item.price)}}元</em></button>
 						</div>
-					</div>   
-					<div class="recharge_type" style="padding-top: 10px;">当前房卡:{{userInfo.roomcard}}</div>
-					<div class="recharge_wrap">
-						<button v-for="(item,index) in items" v-if="index<3" @click="active = index" :class="{'active': index == active}" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><span>房卡×{{item.card}}</span><em>{{parseInt(item.price)}}元</em></button>
-					</div>
-					<div class="recharge_type" v-if="items.length>0">购买信息：{{items[active].card}}房卡={{parseInt(items[active].price)}}元</div>
-					<div class="mui-content-padded">
-						<button type="button" @click="payConfirm" class="mui-btn mui-btn-success mui-btn-block buy_btn">购买</button>
-					</div>
-				<!--content-->
+						<div class="recharge_type" v-if="items.length>0">购买信息：{{items[active].card}}房卡={{parseInt(items[active].price)}}元</div>
+						<div class="mui-content-padded">
+							<button type="button" @click="payConfirm" class="mui-btn mui-btn-success mui-btn-block buy_btn">购买</button>
+						</div>
+					<!--content-->
+				</div>
 			</div>
 		</div>
-
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/vue.min.js"></script>
 		<script src="../js/jQuery.v2.1.4.js"></script>
@@ -66,6 +67,7 @@
 			// 监听事件
 			window.addEventListener("getUserInfo", function(data){
 				vm.userInfo = event.detail;
+
 				setTimeout(function(){
 					if(mui('#refreshContainer').pullRefresh()){
 						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
@@ -83,15 +85,16 @@
 			}
 		
 			var vm = new Vue({
-				el: ".mui-content",
+				el: ".wrap",
 				data: {
 					currentWebview: null,
-					userid: "", //用户输入的ID v-model
+					userid: app.getState(LOCAL.lastUserid), //用户输入的ID v-model
 					active: 0,
 					items: [],
 					userInfo: app.getState(LOCAL.keys),
 					isFocus: false,
 					isInClub: true, // 是否友间会员
+					needNickname: "", // 需充值用户ID
 				},
 				created: function(){
 					var _this = this;
@@ -109,7 +112,10 @@
 						}
 					});
 					_this.getCardList();
-					_this.userid = "uid" in _this.userInfo?_this.userInfo.uid:"";
+//					_this.userid = "uid" in _this.userInfo?_this.userInfo.uid:"";
+//					app.setState(LOCAL.lastUserid, 29999999)
+					_this.userid = typeof _this.userid != "object"?_this.userid:("uid" in _this.userInfo?_this.userInfo.uid:"");
+					_this.needNickname =  _this.userid  == _this.userInfo.uid?_this.userInfo.nickname:"";
 					mui.plusReady(function() {
 						_this.currentWebview = plus.webview.currentWebview();
 						// 首次本地数据填充
@@ -129,8 +135,10 @@
 							.then(function(data){
 								if(data.code){
 									_this.isInClub = true;
+									_this.needNickname = data.nickname;
 								}else{
 									_this.isInClub = false;
+									_this.needNickname = "";
 								}
 							})
 						}else{
@@ -174,7 +182,7 @@
 							return YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
 						};
 						
-						MASKCONFIRM("tab-card.html","是否为<span style=\\'color: red\\'>"+_this.userid+"（昵称）</span>充值房卡×"+_this.items[_this.active].card+"？")
+						MASKCONFIRM("tab-card.html","是否为<span style=\\'color: red\\'>"+_this.userid+"（"+_this.needNickname+"）</span>充值房卡×"+_this.items[_this.active].card+"？")
 						.then(function(){
 							return app.request(API.wftPay, {
 								userid: _this.userid,

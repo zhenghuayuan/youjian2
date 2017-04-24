@@ -19,18 +19,18 @@
 
 /*input*/
 /*.mui-input-row input {height:40px; border: 1px solid rgba(0,0,0,0.2) !important; margin: 10px 0 0 0;}*/
-.from_wrap {padding: 20px 0; font-family: "微软雅黑"; color: #2a2a2a;}
+.from_wrap {padding: 20px 0; font-family: "微软雅黑"; color: #2a2a2a; background-color: #fff;}
 .from_wrap .cell {position: relative; font-size: 14px; padding: 0 8px 0 0px; margin-bottom: 10px;}
 .from_wrap .cell > * {float: left;}
 .from_wrap .cell label {float: left; width: 28%; height: 40px; line-height: 40px; font-size: 16px; text-align: center; }
 .from_wrap .cell input {float: left; width: 72%; height: 40px; font-size: 16px; text-indent: 8px;}
-.get_verify {width: 30%; height: 36px; line-height: 36px; font-size: 12px; margin-left: 2%; margin-top: 2px; text-align: center; background-color: #FFB400; color: #fff; border-radius: 4px;}
+.get_verify { height: 36px; line-height: 36px; font-size: 12px; margin-left: 2%; margin-top: 2px; text-align: center; background-color: #FFB400; color: #fff; border-radius: 4px;}
 .clear_input {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/clear_input.png) no-repeat center; background-size: 100% 100%;}
 .open_address_list {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/address_list_icon.png) no-repeat center; background-size: 100% 100%;}
 
 /*列表*/
 .recharge_type {width: 100%; padding: 30px 10px 10px; background-color: #fff; font-size: 16px; color: #2a2a2a;}
-.recharge_wrap {background-color: #fff; padding: 0 12px;}
+.recharge_wrap {background-color: #fff; padding: 12px 12px;}
 .recharge_wrap .mui-btn-outlined {padding: 12px 25px; font-size: 18px;}
 .recharge_wrap .mui-btn-outlined span {float: left;}
 .recharge_wrap .mui-btn-outlined em {float: right;}

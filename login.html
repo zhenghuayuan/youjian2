@@ -33,6 +33,7 @@
 					var _this = this;
 					mui.init();
 					mui.plusReady(function(){
+						
 						_this.userInfo = {};
 						// 模拟登陆 待删除
 						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
@@ -52,10 +53,18 @@
 				methods: {
 					// 获取登录授权对象 =>微信登入 => 获取微信用户信息 => 获取服务器用户信息 => 存入localstorage => 进入主页
 					login: function(){
+						var nowNetwork = plus.networkinfo.getCurrentType();
+						var noNetwork = plus.networkinfo.CONNECTION_NONE;
+						if(nowNetwork == noNetwork) {
+							YDUI.dialog.toast("未连接网络");
+							return;
+						}
 						var _this = this;
 						// 模拟登陆 待删除
 						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
 						_this.getServerInfo()
+						
+						
 						return;
 						app.getServices("weixin")
 						.then(function(authService){

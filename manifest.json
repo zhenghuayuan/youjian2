@@ -177,25 +177,25 @@
 					"iphone": {
 						"default": "", /*必选，320x480，iPhone3启动图片*/
 						"retina35": "",/*必选，640x960，3.5英寸设备(iPhone4)启动图片*/
-						"retina40": ""
+						"retina40": "image/entry.png","retina55":"image/entry.png","retina47":"image/entry.png","retina55l":"image/entry.png"
 					},
 					"ipad": {
-						"portrait": "", /*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
-						"portrait-retina": "",/*可选，1536x2008，需支持iPad时必选，iPad高分屏竖屏图片*/
-						"landscape": "", /*可选，1024x748，需支持iPad时必选，iPad横屏启动图片*/
-						"landscape-retina": "", /*可选 ，2048x1496，需支持iPad时必选，iPad高分屏横屏启动图片*/
-						"portrait7": "", /*可选，768x1024，需支持iPad iOS7时必选，iPad竖屏启动图片*/
-						"portrait-retina7": "",/*可选，1536x2048，需支持iPad iOS7时必选，iPad高分屏竖屏图片*/
-						"landscape7": "", /*可选，1024x768，需支持iPad iOS7时必选，iPad横屏启动图片*/
-						"landscape-retina7": ""
+						"portrait": "image/entry.png", /*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
+						"portrait-retina": "image/entry.png",/*可选，1536x2008，需支持iPad时必选，iPad高分屏竖屏图片*/
+						"landscape": "image/entry.png", /*可选，1024x748，需支持iPad时必选，iPad横屏启动图片*/
+						"landscape-retina": "image/entry.png", /*可选 ，2048x1496，需支持iPad时必选，iPad高分屏横屏启动图片*/
+						"portrait7": "image/entry.png", /*可选，768x1024，需支持iPad iOS7时必选，iPad竖屏启动图片*/
+						"portrait-retina7": "image/entry.png",/*可选，1536x2048，需支持iPad iOS7时必选，iPad高分屏竖屏图片*/
+						"landscape7": "image/entry.png", /*可选，1024x768，需支持iPad iOS7时必选，iPad横屏启动图片*/
+						"landscape-retina7": "image/entry.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*必选，240x282，普通屏启动图片*/
 					"ldpi": "", /*必选，320x442，大屏启动图片*/
-					"hdpi": "", /*必选，480x762，高分屏启动图片*/
-					"xhdpi": "", /*必选，720x1242，720P高分屏启动图片*/
-					"xxhdpi": ""
+					"hdpi": "image/entry.png", /*必选，480x762，高分屏启动图片*/
+					"xhdpi": "image/entry.png", /*必选，720x1242，720P高分屏启动图片*/
+					"xxhdpi": "image/entry.png"
 				}
 			}
 		}
@@ -1284,7 +1284,8 @@
 					"js/jQuery.v2.1.4.js"
 				],
 				"refer": [
-					"templates/bind-phone.html"
+					"templates/bind-phone.html",
+					"templates/recharge-list.html"
 				],
 				"priority": 0
 			},
@@ -1408,6 +1409,22 @@
 					"js/jQuery.v2.1.4.js",
 					"js/public.js",
 					"js/ydui.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"templates/recharge-list.html": {
+				"resources": [
+					"css/ydui.css",
+					"js/jQuery.v2.1.4.js",
+					"css/main.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/public.js",
+					"css/mui.min.css",
+					"js/vue.min.js",
+					"js/ydui.js",
+					"css/reset.css"
 				],
 				"refer": [],
 				"priority": 0

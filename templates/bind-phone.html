@@ -24,7 +24,7 @@
 			/*清除input*/
 			.clear_input {position: absolute; right: 5%; top: 50%; margin-top: -11px; width: 22px; height: 22px; background: url(../image/clear_input.png) no-repeat center; background-size: 100% 100%;}
 			/**/
-			.from_wrap .cell .tips {font-size: 12px; margin-left: 30%; color: red;}
+			.from_wrap .cell .tips {font-size: 12px; color: red;}
 		</style>
 	</head>
 	<body >
@@ -34,7 +34,7 @@
 			    <div class="cell clearfix" > <!--v-if="oldUsernumber"-->
 					<label>原手机号</label>
 					<input type="tel" class="border_none" disabled="disabled" :value="oldUsernumber" >
-					<span class="tips">（验证码会发到原手机上）</span>
+					<span class="tips" style="margin-left: 30%;">（验证码会发到原手机上）</span>
 				</div>
 				<div class="cell clearfix">
 					<label>{{oldUsernumber?"新手机号":"手机号"}}</label>
@@ -44,8 +44,9 @@
 				</div>
 				<div class="cell clearfix">
 					<label>验证码</label>
-					<input type="tel" v-model="verifynumber" style="width: 40%;" placeholder="请输入验证码">
-					<span @click="getVerify" :class="{'disabled_color': countdown != 0}" class="get_verify">{{countdown == 0 ?"获取验证码":countdown+" S"}}</span>  <!--disabled_color-->
+					<input type="tel" v-model="verifynumber" style="width: 38%;" placeholder="请输入验证码">
+					<span @click="getVerify" :class="{'disabled_color': countdown != 0}" style="width: 32%;" class="get_verify">{{countdown == 0 ?(isFirstSend?'获取验证码':'重新获取验证码'):countdown+" S"}}</span>  <!--disabled_color-->
+					<span class="tips" @click="callService" style="float: right; text-decoration: underline;">无法获取验证码？</span>
 				</div>
 				<button @click="comfirmBind" type="button" class="mui-btn mui-btn-warning mui-btn-block">确定</button>
 			</div>
@@ -68,7 +69,7 @@
 				countdown: 0, // 倒计时
 				isFocus: false, // 是否聚焦状态
 				userInfo: app.getState(LOCAL.keys), // 用户信息
-				timer: 2, // 计时器
+				isFirstSend: true,
 			},
 			created: function(){
 				var _this = this;
@@ -85,11 +86,6 @@
 				verifyIsTrue: function(){
 					return /^[0-9]{6}$/.test(this.verifynumber)
 				}
-			},
-			watch: {
-//				verifynumber: function(news){
-//					console.log(this.verifyIsTrue)
-//				}
 			},
 			methods: {
 				inputFocus: function(isFocusBool){
@@ -118,15 +114,17 @@
 						return YDUI.dialog.toast("请输入正确的手机号码", "none", 1000);
 					};
 					_this.countdownStart();
+					_this.isFirstSend = false;
+					//ajax..
 				},
 				countdownStart: function(){
 					var _this = this;
 					if(_this.countdown>0) return;
-					_this.countdown = 60;
-					_this.timer = setInterval(function(){
+					_this.countdown = 5;
+					var timer = setInterval(function(){
 						_this.countdown --
 						if(_this.countdown <= 0){
-							_this.timer && clearInterval(_this.timer);
+							timer && clearInterval(timer);
 							_this.countdown = 0;
 						}
 					}, 1000)
@@ -140,6 +138,9 @@
 						return YDUI.dialog.toast("请输入正确的验证码", "none", 1000);
 					}
 					YDUI.dialog.toast("发送成功", "none", 1000);
+				},
+				callService: function(){
+					YDUI.dialog.alert("请联系客服：321654987");
 				}
 				
 			}

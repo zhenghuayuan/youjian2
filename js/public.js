@@ -25,7 +25,7 @@ var PAGE = {
 		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "0", bottom: "56px"}},
 		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "0", bottom: "56px"}},
 	],
-	"recharge": {
+	recharge: {
 		url: "/templates/recharge.html", 
 		id: "recharge.html", 
 		show: {autoShow: true},
@@ -49,7 +49,7 @@ var PAGE = {
 			popGesture: "none",
 		},
 	},
-	"mask": {
+	mask: {
 		url: "/templates/mask.html", 
 		id: "mask.html", 
 		show: {
@@ -60,6 +60,18 @@ var PAGE = {
 			popGesture: "hide",
 		},
 		
+	},
+	"recharge-list": {
+		url: "/templates/recharge-list.html", 
+		id: "recharge-liste.html", 
+		show: {
+			autoShow: true,
+			aniShow: "",
+//			aniShow:"zoom-fade-out",
+		},
+		styles: {
+//			popGesture: "none",
+		},
 	}
 	
 	
@@ -67,9 +79,10 @@ var PAGE = {
 /**
  * 本地存储信息
  **/
-var LOCAL = {
-	keys: "USERINFO", // localstorage key
-	value: "",
+var LOCAL = { 
+	keys: "USERINFO", // userInfo key
+	lastUserid: "LAST_USERID", // 上次的充值用户ID
+	lastNumber: "LAST_NUMBER", // 上次的兑换手机号
 }
 /**
  * API
@@ -94,16 +107,21 @@ var API = {
  * 自定义事件
  **/
 var EVENT = function(){
+	function fire(allId, ev, data){
+		for(var i=0; i<allId.length; i++){
+			var webview = plus.webview.getWebviewById(allId[i]);
+			if(webview){
+				mui.fire(webview, ev, data);
+			}
+		}
+	}
 	var getUserInfo = function(){
 		//	var unionId = app.getState(LOCAL.keys).sv.unionId;
 		app.request(API.login,  {unionId: app.getState(LOCAL.keys).unionid}) //app.getState(LOCAL.keys)
 		.then(function(data){
 			console.log("用户信息"+JSON.stringify(data))
 			// 传递消息给各个页面
-			for(var i=0; i<3; i++){
-				var item = plus.webview.getWebviewById(PAGE.sub[i].id);
-				item && mui.fire(item,"getUserInfo", data);
-			}
+			fire([PAGE.sub[0].id, PAGE.sub[1].id, PAGE.sub[2].id, PAGE.recharge.id], "getUserInfo", data)
 			
 		})
 		.catch(function(e){

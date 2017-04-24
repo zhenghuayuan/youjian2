@@ -35,13 +35,13 @@
 			    		<div><span>礼券: </span>{{userInfo.voucher}}</div>
 			    	</div>
 			    </div>
-		    	<!--<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
-					<li class="mui-table-view-cell">
+		    	<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
+					<li @click="mui.openWindow(PAGE['recharge-list'])" class="mui-table-view-cell">
 						<a href="#account" class="mui-navigate-right">兑换记录</a>
 					</li>
-				</ul>-->
+				</ul>
 			    <ul class="mui-table-view mui-table-view-chevron" style=" margin-top: 30px;">
-					<li class="mui-table-view-cell auth_logout" @click="yudiConfirm">退出登录</li>
+					<li class="mui-table-view-cell auth_logout" @click="logoutConfirm">退出登录</li>
 				</ul>
 			</div>
 		<!---->
@@ -96,9 +96,9 @@
 				});
 			},
 			methods: {
-				yudiConfirm: function(){
+				logoutConfirm: function(){
 					var _this = this;
-					MASKCONFIRM('tab-user.html', '确定退出登陆吗？')
+					MASKCONFIRM('tab-user.html', "是否注销<span style=\\'color: red\\'>"+_this.userInfo.nickname+"（"+ _this.userInfo.uid+"）</span>"+"的登录？")
 					.then(function(){
 						return app.getServices("weixin")
 					})

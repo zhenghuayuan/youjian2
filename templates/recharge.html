@@ -34,14 +34,14 @@
 						<label style="width: 18%;">手机号:</label>
 						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
 						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
-						<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>
+						<!--<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>-->
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
 					</div>
 				</div>
 				<div class="recharge_type" style="padding-top: 10px;">充{{title.slice(2,4)}}</div>
 				<div class="recharge_wrap">
-					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
-					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 				</div>
 				<div class="recharge_type">更多充值</div>
 				<div class="recharge_other clearfix">
@@ -57,130 +57,175 @@
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
-			var vm = new Vue({
-				el: "#wrap",
-				data: {
-					usernumber: "", //用户输入的ID v-model
-					userInfo: app.getState(LOCAL.keys),
-					isFocus: false,
-					curProductType: 1, // type 1 话费 type 2 流量
-					productPhone: [], // 话费
-					productFlow: [], // 流量
+		// 监听事件
+		window.addEventListener("getUserInfo", function(data){
+			vm.userInfo = event.detail;
+//			setTimeout(function(){
+//				if(mui('#refreshContainer').pullRefresh()){
+//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+//				}
+//			}, 500)
+		})	
+		var vm = new Vue({
+			el: "#wrap",
+			data: {
+				usernumber: app.getState(LOCAL.lastNumber), //用户输入的ID v-model
+				userInfo: app.getState(LOCAL.keys),
+				voucher: 0, //用户礼券
+				isFocus: false,
+				curProductType: 1, // type 1 话费 type 2 流量
+				productPhone: [], // 话费
+				productFlow: [], // 流量
+			},
+			created: function(){
+				var _this = this;
+				mui.init();
+				_this.voucher = "voucher" in _this.userInfo?_this.userInfo.voucher:0;
+//				_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
+//				app.setState(LOCAL.lastNumber, 18959288888)
+				_this.usernumber = typeof _this.usernumber != "object"?_this.usernumber:("mobile" in _this.userInfo?_this.userInfo.mobile:"");
+				
+				console.log(_this.voucher)
+				_this.getProductList();
+				mui.plusReady(function(){
+					_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
+				})
+			},
+			computed: {
+				title: function(){
+					return this.curProductType == 1?"兑换话费":"兑换流量";
 				},
-				created: function(){
+				numberIsTrue: function(){
+					return /^[1][356789][0-9]{9}$/.test(this.usernumber);
+				},
+			},
+			methods: {
+				inputFocus: function(isFocusBool){
+					// isFocusBool String
 					var _this = this;
-					mui.init();
-					_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
-					_this.getProductList();
-					mui.plusReady(function(){
-						_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
+					setTimeout(function(){
+						_this[isFocusBool] = true;
+					}, 16)
+				},
+				inputBlur: function(isFocusBool){
+					// isFocusBool String
+					var _this = this;
+					setTimeout(function(){
+						_this[isFocusBool] = false;
 					})
 				},
-				computed: {
-					title: function(){
-						return this.curProductType == 1?"兑换话费":"兑换流量";
-					},
-					numberIsTrue: function(){
-						return /^[1][356789][0-9]{9}$/.test(this.usernumber);
-					}
+				clearInput: function(data, refName){
+					// data v-data
+					// refName String
+					this[data] = '';
+					this.$refs[refName].focus();
 				},
-				methods: {
-					inputFocus: function(isFocusBool){
-						// isFocusBool String
-						var _this = this;
-						setTimeout(function(){
-							_this[isFocusBool] = true;
-						}, 16)
-					},
-					inputBlur: function(isFocusBool){
-						// isFocusBool String
-						var _this = this;
-						setTimeout(function(){
-							_this[isFocusBool] = false;
-						})
-					},
-					clearInput: function(data, refName){
-						// data v-data
-						// refName String
-						this[data] = '';
-						this.$refs[refName].focus();
-					},
-					getProductList: function(){
-						var _this = this;
-						app.request(API.productList, {})
-						.then(function(data){
+				getProductList: function(){
+					var _this = this;
+					app.request(API.productList, {})
+					.then(function(data){
 //							console.log("兑换列表："+ JSON.stringify(data));
 //							_this.items = data;
-							_this.productPhone = [];
-							_this.productFlow = [];
-							data.forEach(function(item, index){
-								if(item.type == "1"){
-									_this.productPhone.push(item);
-								}else{
-									_this.productFlow.push(item);
-								}
-							})
-						})
-							
-					},
-					openAddressList: function(){
-						var _this = this;
-						new Promise(function(reject, resolve){
-							plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, reject, resolve);
-						})
-						.then(function(addressbook){
-							return new Promise(function(reject, resolve){
-								addressbook.find(null, reject, resolve)
-							})
-						})
-						.then(function(res){
-							var usernumber = res[0]["phoneNumbers"][0].value;
-//							console.log(usernumber)
-							_this.usernumber = usernumber;
-						})
-						.catch(function(e){
-							alert("获取通讯录错误："+e)
-						})
-					},
-					getIsClub: function(){
-						
-					},
-					confirmRecharge: function(item){
-						// YDUI.dialog.toast('你点了确定', 'none', 1000);
-						// YDUI.dialog.toast('鼠标不错哟！', 'success', 1000);
-						// YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
-						// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
-						var _this = this;
-						if(!_this.numberIsTrue){
-							return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
-						}
-						
-						MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"")
-						.then(function(){
-							return app.request(API.recharge, {
-								uid: _this.userInfo.uid,
-								unionid: _this.userInfo.unionid,
-								product_id: item.id, 
-								mobile: _this.usernumber,
-							}, "post");
-						})
-						.then(function(data){
-							if(data && data.code == 0){
-								YDUI.dialog.toast("礼券不足或不是友间会员", 'none', 1000);
-								return;
+						_this.productPhone = [];
+						_this.productFlow = [];
+						data.forEach(function(item, index){
+							if(item.type == "1"){
+								_this.productPhone.push(item);
+							}else{
+								_this.productFlow.push(item);
 							}
-							// 更新
-							EVENT.getUserInfo();
-							YDUI.dialog.toast('兑换成功', 'success', 1500);
 						})
-						.catch(function(e){
-							alert(e)
+					})
+				},
+				openAddressList: function(){
+					var _this = this;
+					
+					new Promise(function(reject, resolve){
+						plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, reject, resolve);
+					})
+					.then(function(addressbook){
+						return new Promise(function(reject, resolve){
+							addressbook.find(null, reject, resolve)
 						})
-					},
+					})
+					.then(function(res){
+						var usernumber = res[0]["phoneNumbers"][0].value;
+//							console.log(usernumber)
+						_this.usernumber = usernumber;
+					})
+					.catch(function(e){
+						alert("获取通讯录错误："+e)
+					})
+				},
+				getIsClub: function(){
 					
+				},
+				confirmRecharge: function(item){
+					// YDUI.dialog.toast('你点了确定', 'none', 1000);
+					// YDUI.dialog.toast('鼠标不错哟！', 'success', 1000);
+					// YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
+					// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
+					var _this = this;
+					if(_this.voucher<Number(item.redeem_point)){
+						return;
+					}
+					if(!_this.numberIsTrue){
+						return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
+					}
 					
-				}
-			})
+					MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"")
+					.then(function(){
+						return app.request(API.recharge, {
+							uid: _this.userInfo.uid,
+							unionid: _this.userInfo.unionid,
+							product_id: item.id, 
+							mobile: _this.usernumber,
+						}, "post");
+//						return new Promise(function(resolve, reject){
+//							mui.post(API.recharge, {
+//								uid: _this.userInfo.uid,
+//								unionid: _this.userInfo.unionid,
+//								product_id: item.id, 
+//								mobile: _this.usernumber,
+//							}, resolve, "json")
+//						});
+//						mui.ajax(API.recharge,{
+//							data: {
+//								uid: _this.userInfo.uid,
+//								unionid: _this.userInfo.unionid,
+//								product_id: item.id, 
+//								mobile: _this.usernumber,
+//							},
+//							dataType: 'json',//服务器返回json格式数据
+//							type:'post',//HTTP请求类型
+//							success:function(data){
+//								//获得服务器响应
+//								alert(data)
+//							},
+//							error: function(e){
+//								alert("e:"+e)
+//							}
+//						});
+						
+					})
+					.then(function(data){
+						alert(JSON.stringify(data))
+						if(data && data.code == 0){
+							YDUI.dialog.toast("礼券不足或不是友间会员", 'none', 1000);
+							return;
+						}
+						// 更新
+						EVENT.getUserInfo();
+						YDUI.dialog.toast('兑换成功', 'success', 1500);
+					})
+					.catch(function(e){
+						alert("e:"+e)
+					})
+				},
+				
+				
+			}
+		})
 
 	</script>
 </html>

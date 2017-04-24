@@ -208,7 +208,8 @@
 			"js/jQuery.v2.1.4.js"
 		],
 		"refer": [
-			"templates/bind-phone.html"
+			"templates/bind-phone.html",
+			"templates/recharge-list.html"
 		]
 	},
 	"templates/tab-card.html": {
@@ -320,6 +321,20 @@
 			"js/jQuery.v2.1.4.js",
 			"js/public.js",
 			"js/ydui.js"
+		]
+	},
+	"templates/recharge-list.html": {
+		"resources": [
+			"css/ydui.css",
+			"js/jQuery.v2.1.4.js",
+			"css/main.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/public.js",
+			"css/mui.min.css",
+			"js/vue.min.js",
+			"js/ydui.js",
+			"css/reset.css"
 		]
 	}
 }
