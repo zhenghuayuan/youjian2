@@ -102,6 +102,7 @@ var API = {
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
 	isInClub: "http://192.168.1.55/dcxcx/index.php/Login/playerExist",
+	list: "http://192.168.1.55/dcxcx/index.php/Login/playerExist?uid=1"
 };
 /**
  * 自定义事件
