@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="../css/reset.css">
 		<link rel="stylesheet" href="../css/main.css">
 		<style type="text/css">
-			.mui-title {height: 100%;background: url("../image/home_title.png") no-repeat center;background-size: 120px;}
+			
 			.userother {background: #fff; color: #2a2a2a;}
 			.userother div {color: #2a2a2a;}
 			.userother div span {color: #2a2a2a; font-family: "微软雅黑";}
@@ -20,17 +20,13 @@
 			.pic_list div {width: 93%;height: 110px; height: 30vw; margin: 0 auto 12px;}
 			.mui-slider-group {height: 155px; height: 49vw;}
 			
-			.mui-bar-nav~.mui-content .mui-pull-top-pocket {top: 100px !important;}
+			/*.mui-bar-nav~.mui-content .mui-pull-top-pocket {top: 100px !important;}*/
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 id="title" class="mui-title"></h1>
-		</header>
 		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-
 				<div class="mui-content">
 					<div class="userother clearfix">
 						<div><span>房卡: </span>{{userInfo.roomcard}}</div>
@@ -73,7 +69,7 @@
 				if(mui('#refreshContainer').pullRefresh()){
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
 				}
-			}, 500)
+			}, 100)
 		})
 
 		var vm = new Vue({

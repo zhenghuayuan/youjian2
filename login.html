@@ -90,11 +90,8 @@
 							mui.extend(true, _this.userInfo, data);
 							app.setState(LOCAL.keys, _this.userInfo);
 							console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
-//							index = mui.preload(PAGE.index);
-//							var index = mui.openWindow(PAGE.index)
 							var main = mui.preload(PAGE.index)
 							PAGE.sub.forEach(function(item,index){
-	//							var sub = mui.preload(item)
 								var sub = mui.preload(item);
 								if(index == 0){
 									sub.show();

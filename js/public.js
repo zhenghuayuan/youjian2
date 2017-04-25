@@ -21,9 +21,9 @@ var PAGE = {
 		extras: {title: "我的首页"},
 	},
 	sub: [ 
-		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "0", bottom: "57px"}},
-		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "0",bottom:"57px"}},
-		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "0",bottom:"57px"}},
+		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "44px", bottom: "57px"}},
+		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "44px",bottom:"57px"}},
+		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "44px",bottom:"57px"}},
 	],
 	recharge: {
 		url: "/templates/recharge.html", 
