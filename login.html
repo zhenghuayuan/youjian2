@@ -33,7 +33,6 @@
 					var _this = this;
 					mui.init();
 					mui.plusReady(function(){
-						
 						_this.userInfo = {};
 						// 模拟登陆 待删除
 						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
@@ -42,9 +41,9 @@
 							return;
 						}
 						// 设置沉浸式
-						plus.navigator.setFullscreen(true);
+//						plus.navigator.setFullscreen(true);
 						// 设置系统状态栏背景颜色
-						plus.navigator.setStatusBarBackground("#973932");
+//						plus.navigator.setStatusBarBackground("#973932");
 						// 关闭 hubilder loading
 						plus.navigator.closeSplashscreen();
 						
@@ -91,26 +90,33 @@
 							mui.extend(true, _this.userInfo, data);
 							app.setState(LOCAL.keys, _this.userInfo);
 							console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
-							index = mui.preload(PAGE.index);
+//							index = mui.preload(PAGE.index);
+//							var index = mui.openWindow(PAGE.index)
+							var main = mui.preload(PAGE.index)
+							PAGE.sub.forEach(function(item,index){
+	//							var sub = mui.preload(item)
+								var sub = mui.preload(item);
+								if(index == 0){
+									sub.show();
+								}else{
+									sub.hide();
+								}
+								main.append(sub)
+							});
+							mui.preload(PAGE.mask);
+							main.addEventListener("loaded", function(){
+								main.show();
+							}, false)
 							// 预加载子页面 及 展示逻辑
-							index.addEventListener("loaded", function(){
-								PAGE.sub.forEach(function(item){
-									var sub = mui.preload(item)
-									index.append(sub)
-								});
+							
 								// 预加载蒙版
-								mui.preload(PAGE.mask);
-								var firstSub = plus.webview.getWebviewById(PAGE.sub[0].id);
-								// 主页 及 第一个子页面加载好 展示
-								firstSub.addEventListener("loaded", function(){
-									// 初始化数据
-									firstSub.show()
-									index.show();
-									plus.navigator.setFullscreen(false);
-									plus.navigator.setStatusBarBackground("#fff");
-									plus.navigator.closeSplashscreen();
-								})
-							}, false);
+							
+							// 主页 及 第一个子页面加载好 展示
+								// 初始化数据
+							
+//							plus.navigator.setFullscreen(false);
+//							plus.navigator.setStatusBarBackground("#fff");
+							plus.navigator.closeSplashscreen();
 						})
 						.catch(function(e){
 							mui.alert(e)

@@ -172,8 +172,7 @@
 					if(!_this.numberIsTrue){
 						return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
 					}
-					
-					MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"")
+					MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")
 					.then(function(){
 						return app.request(API.recharge, {
 							uid: _this.userInfo.uid,
@@ -181,37 +180,14 @@
 							product_id: item.id, 
 							mobile: _this.usernumber,
 						}, "post");
-//						return new Promise(function(resolve, reject){
-//							mui.post(API.recharge, {
-//								uid: _this.userInfo.uid,
-//								unionid: _this.userInfo.unionid,
-//								product_id: item.id, 
-//								mobile: _this.usernumber,
-//							}, resolve, "json")
-//						});
-//						mui.ajax(API.recharge,{
-//							data: {
-//								uid: _this.userInfo.uid,
-//								unionid: _this.userInfo.unionid,
-//								product_id: item.id, 
-//								mobile: _this.usernumber,
-//							},
-//							dataType: 'json',//服务器返回json格式数据
-//							type:'post',//HTTP请求类型
-//							success:function(data){
-//								//获得服务器响应
-//								alert(data)
-//							},
-//							error: function(e){
-//								alert("e:"+e)
-//							}
-//						});
-						
 					})
 					.then(function(data){
-						alert(JSON.stringify(data))
-						if(data && data.code == 0){
-							YDUI.dialog.toast("礼券不足或不是友间会员", 'none', 1000);
+						if(!data){
+							YDUI.dialog.toast(data, 'none', 1000);
+							return;
+						}
+						if(data.code != 1){
+							YDUI.dialog.toast(data.message, 'error', 2000);
 							return;
 						}
 						// 更新

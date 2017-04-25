@@ -1,340 +1,340 @@
 {
-	"main.html": {
-		"refer": [
-			"setting.html"
-		],
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		]
-	},
-	"login.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"images/sinaweibo.png",
-			"css/mui.min.css",
-			"css/style.css",
-			"images/weixin.png",
-			"images/qq.png",
-			"js/mui.enterfocus.js",
-			"img/login-bg.jpg",
-			"img/weixin.png",
-			"css/main.css",
-			"js/store.js",
-			"js/public.js",
-			"js/vue.min.js",
-			"image/wx-login.png",
-			"image/login-bg.jpg",
-			"css/ydui.css",
-			"js/jQuery.v2.1.4.js",
-			"js/ydui.js"
-		],
-		"refer": [
-			"main.html",
-			"reg.html",
-			"templates/index.html",
-			"templates/tab-home.html",
-			"templates/tab-user.html",
-			"templates/tab-card.html",
-			"templates/mask.html"
-		]
-	},
-	"setting.html": {
-		"resources": [
-			"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
-			"fonts/mui.ttf",
-			"libs/easymob-webim-sdk/json2.js",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"js/mui.locker.js",
-			"js/feedback.js",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-			"js/mui.view.js"
-		]
-	},
-	"reg.html": {
-		"resources": [
-			"fonts/mui.ttf"
-		]
-	},
-	"templates/index.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"templates/tab-webview-subpage-about.html",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/iconfont.woff",
-			"css/style.css",
-			"fonts/card/iconfont.woff",
-			"fonts/redeem/iconfont.woff",
-			"templates/tab-webview-subpage-home.html",
-			"js/jQuery.v2.1.4.js",
-			"image/wo_icon.png",
-			"image/card_icon.png",
-			"image/home_icon.png",
-			"css/main.css",
-			"js/store.js",
-			"js/vue.min.js",
-			"image/home_icon_active.png",
-			"image/wo_icon_active.png",
-			"image/card_icon_active.png",
-			"js/public.js",
-			"templates/tab-home.html"
-		],
-		"refer": [
-			"templates/tab-webview-subpage-about.html",
-			"templates/tab-webview-subpage-contact.html",
-			"templates/tab-webview-subpage-chat.html",
-			"templates/tab-webview-subpage-home.html",
-			"templates/tab-webview-subpage-card.html",
-			"templates/tab-webview-subpage-redeem.html",
-			"templates/tab-user.html",
-			"templates/tab-card.html",
-			"templates/tab-home.html"
-		]
-	},
-	"templates/tab-webview-subpage-about.html": {
-		"resources": [
-			"img/card.jpg",
-			"img/recommend1.png",
-			"img/juan.jpg",
-			"img/phone.png",
-			"img/recommend2.png",
-			"img/head.jpg",
-			"img/reminder.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/app.js"
-		]
-	},
-	"templates/tab-webview-subpage-chat.html": {
-		"resources": [
-			"img/shopList-l.png",
-			"img/shopList-r.png",
-			"css/style.css",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		]
-	},
-	"templates/tab-webview-subpage-contact.html": {
-		"resources": [
-			"img/juan-icon.png",
-			"img/lipin.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css"
-		],
-		"refer": [
-			"templates/tab-webview-subpage-exchange.html"
-		]
-	},
-	"templates/tab-webview-subpage-exchange.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"fonts/mui.ttf",
-			"js/app.js"
-		]
-	},
-	"templates/tab-webview-subpage-card.html": {
-		"resources": [
-			"img/juan-icon.png",
-			"img/lipin.png",
-			"img/shopList-l.png",
-			"img/shopList-r.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/app.js",
-			"js/beecloud.js"
-		]
-	},
-	"templates/tab-webview-subpage-home.html": {
-		"resources": [
-			"img/recommend1.png",
-			"img/card.jpg",
-			"img/juan.jpg",
-			"img/phone.png",
-			"img/recommend2.png",
-			"img/reminder.png",
-			"img/head.jpg",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"templates/tab-webview-subpage-card.html",
-			"templates/tab-webview-subpage-exchange.html"
-		],
-		"refer": [
-			"templates/tab-webview-subpage-card.html",
-			"templates/tab-webview-subpage-exchange.html"
-		]
-	},
-	"templates/tab-webview-subpage-redeem.html": {
-		"resources": [
-			"img/shopList-l.png",
-			"img/shopList-r.png",
-			"img/juan-icon.png",
-			"img/lipin.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/app.js"
-		],
-		"refer": [
-			"templates/tab-webview-subpage-exchange.html"
-		]
-	},
-	"templates/tab-user.html": {
-		"resources": [
-			"image/id-icon.png",
-			"image/phone-icon.png",
-			"image/card-icon.png",
-			"image/gift-icon.png",
-			"css/reset.css",
-			"fonts/mui.ttf",
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"css/ydui.css",
-			"js/ydui.js",
-			"js/jQuery.v2.1.4.js"
-		],
-		"refer": [
-			"templates/bind-phone.html",
-			"templates/recharge-list.html"
-		]
-	},
-	"templates/tab-card.html": {
-		"resources": [
-			"image/shopList-l.png",
-			"image/shopList-r.png",
-			"css/reset.css",
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"js/store.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"fonts/mui.ttf",
-			"image/clear_input.png",
-			"css/ydui.css",
-			"js/ydui.js",
-			"js/jQuery.v2.1.4.js"
-		]
-	},
-	"templates/tab-home.html": {
-		"resources": [
-			"image/card-icon.png",
-			"image/recharge-flow.png",
-			"image/recharge-phone.png",
-			"image/pic_02.jpg",
-			"image/pic_01.jpg",
-			"image/gift-icon.png",
-			"image/pic_03.jpg",
-			"css/reset.css",
-			"css/main.css",
-			"js/mui.min.js",
-			"js/store.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"image/home_title.png",
-			"js/public.js"
-		],
-		"refer": [
-			"templates/recharge-phone.html",
-			"templates/recharge-flow.html",
-			"templates/recharge.html"
-		]
-	},
-	"templates/recharge-phone.html": {
-		"resources": [
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"css/reset.css",
-			"fonts/mui.ttf",
-			"image/huafei_icon.png",
-			"image/liuliang_icon.png"
-		]
-	},
-	"templates/recharge-flow.html": {
-		"resources": [
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"css/reset.css"
-		]
-	},
-	"templates/recharge.html": {
-		"resources": [
-			"image/liuliang_icon.png",
-			"image/huafei_icon.png",
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"css/reset.css",
-			"fonts/mui.ttf",
-			"image/clear_input.png",
-			"image/address_list_icon.png",
-			"css/ydui.css",
-			"js/jQuery.v2.1.4.js",
-			"js/ydui.js"
-		]
-	},
-	"templates/bind-phone.html": {
-		"resources": [
-			"css/ydui.css",
-			"js/jQuery.v2.1.4.js",
-			"css/main.css",
-			"js/mui.min.js",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"js/ydui.js",
-			"css/reset.css",
-			"image/back_icon.png",
-			"image/clear_input.png"
-		]
-	},
-	"templates/mask.html": {
-		"resources": [
-			"css/ydui.css",
-			"css/main.css",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"css/reset.css",
-			"js/jQuery.v2.1.4.js",
-			"js/public.js",
-			"js/ydui.js"
-		]
-	},
-	"templates/recharge-list.html": {
-		"resources": [
-			"css/ydui.css",
-			"js/jQuery.v2.1.4.js",
-			"css/main.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/public.js",
-			"css/mui.min.css",
-			"js/vue.min.js",
-			"js/ydui.js",
-			"css/reset.css"
-		]
-	}
+  "main.html": {
+    "refer": [
+      "setting.html"
+    ],
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "images/sinaweibo.png",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weixin.png",
+      "images/qq.png",
+      "js/mui.enterfocus.js",
+      "img/login-bg.jpg",
+      "img/weixin.png",
+      "css/main.css",
+      "js/store.js",
+      "js/public.js",
+      "js/vue.min.js",
+      "image/wx-login.png",
+      "image/login-bg.jpg",
+      "css/ydui.css",
+      "js/jQuery.v2.1.4.js",
+      "js/ydui.js"
+    ],
+    "refer": [
+      "main.html",
+      "reg.html",
+      "templates/index.html",
+      "templates/tab-home.html",
+      "templates/tab-user.html",
+      "templates/tab-card.html",
+      "templates/mask.html"
+    ]
+  },
+  "setting.html": {
+    "resources": [
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "fonts/mui.ttf",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "js/mui.view.js"
+    ]
+  },
+  "reg.html": {
+    "resources": [
+      "fonts/mui.ttf"
+    ]
+  },
+  "templates/index.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "templates/tab-webview-subpage-about.html",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/iconfont.woff",
+      "css/style.css",
+      "fonts/card/iconfont.woff",
+      "fonts/redeem/iconfont.woff",
+      "templates/tab-webview-subpage-home.html",
+      "js/jQuery.v2.1.4.js",
+      "image/wo_icon.png",
+      "image/card_icon.png",
+      "image/home_icon.png",
+      "css/main.css",
+      "js/store.js",
+      "js/vue.min.js",
+      "image/home_icon_active.png",
+      "image/wo_icon_active.png",
+      "image/card_icon_active.png",
+      "js/public.js",
+      "templates/tab-home.html"
+    ],
+    "refer": [
+      "templates/tab-webview-subpage-about.html",
+      "templates/tab-webview-subpage-contact.html",
+      "templates/tab-webview-subpage-chat.html",
+      "templates/tab-webview-subpage-home.html",
+      "templates/tab-webview-subpage-card.html",
+      "templates/tab-webview-subpage-redeem.html",
+      "templates/tab-user.html",
+      "templates/tab-card.html",
+      "templates/tab-home.html"
+    ]
+  },
+  "templates/tab-webview-subpage-about.html": {
+    "resources": [
+      "img/card.jpg",
+      "img/recommend1.png",
+      "img/juan.jpg",
+      "img/phone.png",
+      "img/recommend2.png",
+      "img/head.jpg",
+      "img/reminder.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/app.js"
+    ]
+  },
+  "templates/tab-webview-subpage-chat.html": {
+    "resources": [
+      "img/shopList-l.png",
+      "img/shopList-r.png",
+      "css/style.css",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "templates/tab-webview-subpage-contact.html": {
+    "resources": [
+      "img/juan-icon.png",
+      "img/lipin.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "templates/tab-webview-subpage-exchange.html"
+    ]
+  },
+  "templates/tab-webview-subpage-exchange.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "fonts/mui.ttf",
+      "js/app.js"
+    ]
+  },
+  "templates/tab-webview-subpage-card.html": {
+    "resources": [
+      "img/juan-icon.png",
+      "img/lipin.png",
+      "img/shopList-l.png",
+      "img/shopList-r.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/app.js",
+      "js/beecloud.js"
+    ]
+  },
+  "templates/tab-webview-subpage-home.html": {
+    "resources": [
+      "img/recommend1.png",
+      "img/card.jpg",
+      "img/juan.jpg",
+      "img/phone.png",
+      "img/recommend2.png",
+      "img/reminder.png",
+      "img/head.jpg",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "templates/tab-webview-subpage-card.html",
+      "templates/tab-webview-subpage-exchange.html"
+    ],
+    "refer": [
+      "templates/tab-webview-subpage-card.html",
+      "templates/tab-webview-subpage-exchange.html"
+    ]
+  },
+  "templates/tab-webview-subpage-redeem.html": {
+    "resources": [
+      "img/shopList-l.png",
+      "img/shopList-r.png",
+      "img/juan-icon.png",
+      "img/lipin.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/app.js"
+    ],
+    "refer": [
+      "templates/tab-webview-subpage-exchange.html"
+    ]
+  },
+  "templates/tab-user.html": {
+    "resources": [
+      "image/id-icon.png",
+      "image/phone-icon.png",
+      "image/card-icon.png",
+      "image/gift-icon.png",
+      "css/reset.css",
+      "fonts/mui.ttf",
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "css/ydui.css",
+      "js/ydui.js",
+      "js/jQuery.v2.1.4.js"
+    ],
+    "refer": [
+      "templates/bind-phone.html",
+      "templates/recharge-list.html"
+    ]
+  },
+  "templates/tab-card.html": {
+    "resources": [
+      "image/shopList-l.png",
+      "image/shopList-r.png",
+      "css/reset.css",
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "js/store.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "fonts/mui.ttf",
+      "image/clear_input.png",
+      "css/ydui.css",
+      "js/ydui.js",
+      "js/jQuery.v2.1.4.js"
+    ]
+  },
+  "templates/tab-home.html": {
+    "resources": [
+      "image/card-icon.png",
+      "image/recharge-flow.png",
+      "image/recharge-phone.png",
+      "image/pic_02.jpg",
+      "image/pic_01.jpg",
+      "image/gift-icon.png",
+      "image/pic_03.jpg",
+      "css/reset.css",
+      "css/main.css",
+      "js/mui.min.js",
+      "js/store.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "image/home_title.png",
+      "js/public.js"
+    ],
+    "refer": [
+      "templates/recharge-phone.html",
+      "templates/recharge-flow.html",
+      "templates/recharge.html"
+    ]
+  },
+  "templates/recharge-phone.html": {
+    "resources": [
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "css/reset.css",
+      "fonts/mui.ttf",
+      "image/huafei_icon.png",
+      "image/liuliang_icon.png"
+    ]
+  },
+  "templates/recharge-flow.html": {
+    "resources": [
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "css/reset.css"
+    ]
+  },
+  "templates/recharge.html": {
+    "resources": [
+      "image/liuliang_icon.png",
+      "image/huafei_icon.png",
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "css/reset.css",
+      "fonts/mui.ttf",
+      "image/clear_input.png",
+      "image/address_list_icon.png",
+      "css/ydui.css",
+      "js/jQuery.v2.1.4.js",
+      "js/ydui.js"
+    ]
+  },
+  "templates/bind-phone.html": {
+    "resources": [
+      "css/ydui.css",
+      "js/jQuery.v2.1.4.js",
+      "css/main.css",
+      "js/mui.min.js",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/ydui.js",
+      "css/reset.css",
+      "image/back_icon.png",
+      "image/clear_input.png"
+    ]
+  },
+  "templates/mask.html": {
+    "resources": [
+      "css/ydui.css",
+      "css/main.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "css/reset.css",
+      "js/jQuery.v2.1.4.js",
+      "js/public.js",
+      "js/ydui.js"
+    ]
+  },
+  "templates/recharge-list.html": {
+    "resources": [
+      "css/ydui.css",
+      "js/jQuery.v2.1.4.js",
+      "css/main.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/public.js",
+      "css/mui.min.css",
+      "js/vue.min.js",
+      "js/ydui.js",
+      "css/reset.css"
+    ]
+  }
 }

@@ -63,8 +63,6 @@
 				}
 			}, 500)
 		})	
-		// 派发事件
-
 		var vm = new Vue({
 			el: ".mui-content",
 			data: {
@@ -91,8 +89,9 @@
 				});
 				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
-					// 首次本地数据填充
-//					mui.fire(plus.webview.getWebviewById(PAGE.sub[2].id),"getUserInfo", app.getState(LOCAL.keys));
+//					_this.currentWebview.setStyle({top: "0",bottom: "57px"})
+					
+//					_this.currentWebview.hide();
 				});
 			},
 			methods: {
@@ -118,7 +117,6 @@
 					.catch(function(e){
 						mui.toast(e)
 					})
-
 					
 				}
 				

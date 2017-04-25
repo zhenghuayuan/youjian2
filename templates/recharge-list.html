@@ -16,7 +16,7 @@
 			.mui-pull-top-pocket {top: 0 !important; }
 			.mui-scroll {position: relative; z-index: 2 !important; }
 			/**/
-			.mui-content {background: #fff;}
+			.table_title {position: fixed; width: 100%;height: 28px;top: 44px; background: #fff; z-index: 9; border-bottom: 1px solid #ccc;}
 			.table_title > div {overflow: hidden;}
 			.table_title > div strong {float: left; text-align: center; font-size: 14px; height: 28px; line-height: 28px;}
 			.table_title > div strong:nth-child(1) {width: 22%; }
@@ -25,7 +25,7 @@
 			.table_title > div strong:nth-child(4) {width: 30%; }
 			/**/
 			.table_body  li {border-bottom: 1px solid #ccc; overflow: hidden;}
-			.table_body  li:nth-child(1) {border-top: 1px solid #ccc;}
+			/*.table_body  li:nth-child(1) {border-top: 1px solid #ccc;}*/
 			.table_body  li span {float: left; height: 40px; border-left: 1px solid #ccc; line-height: 40px; text-align: center;}
 			.table_body  li span:nth-child(1) {width: 22%; border-left: 0;}
 			.table_body  li span:nth-child(2) {width: 18%;}
@@ -39,86 +39,24 @@
 			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			    <h1 class="mui-title">兑换记录</h1>
 			</header>
-			<div class="mui-content">
-				<div class="table_title">
-					<div>
-						<strong>名称</strong>
-						<strong>花费</strong>
-						<strong>号码</strong>
-						<strong>日期</strong>
-					</div>
+			<div class="table_title">
+				<div>
+					<strong>名称</strong>
+					<strong>花费</strong>
+					<strong>号码</strong>
+					<strong>日期</strong>
 				</div>
-				<div id="refreshContainer" class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="table_body">
-							<li>
-								<span>500M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>500M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>500M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-							<li>
-								<span>50M流量</span>
-								<span>300</span>
-								<span>18959271550</span>
-								<span>2017-10-30<br>17:59</span>
-							</li>
-						</ul>
-					</div>
+			</div>
+			<div id="refreshContainer" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="table_body">
+						<li v-for="item in items">
+							<span>{{item.name}}</span>
+							<span>{{item.redeem_voucher}}</span>
+							<span>{{item.mobile}}</span>
+							<span v-html="dateFormat(item.redeem_time)"></span>
+						</li>
+					</ul>
 				</div>
 			</div>
 	</body>
@@ -129,9 +67,15 @@
 	<script src="../js/public.js"></script>
 	<script>
 		var vm = new Vue({
-			el: "#wrap",
-			data: {},
+			el: "#refreshContainer",
+			data: {
+				userInfo: app.getState(LOCAL.keys),
+				page: 1, // 页数 1开始
+				items: [], // 兑换记录列表
+				total: 0, // 总条数
+			},
 			created:function(){
+				var _this =this;
 				mui.init({
 					pullRefresh: {
 						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
@@ -140,18 +84,39 @@
 							auto:false,//可选,默认false.自动上拉加载一次
 							contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
 							contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-							callback: function(){
-							  	console.log("up")
-							  	setTimeout(function(){
-									if(mui('#refreshContainer').pullRefresh()){
-										mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
-									}
-								}, 1000)
-							} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+							callback: _this.getRechargeList //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 						}
 					}
 				});
+				this.getRechargeList();
 			},
+			methods: {
+				getRechargeList: function(){
+					var _this = this;
+					app.request(API.rechargeList, {
+						uid: _this.userInfo.uid,
+						p: _this.page,
+					})
+					.then(function(data){
+						data.list.forEach(function(item){
+							_this.items.push(item);
+						})
+						_this.total = data.total;
+						_this.page++;
+						var len = data.list.length; // 返回条数
+						var isMore = len<10?true:false;
+						setTimeout(function(){
+							if(mui('#refreshContainer').pullRefresh()){
+								mui('#refreshContainer').pullRefresh().endPullupToRefresh(isMore);
+							}
+						}, 1000);
+					})
+				},
+				dateFormat: function(str){
+					var d = new Date(Number(str)*1000);
+					return d.format("yyyy-MM-dd") +"<br>"+d.format("hh:mm");
+				}
+			}
 			
 		})
 //		$(document).scroll(function(){
@@ -161,5 +126,6 @@
 //		        leaveMsgStart();
 //		    }
 //		})
+
 	</script>
 </html>

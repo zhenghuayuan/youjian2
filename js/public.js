@@ -21,9 +21,9 @@ var PAGE = {
 		extras: {title: "我的首页"},
 	},
 	sub: [ 
-		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "0", bottom: "56px"}},
-		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "0", bottom: "56px"}},
-		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "0", bottom: "56px"}},
+		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "0", bottom: "57px"}},
+		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "0",bottom:"57px"}},
+		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "0",bottom:"57px"}},
 	],
 	recharge: {
 		url: "/templates/recharge.html", 
@@ -97,13 +97,19 @@ var API = {
 //	productList: "http://192.168.1.55/dcxcx/index.php/Product",
 	productList: "https://dcyouxi.com/index.php/Product",
 	// 兑换
-	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
+//	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
+	recharge: "https://dcyouxi.com/index.php/Product/redeem",
 	// 威富通支付
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
-	isInClub: "http://192.168.1.55/dcxcx/index.php/Login/playerExist",
-	list: "http://192.168.1.55/dcxcx/index.php/Login/playerExist?uid=1"
+	isInClub: "https://dcyouxi.com/index.php/Login/playerExist",
+	// 兑换记录
+	rechargeList: "https://dcyouxi.com/index.php/Product/get_redeem_order",
+	// 改绑手机号
+	bindPhone: "https://dcyouxi.com/index.php/login/setMobile"
+	
 };
+//http://192.168.1.55/dcxcx/index.php/Product/get_redeem_order
 /**
  * 自定义事件
  **/
@@ -122,7 +128,9 @@ var EVENT = function(){
 		.then(function(data){
 			console.log("用户信息"+JSON.stringify(data))
 			// 传递消息给各个页面
-			fire([PAGE.sub[0].id, PAGE.sub[1].id, PAGE.sub[2].id, PAGE.recharge.id], "getUserInfo", data)
+			var res = mui.extend(true, app.getState(LOCAL.keys), data);
+			app.setState(LOCAL.keys, res);
+			fire([PAGE.sub[0].id, PAGE.sub[1].id, PAGE.sub[2].id, PAGE.recharge.id, PAGE["bind-phone"]], "getUserInfo", data)
 			
 		})
 		.catch(function(e){
@@ -148,6 +156,34 @@ var MASKCONFIRM = function(fromId, text){
 		plus.webview.getWebviewById(PAGE.mask.id).evalJS("yudiConfirm('"+fromId+"','"+text+"',"+"'YUDIConfirmCallback')");
 	})
 }
+/*
+ * 时间格式化
+ * (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+ * (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+ */
+Date.prototype.format = function(fmt) {
+	if (!fmt) {
+		return 0;
+	}
+	var obj = {
+		"M+": this.getMonth() + 1, //月份 
+		"d+": this.getDate(), //日 
+		"h+": this.getHours(), //小时 
+		"m+": this.getMinutes(), //分 
+		"s+": this.getSeconds(), //秒 
+		"q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		"S": this.getMilliseconds() //毫秒 
+	};
+	if (/(y+)/.test(fmt)){
+		fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	}
+	for (var i in obj){
+		if (new RegExp("(" + i + ")").test(fmt)){
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (obj[i]) : (("00" + obj[i]).substr(("" + obj[i]).length)));
+		}
+	}
+	return fmt;
+}	
 
 /**
  * 常用工具
