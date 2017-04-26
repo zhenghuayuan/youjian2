@@ -21,9 +21,9 @@ var PAGE = {
 		extras: {title: "我的首页"},
 	},
 	sub: [ 
-		{url: "/templates/tab-home.html", id:"tab-home.html", styles: {top: "44px", bottom: "57px"}},
-		{url: "/templates/tab-card.html", id:"tab-card.html", styles: {top: "44px",bottom:"57px"}},
-		{url: "/templates/tab-user.html", id:"tab-user.html", styles: {top: "44px",bottom:"57px"}},
+		{url: "tab-home.html", id:"tab-home.html", styles: {top: "44px", bottom: "57px",bounce:"all"}},
+		{url: "tab-card.html", id:"tab-card.html", styles: {top: "44px",bottom:"57px"}},
+		{url: "tab-user.html", id:"tab-user.html", styles: {top: "44px",bottom:"57px"}},
 	],
 	recharge: {
 		url: "/templates/recharge.html", 
@@ -241,7 +241,7 @@ Date.prototype.format = function(fmt) {
 				resolve(event.target);
 			},
 			function(e){
-				reject("授权登录认证失败："+ e.message);
+				reject("登录失败");
 			});
 		})
 	}
@@ -274,7 +274,14 @@ Date.prototype.format = function(fmt) {
 		return new Promise(function(resolve, reject){
 			console.log("【请求地址】："+url);
 			console.log("【请求参数】："+JSON.stringify(data));
-			
+			if("plus" in window){
+				var nowNetwork = plus.networkinfo.getCurrentType();
+				var noNetwork = plus.networkinfo.CONNECTION_NONE;
+				if(nowNetwork == noNetwork) {
+					YDUI.dialog.toast("未连接网络", "none", 2000);
+					return;
+				}
+			}
 			mui.ajax(url, {
 				data: data,
 				dataType:'json',//服务器返回json格式数据

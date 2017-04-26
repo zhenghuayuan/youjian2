@@ -28,6 +28,8 @@
 				el: ".login_wx",
 				data: {
 					userInfo: app.getState(LOCAL.keys) || {}, // 记得注销要清空{}
+					isCanclick: true,
+					authService: null,
 				},	
 				created: function(){
 					var _this = this;
@@ -55,26 +57,36 @@
 						var nowNetwork = plus.networkinfo.getCurrentType();
 						var noNetwork = plus.networkinfo.CONNECTION_NONE;
 						if(nowNetwork == noNetwork) {
-							YDUI.dialog.toast("未连接网络");
+							YDUI.dialog.toast("未连接网络", "none", 2000);
 							return;
 						}
+						
 						var _this = this;
+						if(!_this.isCanclick){
+							return;	
+						}
+//						_this.isCanclick = false;
+//						setTimeout(function(){
+//							_this.isCanclick = true;
+//						}, 2000)
 						// 模拟登陆 待删除
-						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
-						_this.getServerInfo()
-						
-						
-						return;
+//						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
+//						_this.getServerInfo()
+//						return;
+						plus.nativeUI.showWaiting();
 						app.getServices("weixin")
 						.then(function(authService){
+							_this.authService = authService;
 							return app.wxLogin(authService)
 						})
 						.then(function(data){
+							plus.nativeUI.closeWaiting();
 							_this.userInfo.unionid = data.authResult.unionid;
 							_this.getServerInfo();
 						})
 						.catch(function(e){
-							mui.alert(e)
+							plus.nativeUI.closeWaiting();
+							YDUI.dialog.toast(e, "none", 2000);
 						})
 						
 					},
@@ -84,39 +96,31 @@
 						app.request(API.login, {unionId: _this.userInfo.unionid}) 
 						.then(function(data){
 							if(data.not_player == 1){
-								YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
-								return;
+								app.authLogout(_this.authService)
+								.then(function(){
+									YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
+									return;
+								})
+							}else{
+								mui.extend(true, _this.userInfo, data);
+								app.setState(LOCAL.keys, _this.userInfo);
+								console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
+//								var main = mui.preload(PAGE.index)
+//								var main  = plus.webview.create(PAGE.index.url, PAGE.index.id, PAGE.index.styles);
+//								plus.navigator.setFullscreen(false);
+								plus.navigator.setStatusBarBackground("#000000");
+								plus.navigator.closeSplashscreen();
+								mui.openWindow({url: PAGE.index.url, id: PAGE.index.id})
+							
 							}
-							mui.extend(true, _this.userInfo, data);
-							app.setState(LOCAL.keys, _this.userInfo);
-							console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
-							var main = mui.preload(PAGE.index)
-							PAGE.sub.forEach(function(item,index){
-								var sub = mui.preload(item);
-								if(index == 0){
-									sub.show();
-								}else{
-									sub.hide();
-								}
-								main.append(sub)
-							});
-							mui.preload(PAGE.mask);
-							main.addEventListener("loaded", function(){
-								main.show();
-							}, false)
-							// 预加载子页面 及 展示逻辑
-							
-								// 预加载蒙版
-							
-							// 主页 及 第一个子页面加载好 展示
-								// 初始化数据
 							
 //							plus.navigator.setFullscreen(false);
 //							plus.navigator.setStatusBarBackground("#fff");
-							plus.navigator.closeSplashscreen();
+							
 						})
 						.catch(function(e){
-							mui.alert(e)
+							plus.nativeUI.closeWaiting();
+							YDUI.dialog.toast(e, "none", 2000);
 						})
 					},
 					

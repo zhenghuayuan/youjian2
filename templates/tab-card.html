@@ -30,7 +30,7 @@
 		</style>
 	</head>
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" v-cloak>
 			<div class="mui-scroll">
 				<div class="from_wrap" style="padding-bottom: 0px;">
 					<div class="cell clearfix">
@@ -61,22 +61,23 @@
 			// 监听事件
 			window.addEventListener("getUserInfo", function(data){
 				vm.userInfo = event.detail;
-				setTimeout(function(){
 					if(mui('#refreshContainer').pullRefresh()){
 						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
 					}
-				}, 100)
+//				setTimeout(function(){
+//				}, 100)
 			})	
 
 			
 			// 支付结果回调
 			function payResult(res){
-				EVENT.getUserInfo()
-				if(res == "1"){
-					YDUI.dialog.toast('购买成功', 'success', 2000);
-				}else{
-					YDUI.dialog.toast('购买失败', 'error', 2000);
-				}
+				EVENT.getUserInfo();
+				plus.webview.getWebviewById(PAGE.index.id).evalJS("payEnd(1)")
+//				if(res == "1"){
+//					YDUI.dialog.toast('购买成功', 'success', 2000);
+//				}else{
+//					YDUI.dialog.toast('购买失败', 'error', 2000);
+//				}
 			}
 		
 			var vm = new Vue({
@@ -107,16 +108,10 @@
 						}
 					});
 					_this.getCardList();
-//					_this.userid = "uid" in _this.userInfo?_this.userInfo.uid:"";
-//					app.setState(LOCAL.lastUserid, 29999999)
 					_this.userid = typeof _this.userid != "object"?_this.userid:("uid" in _this.userInfo?_this.userInfo.uid:"");
 					_this.needNickname =  _this.userid  == _this.userInfo.uid?_this.userInfo.nickname:"";
 					mui.plusReady(function() {
 						_this.currentWebview = plus.webview.currentWebview();
-//						_this.currentWebview.setStyle({top: "0",bottom: "57px"})
-						
-						// 首次本地数据填充
-//						mui.fire(plus.webview.getWebviewById(PAGE.sub[1].id), "getUserInfo", app.getState(LOCAL.keys));
 					});
 				},
 				computed: {

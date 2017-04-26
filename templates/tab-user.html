@@ -16,7 +16,7 @@
 		</style>
 	</head>
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" v-cloak>
 			<div class="mui-scroll">
 				<div class="mui-content"  v-cloak>
 				    <div class="user_wrap">
@@ -24,7 +24,7 @@
 				    	<div class="info_wrap">
 				    		<div class="name">{{userInfo.nickname}}</div>
 				    		<div class="userid">: {{userInfo.uid}}</div>
-				    		<div class="phone">: {{userInfo.mobile}}<button type="button" @click="mui.openWindow(PAGE['bind-phone'])" class="mui-btn mui-btn-warning">修改</button></div>
+				    		<div class="phone">: {{userInfo.mobile}}<button type="button" @click="mui.openWindow(PAGE['bind-phone'])" class="mui-btn mui-btn-warning" style="line-height: normal;">修改</button></div>
 				    	</div>
 				    	<div class="userother clearfix">
 				    		<div><span>房卡: </span>{{userInfo.roomcard}}</div>
@@ -52,11 +52,11 @@
 		// 监听事件
 		window.addEventListener("getUserInfo", function(data){
 			vm.userInfo = event.detail;
-			setTimeout(function(){
 				if(mui('#refreshContainer').pullRefresh()){
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
 				}
-			}, 100)
+//			setTimeout(function(){
+//			}, 100)
 		})	
 		var vm = new Vue({
 			el: ".mui-content",
@@ -85,7 +85,6 @@
 				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
 //					_this.currentWebview.setStyle({top: "0",bottom: "57px"})
-					
 //					_this.currentWebview.hide();
 				});
 			},

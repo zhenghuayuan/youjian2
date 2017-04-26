@@ -19,13 +19,14 @@
 			.pic_list {padding: 20px 0;}
 			.pic_list div {width: 93%;height: 110px; height: 30vw; margin: 0 auto 12px;}
 			.mui-slider-group {height: 155px; height: 49vw;}
-			
+			/*.mui-pull-top-pocket {z-index: 9;}*/
 			/*.mui-bar-nav~.mui-content .mui-pull-top-pocket {top: 100px !important;}*/
+			/*html,body {background: rgba(0,0,0,0) !important;}*/
 		</style>
 	</head>
 
 	<body>
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" v-cloak>
 			<div class="mui-scroll">
 				<div class="mui-content">
 					<div class="userother clearfix">
@@ -60,17 +61,21 @@
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/vue.min.js"></script>
+	<script src="../js/jQuery.v2.1.4.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
 		// 监听事件
 		window.addEventListener("getUserInfo", function(data){
 			vm.userInfo = event.detail;
-			setTimeout(function(){
-				if(mui('#refreshContainer').pullRefresh()){
+//			var res = mui('#refreshContainer').pullRefresh()
+			console.log(mui('#refreshContainer').pullRefresh)
+				if(mui('#refreshContainer').pullRefresh){
 					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
 				}
-			}, 100)
+//			setTimeout(function(){
+//			}, 100)
 		})
+	
 
 		var vm = new Vue({
 			el: ".mui-content",
@@ -81,23 +86,18 @@
 			created: function() {
 				var _this = this;
 				mui.init({
+					swipeBack: false,
 					pullRefresh: {
 						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
 						down: {
-							height: 50, //可选,默认50.触发下拉刷新拖动距离,
-							auto: false, //可选,默认false.自动下拉刷新一次
-							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
-							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
-							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
 							callback: EVENT.getUserInfo,  //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 						}
 					}
 				});
 				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
-//					_this.currentWebview.setStyle({top: "0", bottom: "57px"})
-//				_this.currentWebview.show()
 					
+
 					mui("#slider").slider({
 						interval: 3000
 					});

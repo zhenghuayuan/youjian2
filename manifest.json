@@ -1139,7 +1139,8 @@
 					"image/wo_icon_active.png",
 					"image/card_icon_active.png",
 					"js/public.js",
-					"templates/tab-home.html"
+					"templates/tab-home.html",
+					"image/home_title.png"
 				],
 				"refer": [
 					"templates/tab-webview-subpage-setting.html",
@@ -1147,7 +1148,8 @@
 					"templates/tab-webview-subpage-card.html",
 					"templates/tab-webview-subpage-redeem.html",
 					"templates/tab-user.html",
-					"templates/tab-card.html"
+					"templates/tab-card.html",
+					"templates/mask.html"
 				],
 				"priority": 0
 			},
@@ -1216,7 +1218,8 @@
 					"templates/tab-home.html",
 					"templates/tab-user.html",
 					"templates/tab-card.html",
-					"templates/mask.html"
+					"templates/mask.html",
+					"templates/tab-webview-subpage-home.html"
 				],
 				"priority": 0
 			},
@@ -1247,7 +1250,8 @@
 					"css/mui.min.css",
 					"css/style.css",
 					"templates/tab-webview-subpage-card.html",
-					"templates/tab-webview-subpage-exchange.html"
+					"templates/tab-webview-subpage-exchange.html",
+					"js/public.js"
 				],
 				"refer": [],
 				"priority": 0

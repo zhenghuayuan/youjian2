@@ -31,7 +31,7 @@
 		<div class="content" v-cloak>
 			<div class="bind_title">绑定手机 <span class="mui-action-back"></span></div>
 			<div class="from_wrap">
-			    <div class="cell clearfix" > <!--v-if="oldUsernumber"-->
+			    <div class="cell clearfix" v-if="oldUsernumber"> <!--v-if="oldUsernumber"-->
 					<label>原手机号</label>
 					<input type="tel" class="border_none" disabled="disabled" :value="oldUsernumber" >
 					<!--<span class="tips" style="margin-left: 30%;">（验证码会发到原手机上）</span>-->

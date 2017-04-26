@@ -38,7 +38,8 @@
       "templates/tab-home.html",
       "templates/tab-user.html",
       "templates/tab-card.html",
-      "templates/mask.html"
+      "templates/mask.html",
+      "templates/tab-webview-subpage-home.html"
     ]
   },
   "setting.html": {
@@ -53,12 +54,14 @@
       "js/feedback-page.js",
       "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
       "js/mui.view.js"
-    ]
+    ],
+    "refer": []
   },
   "reg.html": {
     "resources": [
       "fonts/mui.ttf"
-    ]
+    ],
+    "refer": []
   },
   "templates/index.html": {
     "resources": [
@@ -82,7 +85,8 @@
       "image/wo_icon_active.png",
       "image/card_icon_active.png",
       "js/public.js",
-      "templates/tab-home.html"
+      "templates/tab-home.html",
+      "image/home_title.png"
     ],
     "refer": [
       "templates/tab-webview-subpage-about.html",
@@ -109,7 +113,8 @@
       "css/mui.min.css",
       "css/style.css",
       "js/app.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/tab-webview-subpage-chat.html": {
     "resources": [
@@ -118,7 +123,8 @@
       "css/style.css",
       "js/mui.min.js",
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "templates/tab-webview-subpage-contact.html": {
     "resources": [
@@ -139,7 +145,8 @@
       "css/style.css",
       "fonts/mui.ttf",
       "js/app.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/tab-webview-subpage-card.html": {
     "resources": [
@@ -152,7 +159,8 @@
       "css/style.css",
       "js/app.js",
       "js/beecloud.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/tab-webview-subpage-home.html": {
     "resources": [
@@ -168,7 +176,8 @@
       "css/mui.min.css",
       "css/style.css",
       "templates/tab-webview-subpage-card.html",
-      "templates/tab-webview-subpage-exchange.html"
+      "templates/tab-webview-subpage-exchange.html",
+      "js/public.js"
     ],
     "refer": [
       "templates/tab-webview-subpage-card.html",
@@ -228,7 +237,8 @@
       "css/ydui.css",
       "js/ydui.js",
       "js/jQuery.v2.1.4.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/tab-home.html": {
     "resources": [
@@ -265,7 +275,8 @@
       "fonts/mui.ttf",
       "image/huafei_icon.png",
       "image/liuliang_icon.png"
-    ]
+    ],
+    "refer": []
   },
   "templates/recharge-flow.html": {
     "resources": [
@@ -275,7 +286,8 @@
       "css/mui.min.css",
       "js/vue.min.js",
       "css/reset.css"
-    ]
+    ],
+    "refer": []
   },
   "templates/recharge.html": {
     "resources": [
@@ -293,7 +305,8 @@
       "css/ydui.css",
       "js/jQuery.v2.1.4.js",
       "js/ydui.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/bind-phone.html": {
     "resources": [
@@ -308,7 +321,8 @@
       "css/reset.css",
       "image/back_icon.png",
       "image/clear_input.png"
-    ]
+    ],
+    "refer": []
   },
   "templates/mask.html": {
     "resources": [
@@ -321,7 +335,8 @@
       "js/jQuery.v2.1.4.js",
       "js/public.js",
       "js/ydui.js"
-    ]
+    ],
+    "refer": []
   },
   "templates/recharge-list.html": {
     "resources": [
@@ -335,6 +350,7 @@
       "js/vue.min.js",
       "js/ydui.js",
       "css/reset.css"
-    ]
+    ],
+    "refer": []
   }
 }

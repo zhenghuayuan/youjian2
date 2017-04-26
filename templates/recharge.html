@@ -166,11 +166,11 @@
 					// YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
 					// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
 					var _this = this;
-					if(_this.voucher<Number(item.redeem_point)){
-						return;
-					}
 					if(!_this.numberIsTrue){
 						return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
+					}
+					if(_this.voucher<Number(item.redeem_point)){
+						return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
 					}
 					MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")
 					.then(function(){

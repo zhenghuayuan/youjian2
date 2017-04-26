@@ -47,7 +47,7 @@
 					<strong>日期</strong>
 				</div>
 			</div>
-			<div id="refreshContainer" class="mui-scroll-wrapper">
+			<div id="refreshContainer" class="mui-scroll-wrapper" v-cloak>
 				<div class="mui-scroll">
 					<ul class="table_body">
 						<li v-for="item in items">
@@ -66,6 +66,15 @@
 	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
+//		var fn = function(){
+//			var res = {"list":[{"id":"60","uid":"6002809","product_id":"2","sporder_id":"94e982b472c2c327db3c5615","name":"30元话费","mobile":"18959275222","num":"1","redeem_voucher":"3000","redeem_time":"1493176100","status":"1"},{"id":"56","uid":"6002809","product_id":"2","sporder_id":"dc4b67423743d523d9f88f84","name":"30元话费","mobile":"18959275222","num":"1","redeem_voucher":"3000","redeem_time":"1493175996","status":"1"},{"id":"55","uid":"6002809","product_id":"2","sporder_id":"fc7fa1863304efac135a13e1","name":"30元话费","mobile":"18959275222","num":"1","redeem_voucher":"3000","redeem_time":"1493175910","status":"1"},{"id":"54","uid":"6002809","product_id":"2","sporder_id":"fb81dfb5226492d5309a13fb","name":"30元话费","mobile":"18270061874","num":"1","redeem_voucher":"3000","redeem_time":"1493085079","status":"1"},{"id":"53","uid":"6002809","product_id":"2","sporder_id":"abd1f9cc4e716aaa39b43fdf","name":"30元话费","mobile":"18270061874","num":"1","redeem_voucher":"3000","redeem_time":"1493084897","status":"1"},{"id":"52","uid":"6002809","product_id":"2","sporder_id":"702eebad849c901f411847e6","name":"30元话费","mobile":"18270061874","num":"1","redeem_voucher":"3000","redeem_time":"1493084832","status":"1"},{"id":"51","uid":"6002809","product_id":"2","sporder_id":"218cf6ae1a13230adf5ff301","name":"30元话费","mobile":"18270061874","num":"1","redeem_voucher":"3000","redeem_time":"1491642906","status":"1"},{"id":"45","uid":"6002809","product_id":"1","sporder_id":"255239352ec1e08ab7394627","name":null,"mobile":"18270061874","num":"1","redeem_voucher":"2000","redeem_time":"1490855245","status":"1"},{"id":"44","uid":"6002809","product_id":"1","sporder_id":"1cbebbff8e51e3fa74edccb7","name":null,"mobile":"18270061874","num":"1","redeem_voucher":"2000","redeem_time":"1490852491","status":"1"},{"id":"42","uid":"6002809","product_id":"1","sporder_id":"281ef622ee51606938845c70","name":null,"mobile":"18270061874","num":"1","redeem_voucher":"2000","redeem_time":"1490847104","status":"1"}],"total":"13"};
+//			res.list.forEach(function(item){
+//				vm.items.push(item);
+//			})
+//			if(mui('#refreshContainer').pullRefresh()){
+//				mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+//			}
+//		}
 		var vm = new Vue({
 			el: "#refreshContainer",
 			data: {
@@ -76,19 +85,24 @@
 			},
 			created:function(){
 				var _this =this;
+				mui.init();
 				mui.init({
 					pullRefresh: {
 						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
 						up: {
-							height:50,//可选.默认50.触发上拉加载拖动距离
-							auto:false,//可选,默认false.自动上拉加载一次
-							contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-							contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-							callback: _this.getRechargeList //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-						}
+						      height:50,//可选.默认50.触发上拉加载拖动距离
+						      auto:true,//可选,默认false.自动上拉加载一次
+						      contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+						      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+						      callback:_this.getRechargeList //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					    }
 					}
 				});
-				this.getRechargeList();
+//				fn()
+//				mui('.mui-scroll-wrapper').scroll({
+//					deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+//				});
+				_this.getRechargeList();
 			},
 			methods: {
 				getRechargeList: function(){
@@ -105,11 +119,11 @@
 						_this.page++;
 						var len = data.list.length; // 返回条数
 						var isMore = len<10?true:false;
-						setTimeout(function(){
-							if(mui('#refreshContainer').pullRefresh()){
-								mui('#refreshContainer').pullRefresh().endPullupToRefresh(isMore);
-							}
-						}, 1000);
+//						setTimeout(function(){
+						if(mui('#refreshContainer').pullRefresh()){
+							mui('#refreshContainer').pullRefresh().endPullupToRefresh(isMore);
+						}
+//						}, 1000);
 					})
 				},
 				dateFormat: function(str){
@@ -119,13 +133,7 @@
 			}
 			
 		})
-//		$(document).scroll(function(){
-//		    var maxScroll = $(".supper_leaveMsg_ul").height() - h;
-//		    if($("body").scrollTop()+20 > maxScroll && leaveMsgRequset.bool) {
-//		        leaveMsgRequset.bool = false;
-//		        leaveMsgStart();
-//		    }
-//		})
+
 
 	</script>
 </html>
