@@ -90,23 +90,23 @@ var LOCAL = {
 var DOMAIN = "https://dcyouxi.com";
 var API = { 
 	// 用户信息
-	login: "https://dcyouxi.com/index.php/index/app_login",
+	login: DOMAIN+"/index.php/index/app_login",
 	// 售卡列表
-	cardList: "https://dcyouxi.com/index.php/Product/get_goods",
+	cardList: DOMAIN+"/index.php/Product/get_goods",
 	// 兑换产品列表
 //	productList: "http://192.168.1.55/dcxcx/index.php/Product",
-	productList: "https://dcyouxi.com/index.php/Product",
+	productList: DOMAIN+"/index.php/Product",
 	// 兑换
 //	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
-	recharge: "https://dcyouxi.com/index.php/Product/redeem",
+	recharge: DOMAIN+"/index.php/Product/redeem",
 	// 威富通支付
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
-	isInClub: "https://dcyouxi.com/index.php/Login/playerExist",
+	isInClub: DOMAIN+"/index.php/Login/playerExist",
 	// 兑换记录
-	rechargeList: "https://dcyouxi.com/index.php/Product/get_redeem_order",
+	rechargeList: DOMAIN+"/index.php/Product/get_redeem_order",
 	// 改绑手机号
-	bindPhone: "https://dcyouxi.com/index.php/login/setMobile"
+	bindPhone: DOMAIN+"/index.php/login/setMobile"
 	
 };
 //http://192.168.1.55/dcxcx/index.php/Product/get_redeem_order

@@ -19,6 +19,7 @@
 			/*input*/
 			.tips {position: absolute; top: 100%; left: 22%; font-size: 12px; color: #FF3B30;}
 			.mui-content {background: #fff; }
+			.mui-btn-block {color: #ccc;}
 		</style>
 	</head>
 	<body >
@@ -32,7 +33,7 @@
 				<div class="from_wrap" style="padding: 10px 0 0 0; margin-bottom: 20px;">
 					<div class="cell clearfix">
 						<label style="width: 18%;">手机号:</label>
-						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要充值用户ID">
+						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要兑换的手机号">
 						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
 						<!--<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>-->
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>

@@ -37,4 +37,4 @@
 .recharge_wrap .mui-btn-outlined:nth-last-child(1) {margin-bottom: 0 !important;}
 
 /* YUDI 弹窗*/
-.confirm-bd {font-size: 20px !important; line-height: normal;}
+.confirm-bd {font-size: 20px !important; padding: 20px; line-height: normal;}

@@ -97,7 +97,8 @@
       "templates/tab-webview-subpage-redeem.html",
       "templates/tab-user.html",
       "templates/tab-card.html",
-      "templates/tab-home.html"
+      "templates/tab-home.html",
+      "templates/mask.html"
     ]
   },
   "templates/tab-webview-subpage-about.html": {
@@ -256,7 +257,8 @@
       "css/mui.min.css",
       "js/vue.min.js",
       "image/home_title.png",
-      "js/public.js"
+      "js/public.js",
+      "js/jQuery.v2.1.4.js"
     ],
     "refer": [
       "templates/recharge-phone.html",

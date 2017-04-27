@@ -131,9 +131,7 @@
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
-			"orientation": [
-				"portrait-primary"
-			],/*必选*/
+			"orientation": [],/*必选*/
 			"icons": {
 				"ios": {
 					"prerendered": "", /*必选，是否高亮显示*/
@@ -1329,7 +1327,8 @@
 					"css/mui.min.css",
 					"js/vue.min.js",
 					"image/home_title.png",
-					"js/public.js"
+					"js/public.js",
+					"js/jQuery.v2.1.4.js"
 				],
 				"refer": [
 					"templates/recharge-phone.html",

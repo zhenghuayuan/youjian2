@@ -1,0 +1,4 @@
+1.项目拷贝到： C:\Users\Administrator\workspace2\HBuilder-Hello\assets\apps\HelloH5\www
+2.清除错误
+3.eclipse => HBuilder-Hello =>Android Tolls => Export Signed Applocation => 。。。。
+4.password: 20160801 
