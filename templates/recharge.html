@@ -39,12 +39,13 @@
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
 					</div>
 				</div>
-				<div class="recharge_type" style="padding-top: 10px;">充{{title.slice(2,4)}}</div>
+				<div class="recharge_type" style="padding-top: 0px;">当前房卡:{{userInfo.roomcard}}</div>
+				<div class="recharge_type" style="padding-top: 5px;">充{{title.slice(2,4)}}</div>
 				<div class="recharge_wrap">
 					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 				</div>
-				<div class="recharge_type">更多充值</div>
+				<div class="recharge_type">更多兑换</div>
 				<div class="recharge_other clearfix">
 					<span class="huafei_icon" v-if="curProductType != 1" @click="curProductType = 1">充话费</span>
 					<span class="liuliang_icon" v-if="curProductType != 2" @click="curProductType = 2">充流量</span>

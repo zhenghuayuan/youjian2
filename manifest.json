@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "HelloH5",/*必选，应用的标识*/
+	"id": "H54C3329D",/*必选，应用的标识*/
 	"name": "友间商圈",/*必选，应用名称*/
 	"version": {
 		"name": "1.0",/*必选，版本名称*/
@@ -22,42 +22,24 @@
 		"url": ""
 	},
 	"permissions": {
-		"Audio": {
-			"description": "访问麦克风"
-		},
-		"Camera": {
-			"description": "访问摄像头"
-		},
+
+
 		"Device": {
 			"description": "访问设备信息"
 		},
 		"Events": {
 			"description": "应用扩展事件"
 		},
-		"File": {
-			"description": "访问本地文件系统"
-		},
-		"Gallery": {
-			"description": "访问系统相册"
-		},
-		"Storage": {
-			"description": "管理应用本地数据"
-		},
+
+
+
 		"Runtime": {
 			"description": "访问运行期环境"
 		},
-		"XMLHttpRequest": {
-			"description": "跨域网络访问"
-		},
-		"Speech": {
-			"description": "管理语音识别插件"
-		},
-		"Zip": {
-			"description": "文件压缩与解压缩"
-		},
-		"Webview": {
-			"description": "窗口管理"
-		},
+
+
+
+
 		"NativeUI": {
 			"description": "原生UI控件"
 		},
@@ -68,12 +50,14 @@
 			"description": "访问通讯录"
 		},
 		"Payment": {},
-		"Uploader": {},
+
 
 		"NativeObj": {},
 		"Invocation": {},
 		"OAuth": {},
-		"Contacts": {}
+
+		"Webview": {},
+		"XMLHttpRequest": {}
 	},
 	"plus": {
 
@@ -115,9 +99,6 @@
 				"aliasname": "",/*Android必选，打包证书别名*/
 				"permissions": [
 					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
 					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
 					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
@@ -126,12 +107,12 @@
 					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
 					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>"
 				]
 			},
-			"orientation": [],/*必选*/
+			"orientation": [
+				"portrait-primary"
+			],/*必选*/
 			"icons": {
 				"ios": {
 					"prerendered": "", /*必选，是否高亮显示*/
@@ -174,26 +155,21 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*必选，320x480，iPhone3启动图片*/
-						"retina35": "",/*必选，640x960，3.5英寸设备(iPhone4)启动图片*/
-						"retina40": "image/entry.png","retina55":"image/entry.png","retina47":"image/entry.png","retina55l":"image/entry.png"
+						"retina35": ""
 					},
 					"ipad": {
-						"portrait": "image/entry.png", /*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
+						/*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
 						"portrait-retina": "image/entry.png",/*可选，1536x2008，需支持iPad时必选，iPad高分屏竖屏图片*/
-						"landscape": "image/entry.png", /*可选，1024x748，需支持iPad时必选，iPad横屏启动图片*/
+						/*可选，1024x748，需支持iPad时必选，iPad横屏启动图片*/
 						"landscape-retina": "image/entry.png", /*可选 ，2048x1496，需支持iPad时必选，iPad高分屏横屏启动图片*/
-						"portrait7": "image/entry.png", /*可选，768x1024，需支持iPad iOS7时必选，iPad竖屏启动图片*/
+						/*可选，768x1024，需支持iPad iOS7时必选，iPad竖屏启动图片*/
 						"portrait-retina7": "image/entry.png",/*可选，1536x2048，需支持iPad iOS7时必选，iPad高分屏竖屏图片*/
-						"landscape7": "image/entry.png", /*可选，1024x768，需支持iPad iOS7时必选，iPad横屏启动图片*/
-						"landscape-retina7": "image/entry.png"
+						"landscape7": "image/entry.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*必选，240x282，普通屏启动图片*/
-					"ldpi": "", /*必选，320x442，大屏启动图片*/
-					"hdpi": "image/entry.png", /*必选，480x762，高分屏启动图片*/
-					"xhdpi": "image/entry.png", /*必选，720x1242，720P高分屏启动图片*/
-					"xxhdpi": "image/entry.png"
+					"ldpi": ""
 				}
 			}
 		}

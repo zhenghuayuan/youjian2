@@ -21,7 +21,7 @@ var PAGE = {
 		extras: {title: "我的首页"},
 	},
 	sub: [ 
-		{url: "tab-home.html", id:"tab-home.html", styles: {top: "44px", bottom: "57px",bounce:"all"}},
+		{url: "tab-home.html", id:"tab-home.html", styles: {top: "44px", bottom: "57px"}},
 		{url: "tab-card.html", id:"tab-card.html", styles: {top: "44px",bottom:"57px"}},
 		{url: "tab-user.html", id:"tab-user.html", styles: {top: "44px",bottom:"57px"}},
 	],
