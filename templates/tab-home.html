@@ -67,21 +67,17 @@
 		// 监听事件
 		window.addEventListener("getUserInfo", function(data){
 			vm.userInfo = event.detail;
-//			var res = mui('#refreshContainer').pullRefresh()
-			console.log(mui('#refreshContainer').pullRefresh)
-				if(mui('#refreshContainer').pullRefresh){
-					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
-				}
-//			setTimeout(function(){
-//			}, 100)
+			if(mui('#refreshContainer').pullRefresh){
+				mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+			}
 		})
-	
 
 		var vm = new Vue({
 			el: ".mui-content",
 			data: {
 				currentWebview: null,
 				userInfo: app.getState(LOCAL.keys),
+				isOneceRecharge: true,
 			},
 			created: function() {
 				var _this = this;
@@ -96,8 +92,6 @@
 				});
 				mui.plusReady(function() {
 					_this.currentWebview = plus.webview.currentWebview();
-					
-
 					mui("#slider").slider({
 						interval: 3000
 					});
@@ -105,13 +99,19 @@
 			},
 			methods: {
 				openWebview: function(text){
+					var _this = this;
+					if(!this.isOneceRecharge) return;
+					this.isOneceRecharge = false;
 					PAGE['recharge'].extras = {title: text};
-					mui.openWindow(PAGE['recharge'])
+					var wv = plus.webview.create(PAGE['recharge'].url, PAGE['recharge'].id, PAGE['recharge'].styles,PAGE['recharge'].extras);
+					wv.addEventListener("loaded", function(){
+						setTimeout(function(){
+							wv.show();
+							_this.isOneceRecharge = true;
+						}, 100)
+					})
+//					mui.openWindow(PAGE['recharge']);
 				},
-				fn: function(){
-//					plus.webview.getWebviewById(PAGE.mask.id).show();
-					
-				}
 			}
 
 		})

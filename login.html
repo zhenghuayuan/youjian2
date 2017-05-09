@@ -36,8 +36,8 @@
 					mui.init();
 					mui.plusReady(function(){
 						// 模拟登陆 待删除
-						_this.userInfo = {};
-						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
+//						_this.userInfo = {};
+//						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
 						if(_this.userInfo.unionid){
 							_this.getServerInfo()
 							return;
@@ -84,8 +84,10 @@
 							_this.getServerInfo();
 						})
 						.catch(function(e){
+							app.authLogout(_this.authService);
 							plus.nativeUI.closeWaiting();
-							YDUI.dialog.toast(e, "none", 2000);
+//							YDUI.dialog.toast(e, "none", 2500);
+							alert(e);
 						})
 						
 					},
@@ -103,13 +105,14 @@
 							}else{
 								mui.extend(true, _this.userInfo, data);
 								app.setState(LOCAL.keys, _this.userInfo);
-								console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
+//								console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
 //								var main = mui.preload(PAGE.index)
 //								var main  = plus.webview.create(PAGE.index.url, PAGE.index.id, PAGE.index.styles);
 //								plus.navigator.setFullscreen(false);
-								plus.navigator.setStatusBarBackground("#000000");
+//								plus.navigator.setStatusBarBackground("#000000");
 								plus.navigator.closeSplashscreen();
-								mui.openWindow({url: PAGE.index.url, id: PAGE.index.id})
+//								mui.openWindow({url: PAGE.index.url, id: PAGE.index.id, })
+								mui.openWindow(PAGE.index)
 							
 							}
 							

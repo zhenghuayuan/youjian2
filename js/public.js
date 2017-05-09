@@ -4,6 +4,7 @@
  * */
 var ENV = "development"; 
 //var ENV = "production"; 
+log({a:1,b:"a",c:undefined})
 /**
  * 所有页面信息
  **/
@@ -16,7 +17,7 @@ var PAGE = {
 		createNew: true,
 		styles: {
 			background: "RGBA(0, 0, 0, 1)",
-			popGesture: "none"
+			popGesture: "none",
 		},
 		extras: {title: "我的首页"},
 	},
@@ -28,7 +29,11 @@ var PAGE = {
 	recharge: {
 		url: "/templates/recharge.html", 
 		id: "recharge.html", 
-		show: {autoShow: true},
+		show: {
+			autoShow: true,
+			aniShow:"slide-in-right",
+			duration: 300
+		},
 		styles: {
 			background: "RGBA(0, 0, 0, 1)",
 			popGesture: "close"
@@ -53,11 +58,11 @@ var PAGE = {
 		url: "/templates/mask.html", 
 		id: "mask.html", 
 		show: {
-			autoShow: true
+			autoShow: true,
 		},
 		styles: {
 			background: "transparent",
-			popGesture: "hide",
+			popGesture: "none",
 		},
 		
 	},
@@ -124,9 +129,9 @@ var EVENT = function(){
 	}
 	var getUserInfo = function(){
 		//	var unionId = app.getState(LOCAL.keys).sv.unionId;
-		app.request(API.login,  {unionId: app.getState(LOCAL.keys).unionid}) //app.getState(LOCAL.keys)
+		app.request(API.login,  {unionId: app.getState(LOCAL.keys).unionid}, "get", false) //app.getState(LOCAL.keys)
 		.then(function(data){
-			console.log("用户信息"+JSON.stringify(data))
+//			console.log("用户信息"+JSON.stringify(data))
 			// 传递消息给各个页面
 			var res = mui.extend(true, app.getState(LOCAL.keys), data);
 			app.setState(LOCAL.keys, res);
@@ -241,7 +246,7 @@ Date.prototype.format = function(fmt) {
 				resolve(event.target);
 			},
 			function(e){
-				reject("登录失败");
+				reject("登录失败:"+e.message);
 			});
 		})
 	}
@@ -265,16 +270,23 @@ Date.prototype.format = function(fmt) {
 	 * @param url, data, type（可选）
 	 * @return data
 	 */
-	app.request = function(url, data, type){
+	app.request = function(url, data, type, isShowLoading){
 //		return new Promise(function(resolve, reject){
 //			mui[type || "get"](url, data, function(data){
 //				resolve(data);
 //			},"json");
 //		});
 		return new Promise(function(resolve, reject){
-			console.log("【请求地址】："+url);
-			console.log("【请求参数】："+JSON.stringify(data));
+//			console.log("【请求地址】："+url);
+//			console.log("【请求参数】："+JSON.stringify(data));
 			if("plus" in window){
+				// 排除登录loading
+//				if(url.indexOf("/app_login") == -1){
+//				}
+				if(typeof isShowLoading == "undefined" || isShowLoading){
+					plus.nativeUI.showWaiting();
+				}
+//				alert(1)
 				var nowNetwork = plus.networkinfo.getCurrentType();
 				var noNetwork = plus.networkinfo.CONNECTION_NONE;
 				if(nowNetwork == noNetwork) {
@@ -287,10 +299,16 @@ Date.prototype.format = function(fmt) {
 				dataType:'json',//服务器返回json格式数据
 				type: type || "get",//HTTP请求类型
 				success:function(data){
-					console.log("【请求结果】："+JSON.stringify(data));
+					if("plus" in window){
+						plus.nativeUI.closeWaiting();
+					}
+//					console.log("【请求结果】："+JSON.stringify(data));
 					resolve(data);
 				},
 				error: function(e){
+					if("plus" in window){
+						plus.nativeUI.closeWaiting();
+					}
 					reject(e)
 				}
 			});

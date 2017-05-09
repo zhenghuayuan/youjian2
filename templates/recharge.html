@@ -39,16 +39,16 @@
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
 					</div>
 				</div>
-				<div class="recharge_type" style="padding-top: 0px;">当前房卡:{{userInfo.roomcard}}</div>
-				<div class="recharge_type" style="padding-top: 5px;">充{{title.slice(2,4)}}</div>
+				<div class="recharge_type" style="padding-top: 10px;">礼券: {{userInfo.voucher}}</div>
+				<div class="recharge_type" style="padding-top: 10px;">兑换{{title.slice(2,4)}}</div>
 				<div class="recharge_wrap">
 					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 				</div>
 				<div class="recharge_type">更多兑换</div>
 				<div class="recharge_other clearfix">
-					<span class="huafei_icon" v-if="curProductType != 1" @click="curProductType = 1">充话费</span>
-					<span class="liuliang_icon" v-if="curProductType != 2" @click="curProductType = 2">充流量</span>
+					<span class="huafei_icon" v-if="curProductType != 1" @click="curProductType = 1">兑换话费</span>
+					<span class="liuliang_icon" v-if="curProductType != 2" @click="curProductType = 2">兑换流量</span>
 				</div>
 			</div>
 		</div>
@@ -86,8 +86,6 @@
 //				_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
 //				app.setState(LOCAL.lastNumber, 18959288888)
 				_this.usernumber = typeof _this.usernumber != "object"?_this.usernumber:("mobile" in _this.userInfo?_this.userInfo.mobile:"");
-				
-				console.log(_this.voucher)
 				_this.getProductList();
 				mui.plusReady(function(){
 					_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
@@ -169,36 +167,40 @@
 					// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
 					var _this = this;
 					if(!_this.numberIsTrue){
-						return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
-					}
-					if(_this.voucher<Number(item.redeem_point)){
-						return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
-					}
-					MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")
-					.then(function(){
-						return app.request(API.recharge, {
-							uid: _this.userInfo.uid,
-							unionid: _this.userInfo.unionid,
-							product_id: item.id, 
-							mobile: _this.usernumber,
-						}, "post");
-					})
-					.then(function(data){
-						if(!data){
-							YDUI.dialog.toast(data, 'none', 1000);
-							return;
+						setTimeout(function(){
+							YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
+						}, 600)
+					}else{
+						if(_this.voucher<Number(item.redeem_point)){
+							return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
 						}
-						if(data.code != 1){
-							YDUI.dialog.toast(data.message, 'error', 2000);
-							return;
-						}
-						// 更新
-						EVENT.getUserInfo();
-						YDUI.dialog.toast('兑换成功', 'success', 1500);
-					})
-					.catch(function(e){
-						alert("e:"+e)
-					})
+						MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")
+						.then(function(){
+							return app.request(API.recharge, {
+								uid: _this.userInfo.uid,
+								unionid: _this.userInfo.dc_unionid,
+								product_id: item.id, 
+								mobile: _this.usernumber,
+							}, "post");
+						})
+						.then(function(data){
+							if(!data){
+								YDUI.dialog.toast(data, 'none', 1000);
+								return;
+							}
+							if(data.code != 1){
+								YDUI.dialog.toast(data.message, 'error', 2000);
+								return;
+							}
+							// 更新
+							EVENT.getUserInfo();
+							YDUI.dialog.toast('兑换成功', 'success', 1500);
+						})
+						.catch(function(e){
+							alert("e:"+e)
+						})
+						
+					}
 				},
 				
 				

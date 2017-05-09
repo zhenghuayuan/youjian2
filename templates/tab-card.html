@@ -74,8 +74,8 @@
 				EVENT.getUserInfo();
 				setTimeout(function(){
 					EVENT.getUserInfo();					
-				}, 5000);
-				plus.webview.getWebviewById(PAGE.index.id).evalJS("payEnd(1)");
+				}, 4000);
+//				plus.webview.getWebviewById(PAGE.index.id).evalJS("payEnd(1)");
 //				if(res == "1"){
 //					YDUI.dialog.toast('购买成功', 'success', 2000);
 //				}else{
@@ -94,6 +94,7 @@
 					isFocus: false,
 					isInClub: true, // 是否友间会员
 					needNickname: "", // 需充值用户ID
+					isOnece: true,
 				},
 				created: function(){
 					var _this = this;
@@ -172,34 +173,45 @@
 
 					payConfirm: function(item,index){
 						var _this = this;
-						
 						if(!_this.isInClub) {
-							return YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
-						};
-						
-						MASKCONFIRM("tab-card.html","是否为<span style=\\'color: red\\'>"+_this.userid+"（"+_this.needNickname+"）</span>充值房卡×"+item.card+"？")
-						.then(function(){
-							return app.request(API.wftPay, {
-								userid: _this.userid,
-								id: item.id,
-							}, "get")
-						})
-						.then(function(res){
-							if(typeof(res) === 'string'){
-			                    res = JSON.parse(res);
-			                }
-			                if(res.status == 500) {
-			                	return YDUI.dialog.toast(res.status, "none", 1000);
-			                }else{
-			                	mui.openWindow({
-			                		url: res.pay_info,
-			                		id: res.pay_info,
-			                	})
-			                }
-						})
-						.catch(function(e){
-							alert("请求错误:"+e)
-						})
+							setTimeout(function(){
+								YDUI.dialog.toast("请输入正确的用户ID", "none", 1000);
+							}, 600);
+						}else{
+							if(!_this.isOnece){
+								return;
+							}
+								
+							MASKCONFIRM("tab-card.html","是否为<span style=\\'color: red\\'>"+_this.userid+"（"+_this.needNickname+"）</span>充值房卡×"+item.card+"？")
+							.then(function(){
+								_this.isOnece = false;
+								return app.request(API.wftPay, {
+									userid: _this.userid,
+									id: item.id,
+								}, "get")
+							})
+							.then(function(res){
+								if(typeof(res) === 'string'){
+				                    res = JSON.parse(res);
+				                }
+				                if(res.status == 500) {
+				                	return YDUI.dialog.toast(res.status, "none", 1000);
+				                }else{
+				                	mui.openWindow({
+				                		url: res.pay_info,
+				                		id: res.pay_info,
+				                	})
+				                }
+				                setTimeout(function(){
+					                _this.isOnece = true;
+				                }, 2000)
+							})
+							.catch(function(e){
+								_this.isOnece = true;
+								alert("请求错误:"+e);
+							})
+							
+						}
 					}
 					
 				}
