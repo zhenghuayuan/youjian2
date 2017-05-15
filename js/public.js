@@ -4,7 +4,6 @@
  * */
 var ENV = "development"; 
 //var ENV = "production"; 
-log({a:1,b:"a",c:undefined})
 /**
  * 所有页面信息
  **/
@@ -92,26 +91,27 @@ var LOCAL = {
 /**
  * API
  **/
-var DOMAIN = "https://dcyouxi.com";
+var DOMAIN = "http://app.dachuanyx.com";
 var API = { 
 	// 用户信息
-	login: DOMAIN+"/index.php/index/app_login",
+	login: DOMAIN+"/index/app_login",
 	// 售卡列表
-	cardList: DOMAIN+"/index.php/Product/get_goods",
+	cardList: DOMAIN+"/Product/get_goods",
 	// 兑换产品列表
-//	productList: "http://192.168.1.55/dcxcx/index.php/Product",
-	productList: DOMAIN+"/index.php/Product",
+//	productList: "http://192.168.1.55/dcxcx/Product",
+	productList: DOMAIN+"/Product",
 	// 兑换
-//	recharge: "http://192.168.1.55/dcxcx/index.php/Product/redeem",
-	recharge: DOMAIN+"/index.php/Product/redeem",
+//	recharge: "http://192.168.1.55/dcxcx/Product/redeem",
+	recharge: DOMAIN+"/Product/redeem",
 	// 威富通支付
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
-	isInClub: DOMAIN+"/index.php/Login/playerExist",
+	isInClub: DOMAIN+"/Login/playerExist",
 	// 兑换记录
-	rechargeList: DOMAIN+"/index.php/Product/get_redeem_order",
+	rechargeList: DOMAIN+"/Product/get_redeem_order",
 	// 改绑手机号
-	bindPhone: DOMAIN+"/index.php/login/setMobile"
+	bindPhone: DOMAIN+"/login/setMobile",
+	//
 	
 };
 //http://192.168.1.55/dcxcx/index.php/Product/get_redeem_order
@@ -139,7 +139,8 @@ var EVENT = function(){
 			
 		})
 		.catch(function(e){
-			alert(e)
+//			alert(e)
+			YDUI.dialog.toast(e, "none", 2000);
 		})
 	} 
 	// 给各个页面提供调用方法
@@ -277,39 +278,42 @@ Date.prototype.format = function(fmt) {
 //			},"json");
 //		});
 		return new Promise(function(resolve, reject){
-//			console.log("【请求地址】："+url);
-//			console.log("【请求参数】："+JSON.stringify(data));
+			console.log("【请求地址】："+url);
+			console.log("【请求参数】："+JSON.stringify(data));
 			if("plus" in window){
-				// 排除登录loading
-//				if(url.indexOf("/app_login") == -1){
-//				}
-				if(typeof isShowLoading == "undefined" || isShowLoading){
-					plus.nativeUI.showWaiting();
-				}
-//				alert(1)
 				var nowNetwork = plus.networkinfo.getCurrentType();
 				var noNetwork = plus.networkinfo.CONNECTION_NONE;
 				if(nowNetwork == noNetwork) {
-					YDUI.dialog.toast("未连接网络", "none", 2000);
+//					YDUI.dialog.toast("未连接网络", "none", 2000);
+					reject("未连接网络")
 					return;
+				}
+				if(typeof isShowLoading == "undefined" || isShowLoading){
+					plus.nativeUI.showWaiting();
 				}
 			}
 			mui.ajax(url, {
 				data: data,
 				dataType:'json',//服务器返回json格式数据
 				type: type || "get",//HTTP请求类型
+				timeout: 9000,
 				success:function(data){
 					if("plus" in window){
 						plus.nativeUI.closeWaiting();
 					}
-//					console.log("【请求结果】："+JSON.stringify(data));
+					console.log("【请求结果】："+JSON.stringify(data));
 					resolve(data);
 				},
 				error: function(e){
 					if("plus" in window){
 						plus.nativeUI.closeWaiting();
 					}
-					reject(e)
+					if(mui('#refreshContainer').pullRefresh()){
+						setTimeout(function(){
+							mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+						}, 1000)
+					}
+					reject("系统繁忙");
 				}
 			});
 			
@@ -367,7 +371,24 @@ Date.prototype.format = function(fmt) {
 			
 		})
 	}
-	
+	/**
+	 * 获取当前应用版本号
+	 * @return 版本号 例如：1.0、1.1、2.5 ...
+	 */
+	app.getAppVersion = function(channels){
+		return new Promise(function(resolve, reject){
+			plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo){
+				var app = {
+					appid: widgetInfo.appid,
+					name: widgetInfo.name, 
+					version: widgetInfo.version,
+				}
+				vm.version = app.version;
+				resolve(app);
+		    });
+			
+		})
+	}	
 
 
 	

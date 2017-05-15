@@ -16,13 +16,14 @@
 	</head>
 	<body>
 		<div class="login_wx">
-	        <button type="button" @click="login" class="mui-btn"></button>
+	        <button type="button" @click="login" class="mui-btn"><span style="color: red; font-size: 20px;">{{version}}</span></button>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/vue.min.js"></script>
 		<script src="js/jQuery.v2.1.4.js"></script>
 		<script src="js/ydui.js"></script>
 		<script src="js/public.js"></script>
+		<script src="js/hotUpdata.js"></script>
 		<script>
 			var vm = new Vue({
 				el: ".login_wx",
@@ -30,51 +31,83 @@
 					userInfo: app.getState(LOCAL.keys) || {}, // 记得注销要清空{}
 					isCanclick: true,
 					authService: null,
+					version: "",
 				},	
 				created: function(){
 					var _this = this;
 					mui.init();
 					mui.plusReady(function(){
-						// 模拟登陆 待删除
-//						_this.userInfo = {};
-//						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
-						if(_this.userInfo.unionid){
-							_this.getServerInfo()
-							return;
+						// ajax get is updata
+						var getIsUpdate = function(options){
+							return false;
 						}
-						// 设置沉浸式
-//						plus.navigator.setFullscreen(true);
-						// 设置系统状态栏背景颜色
-//						plus.navigator.setStatusBarBackground("#973932");
-						// 关闭 hubilder loading
-						plus.navigator.closeSplashscreen();
+						// 获取版本信息
+						app.getAppVersion()
+						// 请求是否需要更新
+						.then(getIsUpdate)
+						.then(function(bool){
+							return new Promise(function(resolve, reject){
+								if(bool){
+									plus.navigator.closeSplashscreen();
+									console.log("更 新");
+									YDUI.dialog.confirm('', "有新版本，现在更新？", [
+						                {
+						                    txt: '取消',
+						                    color: false,
+						                    callback: function () {
+						                     	resolve();
+						                    }
+						                },
+						                {
+						                    txt: '确定',
+						                    color: true,
+						                    callback: function () {
+												downlaodStart({
+													url: "http://192.168.1.133:8082/static/youjianshanquan1.1.wgt"
+												}); //
+						                    }
+						                }
+						            ]);
+									
+								}else{
+									console.log("不更新");
+									resolve();
+								}
+								
+							})
+						})
+						.then(function(){
+							console.log("zuihou");
+							// 模拟登陆 待删除
+							_this.userInfo = {};
+							_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
+							plus.navigator.closeSplashscreen();
+							if(_this.userInfo.unionid){
+								_this.getServerInfo()
+								return;
+							}
+							plus.navigator.closeSplashscreen();
+							return;
+						})
+						.catch(function(e){
+							YDUI.dialog.alert(e);
+						})
 					});
 				},
 				methods: {
 					// 获取登录授权对象 =>微信登入 => 获取微信用户信息 => 获取服务器用户信息 => 存入localstorage => 进入主页
 					login: function(){
+						var _this = this;
 						var nowNetwork = plus.networkinfo.getCurrentType();
 						var noNetwork = plus.networkinfo.CONNECTION_NONE;
 						if(nowNetwork == noNetwork) {
 							YDUI.dialog.toast("未连接网络", "none", 2000);
 							return;
 						}
-						
-						var _this = this;
-						if(!_this.isCanclick){
-							return;	
-						}
-//						_this.isCanclick = false;
-//						setTimeout(function(){
-//							_this.isCanclick = true;
-//						}, 2000)
-						// 模拟登陆 待删除
-//						_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
-//						_this.getServerInfo()
-//						return;
 						plus.nativeUI.showWaiting();
 						app.getServices("weixin")
 						.then(function(authService){
+							plus.nativeUI.closeWaiting();
 							_this.authService = authService;
 							return app.wxLogin(authService)
 						})
@@ -87,9 +120,8 @@
 							app.authLogout(_this.authService);
 							plus.nativeUI.closeWaiting();
 //							YDUI.dialog.toast(e, "none", 2500);
-							alert(e);
+							YDUI.dialog.alert(e);
 						})
-						
 					},
 					getServerInfo: function(){
 						//用unionid去获取服务器用户信息
@@ -105,20 +137,17 @@
 							}else{
 								mui.extend(true, _this.userInfo, data);
 								app.setState(LOCAL.keys, _this.userInfo);
-//								console.log("本地缓存："+ JSON.stringify(app.getState(LOCAL.keys)))
-//								var main = mui.preload(PAGE.index)
-//								var main  = plus.webview.create(PAGE.index.url, PAGE.index.id, PAGE.index.styles);
-//								plus.navigator.setFullscreen(false);
-//								plus.navigator.setStatusBarBackground("#000000");
 								plus.navigator.closeSplashscreen();
-//								mui.openWindow({url: PAGE.index.url, id: PAGE.index.id, })
-								mui.openWindow(PAGE.index)
+								if(mui.os.ios){
+									mui.openWindow(PAGE.index);
+								}else{
+									mui.openWindow({url: PAGE.index.url, id: PAGE.index.id});
+								}
+//								
 							
 							}
-							
 //							plus.navigator.setFullscreen(false);
 //							plus.navigator.setStatusBarBackground("#fff");
-							
 						})
 						.catch(function(e){
 							plus.nativeUI.closeWaiting();

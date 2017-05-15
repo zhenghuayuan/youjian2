@@ -42,8 +42,8 @@
 				<div class="recharge_type" style="padding-top: 10px;">礼券: {{userInfo.voucher}}</div>
 				<div class="recharge_type" style="padding-top: 10px;">兑换{{title.slice(2,4)}}</div>
 				<div class="recharge_wrap">
-					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
-					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && userInfo.voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && userInfo.voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 				</div>
 				<div class="recharge_type">更多兑换</div>
 				<div class="recharge_other clearfix">
@@ -73,7 +73,7 @@
 			data: {
 				usernumber: app.getState(LOCAL.lastNumber), //用户输入的ID v-model
 				userInfo: app.getState(LOCAL.keys),
-				voucher: 0, //用户礼券
+//				voucher: 0, //用户礼券
 				isFocus: false,
 				curProductType: 1, // type 1 话费 type 2 流量
 				productPhone: [], // 话费
@@ -82,10 +82,12 @@
 			created: function(){
 				var _this = this;
 				mui.init();
-				_this.voucher = "voucher" in _this.userInfo?_this.userInfo.voucher:0;
+//				_this.voucher = "voucher" in _this.userInfo?_this.userInfo.voucher:0;
 //				_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
 //				app.setState(LOCAL.lastNumber, 18959288888)
 				_this.usernumber = typeof _this.usernumber != "object"?_this.usernumber:("mobile" in _this.userInfo?_this.userInfo.mobile:"");
+				
+//				console.log(_this.voucher)
 				_this.getProductList();
 				mui.plusReady(function(){
 					_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
@@ -136,6 +138,9 @@
 							}
 						})
 					})
+					.catch(function(e){
+						YDUI.dialog.toast(e, 'none', 1000);
+					})
 				},
 				openAddressList: function(){
 					var _this = this;
@@ -171,7 +176,7 @@
 							YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
 						}, 600)
 					}else{
-						if(_this.voucher<Number(item.redeem_point)){
+						if(_this.userInfo.voucher<Number(item.redeem_point)){
 							return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
 						}
 						MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")

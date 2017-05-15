@@ -8,8 +8,10 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/ydui.css">
 		<link rel="stylesheet" href="../css/reset.css">
 		<link rel="stylesheet" href="../css/main.css">
+		
 		<style type="text/css">
 			
 			.userother {background: #fff; color: #2a2a2a;}
@@ -30,7 +32,7 @@
 			<div class="mui-scroll">
 				<div class="mui-content">
 					<div class="userother clearfix">
-						<div><span>房卡: </span>{{userInfo.roomcard}}</div>
+						<div><span>房卡:</span>{{userInfo.roomcard}}</div>
 						<div><span>礼券: </span>{{userInfo.voucher}}</div>
 					</div>
 					<!--轮播图-->
@@ -62,6 +64,7 @@
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/vue.min.js"></script>
 	<script src="../js/jQuery.v2.1.4.js"></script>
+	<script src="../js/ydui.js"></script>
 	<script src="../js/public.js"></script>
 	<script>
 		// 监听事件
@@ -95,6 +98,7 @@
 					mui("#slider").slider({
 						interval: 3000
 					});
+					
 				})
 			},
 			methods: {

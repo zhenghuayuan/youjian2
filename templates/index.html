@@ -9,8 +9,8 @@
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/main.css">
 		<style>
+			.none {display: none;}
 			.home_title {height: 100%;background: url("../image/home_title.png") no-repeat center;background-size: 120px;}
-			
 			.mui-bar-tab {background: #fff; height: 56px; -webkit-box-shadow: 0px -1px 3px #cecece; box-shadow: 0px -2px 3px #cecece;}
 			.mui-bar-tab span {float: left; width: 33.33%; height: 100%;} 
 			.mui-bar-tab span:nth-child(1) {background: url("../image/home_icon.png") no-repeat center; background-size: 25px;}
@@ -19,33 +19,27 @@
 			.mui-bar-tab span:nth-child(1).active {background: url("../image/home_icon_active.png") no-repeat center; background-size: 25px;}
 			.mui-bar-tab span:nth-child(2).active {background: url("../image/card_icon_active.png") no-repeat center; background-size: 25px;}
 			.mui-bar-tab span:nth-child(3).active {background: url("../image/wo_icon_active.png") no-repeat center; background-size: 25px;}
-			
 		</style>
 	</head>
 	<body>
-		<div id="wrap" v-cloak>
-			<header class="mui-bar mui-bar-nav" v-if="active == 0">
-				<h1 id="title" class="mui-title home_title"></h1>
-			</header>
-			<header class="mui-bar mui-bar-nav" v-if="active == 1">
-				<h1 id="title" class="mui-title">购买房卡</h1>
-			</header>
-			<header class="mui-bar mui-bar-nav" v-if="active == 2">
-				<h1 id="title" class="mui-title">个人中心</h1>
-			</header>
+		<header class="mui-bar mui-bar-nav"> 
+			<h1 id="title" class="mui-title home_title"></h1>
+		</header>
+		<header class="mui-bar mui-bar-nav none">
+			<h1 id="title" class="mui-title">购买房卡</h1>
+		</header>
+		<header class="mui-bar mui-bar-nav none">
+			<h1 id="title" class="mui-title">个人中心</h1>
+		</header>
 
-			<nav class="mui-bar mui-bar-tab" id="tabbar" >
-				<span v-for="(nav,index) in navs" :class="{'active': active == index}" @click="active = index"></span>
-				<!--<span class="active" url="tab-home.html"></span>
-				<span url="tab-card.html"></span>
-				<span url="tab-user.html"></span>-->
-			</nav>
-		</div>
+		<nav class="mui-bar mui-bar-tab" id="tabbar" >
+			<span v-for="(nav,index) in navs" :class="{'active': active == index}" @click="active = index"></span>
+		</nav>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/vue.min.js"></script>
 		<script src="../js/public.js"></script>
 		<script src="../js/jQuery.v2.1.4.js"></script>
-		<script type="text/javascript" charset="utf-8">
+		<script type="text/javascript">
 			var payEnd = function(){
 				vm.active = 0;
 			}
@@ -90,7 +84,7 @@
 	
 		
 		var vm = new Vue({
-				el: "#wrap",
+				el: "#tabbar",
 				data: {
 					active: 0,
 					currentWebview: null,
@@ -99,6 +93,8 @@
 				},
 				watch: {
 					"active": function(news, old){
+						$(".mui-bar").eq(old).addClass("none");
+						$(".mui-bar").eq(news).removeClass("none");
 						plus.webview.getWebviewById(PAGE.sub[old].id).hide();
 						plus.webview.getWebviewById(PAGE.sub[news].id).show();
 					}

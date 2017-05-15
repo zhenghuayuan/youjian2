@@ -1,5 +1,9 @@
 {
-	"@platforms": ["android", "iPhone", "iPad"],
+	"@platforms": [
+		"android",
+		"iPhone",
+		"iPad"
+	],
 	"id": "HelloH5",
 	"name": "友间商圈",
 	"version": {
@@ -10,7 +14,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"fullscreen":true,
+	"fullscreen": false,
 	"launch_path": "login.html",
 	"developer": {
 		"email": "",
@@ -18,12 +22,8 @@
 		"url": ""
 	},
 	"permissions": {
-		"Audio": {
-			"description": "访问麦克风"
-		},
-		"Camera": {
-			"lcrt1": "访问摄像头"
-		},
+
+
 		"Device": {
 			"description": "访问设备信息"
 		},
@@ -45,29 +45,29 @@
 		"XMLHttpRequest": {
 			"description": "跨域网络访问"
 		},
-		"Speech": {
-			"description": "管理语音识别插件"
-		},
+
 		"Zip": {
 			"description": "文件压缩与解压缩"
 		},
-		"Webview":{
+		"Webview": {
 			"description": "窗口管理"
 		},
-		"NativeUI":{
+		"NativeUI": {
 			"description": "原生UI控件"
 		},
-		"Navigator":{
+		"Navigator": {
 			"description": "浏览器信息"
 		},
-		"Payment":{},
+		"Payment": {},
 		"Uploader": {},
-		
+
 		"NativeObj": {},
-		"Invocation":{},"OAuth":{}
+		"Invocation": {},
+		"OAuth": {},
+		"Downloader": {}
 	},
 	"plus": {
-		
+
 		"popGesture": "close",
 		"splashscreen": {
 			"autoclose": false,
@@ -75,7 +75,21 @@
 		},
 		"runmode": "normal",
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",
-		"distribute": {"plugins":{"payment":{"weixin":{"description":"微信支付","appid":"wx70b70386db1a5571"}},"oauth":{"weixin":{"appid":"wx70b70386db1a5571","appsecret":"a11284155a9a99dca8f4e6332c738f88"}}},
+		"distribute": {
+			"plugins": {
+				"payment": {
+					"weixin": {
+						"description": "微信支付",
+						"appid": "wx70b70386db1a5571"
+					}
+				},
+				"oauth": {
+					"weixin": {
+						"appid": "wx70b70386db1a5571",
+						"appsecret": "a11284155a9a99dca8f4e6332c738f88"
+					}
+				}
+			},
 			"debug": "",
 			"apple": {
 				"appid": "",
@@ -83,42 +97,56 @@
 				"password": "",
 				"p12": "",
 				"devices": "universal",
-				"frameworks":[]
+				"frameworks": []
 			},
 			"google": {
 				"packagename": "",
 				"keystore": "",
 				"password": "",
 				"aliasname": "",
-				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
-				
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
+				]
 			},
-			"orientation": ["portrait-primary", "landscape-primary", "portrait-secondary", "landscape-secondary"],
+			"orientation": ["portrait-primary"],
 			"icons": {
 				"ios": {
-					"prerendered": "", 
-					"auto": "", 
+					"prerendered": "",
+					"auto": "",
 					"iphone": {
 						"normal": "unpackage/res/icons/57x57.png",
 						"retina": "unpackage/res/icons/114x114.png",
 						"retina7": "unpackage/res/icons/120x120.png",
-						"spotlight-normal": "unpackage/res/icons/29x29.png", 
-						"spotlight-retina": "unpackage/res/icons/58x58.png", 
+						"spotlight-normal": "unpackage/res/icons/29x29.png",
+						"spotlight-retina": "unpackage/res/icons/58x58.png",
 						"spotlight-retina7": "unpackage/res/icons/80x80.png",
-						"settings-normal": "unpackage/res/icons/29x29.png", 
-						"settings-retina": "unpackage/res/icons/58x58.png","retina8":"unpackage/res/icons/180x180.png","settings-retina8":"unpackage/res/icons/87x87.png" 
+						"settings-normal": "unpackage/res/icons/29x29.png",
+						"settings-retina": "unpackage/res/icons/58x58.png",
+						"retina8": "unpackage/res/icons/180x180.png",
+						"settings-retina8": "unpackage/res/icons/87x87.png"
 					},
 					"ipad": {
-						"normal": "unpackage/res/icons/72x72.png", 
-						"retina": "unpackage/res/icons/144x144.png", 
+						"normal": "unpackage/res/icons/72x72.png",
+						"retina": "unpackage/res/icons/144x144.png",
 						"normal7": "unpackage/res/icons/76x76.png",
-						"retina7": "unpackage/res/icons/152x152.png", 
+						"retina7": "unpackage/res/icons/152x152.png",
 						"spotlight-normal": "unpackage/res/icons/50x50.png",
 						"spotlight-retina": "unpackage/res/icons/100x100.png",
 						"spotlight-normal7": "unpackage/res/icons/40x40.png",
 						"spotlight-retina7": "unpackage/res/icons/80x80.png",
 						"settings-normal": "unpackage/res/icons/29x29.png",
-						"settings-retina": "unpackage/res/icons/58x58.png" 
+						"settings-retina": "unpackage/res/icons/58x58.png"
 					}
 				},
 				"android": {
@@ -126,7 +154,8 @@
 					"ldpi": "unpackage/res/icons/48x48.png",
 					"hdpi": "unpackage/res/icons/72x72.png",
 					"xhdpi": "unpackage/res/icons/96x96.png",
-					"xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"
+					"xxhdpi": "unpackage/res/icons/144x144.png",
+					"xxxhdpi": "unpackage/res/icons/192x192.png"
 				}
 			},
 			"splashscreen": {
@@ -137,19 +166,19 @@
 						"retina40": ""
 					},
 					"ipad": {
-						"portrait": "", 
+						"portrait": "",
 						"portrait-retina": "",
-						"landscape": "", 
-						"landscape-retina": "", 
-						"portrait7": "", 
+						"landscape": "",
+						"landscape-retina": "",
+						"portrait7": "",
 						"portrait-retina7": "",
-						"landscape7": "", 
+						"landscape7": "",
 						"landscape-retina7": ""
 					}
 				},
 				"android": {
-					"mdpi": "", 
-					"ldpi": "", 
+					"mdpi": "",
+					"ldpi": "",
 					"hdpi": "",
 					"xhdpi": "",
 					"xxhdpi": ""
@@ -157,7 +186,7 @@
 			}
 		}
 	},
-	"dependencies" : {
+	"dependencies": {
 		"pages": {
 			"index.html": {
 				"resources": [
@@ -1086,16 +1115,17 @@
 					"fonts/redeem/iconfont.woff",
 					"css/style.css",
 					"image/home_title.png",
+					"image/wo_icon.png",
+					"image/card_icon.png",
+					"templates/tab-home.html",
+					"image/home_icon_active.png",
+					"image/wo_icon_active.png",
+					"image/card_icon_active.png",
+					"image/home_icon.png",
 					"js/jQuery.v2.1.4.js",
 					"css/main.css",
 					"js/public.js",
-					"js/vue.min.js",
-					"image/home_icon.png",
-					"image/wo_icon.png",
-					"image/card_icon.png",
-					"image/home_icon_active.png",
-					"image/card_icon_active.png",
-					"image/wo_icon_active.png"
+					"js/vue.min.js"
 				],
 				"refer": [
 					"templates/tab-webview-subpage-setting.html",
@@ -1104,7 +1134,6 @@
 					"templates/tab-webview-subpage-redeem.html",
 					"templates/tab-user.html",
 					"templates/tab-card.html",
-					"templates/tab-home.html",
 					"templates/mask.html"
 				],
 				"priority": 0
@@ -1160,13 +1189,14 @@
 					"img/weixin.png",
 					"js/mui.enterfocus.js",
 					"css/ydui.css",
-					"image/wx-login.png",
-					"js/ydui.js",
-					"image/login-bg.jpg",
 					"js/jQuery.v2.1.4.js",
 					"css/main.css",
 					"js/public.js",
-					"js/vue.min.js"
+					"js/vue.min.js",
+					"image/wx-login.png",
+					"js/ydui.js",
+					"image/login-bg.jpg",
+					"js/hotUpdata.js"
 				],
 				"refer": [
 					"templates/index.html"
@@ -1219,21 +1249,80 @@
 				],
 				"priority": 0
 			},
+			"templates/tab-user.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"image/id-icon.png",
+					"image/phone-icon.png",
+					"css/reset.css",
+					"image/card-icon.png",
+					"image/gift-icon.png",
+					"js/jQuery.v2.1.4.js",
+					"js/public.js",
+					"js/vue.min.js",
+					"js/ydui.js",
+					"css/ydui.css",
+					"css/main.css",
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"templates/recharge-list.html",
+					"templates/bind-phone.html"
+				],
+				"priority": 0
+			},
 			"templates/tab-home.html": {
 				"resources": [
+					"image/card-icon.png",
 					"image/recharge-flow.png",
 					"image/recharge-phone.png",
 					"image/pic_02.jpg",
 					"image/pic_01.jpg",
-					"image/pic_03.jpg",
-					"image/card-icon.png",
 					"image/gift-icon.png",
+					"image/pic_03.jpg",
 					"css/main.css",
 					"js/public.js",
 					"js/vue.min.js",
+					"css/ydui.css",
 					"js/jQuery.v2.1.4.js",
 					"js/mui.min.js",
 					"css/mui.min.css",
+					"js/ydui.js",
+					"css/reset.css"
+				],
+				"refer": [
+					"templates/recharge.html"
+				],
+				"priority": 0
+			},
+			"templates/tab-card.html": {
+				"resources": [
+					"css/reset.css",
+					"js/vue.min.js",
+					"css/ydui.css",
+					"css/main.css",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/ydui.js",
+					"js/jQuery.v2.1.4.js",
+					"js/public.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"templates/recharge.html": {
+				"resources": [
+					"image/liuliang_icon.png",
+					"css/ydui.css",
+					"js/jQuery.v2.1.4.js",
+					"css/main.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/public.js",
+					"css/mui.min.css",
+					"js/vue.min.js",
+					"js/ydui.js",
 					"css/reset.css"
 				],
 				"refer": [],
@@ -1241,62 +1330,42 @@
 			},
 			"templates/mask.html": {
 				"resources": [
-					"css/reset.css",
-					"css/ydui.css",
 					"js/jQuery.v2.1.4.js",
+					"js/public.js",
+					"js/vue.min.js",
+					"js/ydui.js",
+					"css/ydui.css",
 					"css/main.css",
 					"js/mui.min.js",
-					"js/public.js",
 					"css/mui.min.css",
-					"js/vue.min.js",
-					"js/ydui.js"
+					"css/reset.css"
 				],
 				"refer": [],
 				"priority": 0
 			},
-			"templates/recharge.html": {
+			"templates/recharge-list.html": {
 				"resources": [
 					"css/ydui.css",
 					"js/jQuery.v2.1.4.js",
 					"css/main.css",
 					"js/mui.min.js",
-					"js/public.js",
-					"css/mui.min.css",
-					"js/vue.min.js",
-					"js/ydui.js",
-					"css/reset.css",
-					"image/liuliang_icon.png",
-					"fonts/mui.ttf"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"templates/tab-user.html": {
-				"resources": [
-					"image/id-icon.png",
-					"image/phone-icon.png",
-					"css/ydui.css",
-					"js/ydui.js",
-					"css/reset.css",
 					"fonts/mui.ttf",
-					"css/main.css",
 					"js/public.js",
-					"js/vue.min.js",
-					"image/card-icon.png",
-					"js/jQuery.v2.1.4.js",
-					"js/mui.min.js",
 					"css/mui.min.css",
-					"image/gift-icon.png"
+					"js/vue.min.js",
+					"js/ydui.js",
+					"css/reset.css"
 				],
 				"refer": [],
 				"priority": 0
 			},
-			"templates/tab-card.html": {
+			"templates/bind-phone.html": {
 				"resources": [
 					"css/ydui.css",
 					"js/jQuery.v2.1.4.js",
 					"css/main.css",
 					"js/mui.min.js",
+					"image/back_icon.png",
 					"js/public.js",
 					"css/mui.min.css",
 					"js/vue.min.js",
@@ -1321,6 +1390,4 @@
 			]
 		}
 	}
-
-	
 }
