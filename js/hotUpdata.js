@@ -5,9 +5,6 @@ var downlaodStart = function(options){
 	YDUI.dialog.loading.open(loadValue);
 	function downloadStateChanged(downloadObj){
 		downloadObj.addEventListener("statechanged", function(download, status){
-			if(download.state == 0){
-				console.log(0)
-			}
 			if(download.state == 3){
 				loadValue = Math.floor((downloadObj.downloadedSize/downloadObj.totalSize)*100)+"%"
 				$("#loadValue").html(loadValue);

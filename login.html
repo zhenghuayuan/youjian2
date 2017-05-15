@@ -39,7 +39,7 @@
 					mui.plusReady(function(){
 						// ajax get is updata
 						var getIsUpdate = function(options){
-							return false;
+							return true;
 						}
 						// 获取版本信息
 						app.getAppVersion()
@@ -51,24 +51,17 @@
 									plus.navigator.closeSplashscreen();
 									console.log("更 新");
 									YDUI.dialog.confirm('', "有新版本，现在更新？", [
-						                {
-						                    txt: '取消',
-						                    color: false,
-						                    callback: function () {
-						                     	resolve();
-						                    }
-						                },
-						                {
-						                    txt: '确定',
-						                    color: true,
-						                    callback: function () {
+						                {txt: '取消', color: false, callback: resolve},
+						                {txt: '确定', color: true, callback: 
+						                	function(){
 												downlaodStart({
-													url: "http://192.168.1.133:8082/static/youjianshanquan1.1.wgt"
+//													url: "http://192.168.1.133:8082/static/youjianshanquan1.1.wgt"
+//													url: "http://huay.5643.cn/static/youjianshanquan1.1.wgt",
+													url: "http://demo.dcloud.net.cn/test/update/H5EF3C469.wgt"
 												}); //
 						                    }
 						                }
 						            ]);
-									
 								}else{
 									console.log("不更新");
 									resolve();
