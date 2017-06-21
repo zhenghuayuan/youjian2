@@ -1289,7 +1289,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/ydui.js",
-					"css/reset.css"
+					"css/reset.css",
+					"image/recharge-card.png"
 				],
 				"refer": [
 					"templates/recharge.html"
@@ -1306,7 +1307,8 @@
 					"css/mui.min.css",
 					"js/ydui.js",
 					"js/jQuery.v2.1.4.js",
-					"js/public.js"
+					"js/public.js",
+					"image/clear_input.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -1323,9 +1325,18 @@
 					"css/mui.min.css",
 					"js/vue.min.js",
 					"js/ydui.js",
-					"css/reset.css"
+					"css/reset.css",
+					"image/huafei_icon.png",
+					"image/fangka_icon.png",
+					"image/huafei_icon_def.png",
+					"image/liuliang_icon_def.png",
+					"image/fangka_icon_def.png",
+					"image/jilv_icon_def.png",
+					"image/clear_input.png"
 				],
-				"refer": [],
+				"refer": [
+					"templates/recharge-list.html"
+				],
 				"priority": 0
 			},
 			"templates/mask.html": {

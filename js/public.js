@@ -95,14 +95,16 @@ var DOMAIN = "http://app.dachuanyx.com";
 var API = { 
 	// 用户信息
 	login: DOMAIN+"/index/app_login",
+	// 注销
+	logout: DOMAIN+"/index/logout",
 	// 售卡列表
 	cardList: DOMAIN+"/Product/get_goods",
 	// 兑换产品列表
-//	productList: "http://192.168.1.55/dcxcx/Product",
 	productList: DOMAIN+"/Product",
 	// 兑换
-//	recharge: "http://192.168.1.55/dcxcx/Product/redeem",
 	recharge: DOMAIN+"/Product/redeem",
+	//兑换房卡
+	rechargeCard: DOMAIN +"product/redeem_roomcard",
 	// 威富通支付
 	wftPay: "http://www.dachuanyx.com/dcmjpay/wbpay.php",
 	// 识别是否友间会员
@@ -111,6 +113,8 @@ var API = {
 	rechargeList: DOMAIN+"/Product/get_redeem_order",
 	// 改绑手机号
 	bindPhone: DOMAIN+"/login/setMobile",
+	// 获取是否需要更新
+	appUpdata: DOMAIN+"/version/index",
 	//
 	
 };
@@ -297,7 +301,7 @@ Date.prototype.format = function(fmt) {
 				dataType:'json',//服务器返回json格式数据
 				type: type || "get",//HTTP请求类型
 				timeout: 9000,
-				success:function(data){
+				success: function(data){
 					if("plus" in window){
 						plus.nativeUI.closeWaiting();
 					}
@@ -382,8 +386,8 @@ Date.prototype.format = function(fmt) {
 					appid: widgetInfo.appid,
 					name: widgetInfo.name, 
 					version: widgetInfo.version,
+					os: mui.os.ios?"ios":"android"
 				}
-				vm.version = app.version;
 				resolve(app);
 		    });
 			

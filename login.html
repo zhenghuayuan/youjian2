@@ -37,28 +37,26 @@
 					var _this = this;
 					mui.init();
 					mui.plusReady(function(){
-						// ajax get is updata
-						var getIsUpdate = function(options){
-							return true;
-						}
 						// 获取版本信息
 						app.getAppVersion()
 						// 请求是否需要更新
-						.then(getIsUpdate)
-						.then(function(bool){
+						.then(function(appInfo){
+							return app.request(API.appUpdata, appInfo);
+						})
+						.then(function(data){
 							return new Promise(function(resolve, reject){
-								if(bool){
+								var code = data.code; //data.code;
+								var path = data.path; 
+//								var path = "http://huay.5643.cn/static/youjianshangquan-package/youjianshanquan1.1.wgt";//data.path;
+								if(code == 1){
 									plus.navigator.closeSplashscreen();
 									console.log("更 新");
 									YDUI.dialog.confirm('', "有新版本，现在更新？", [
 						                {txt: '取消', color: false, callback: resolve},
-						                {txt: '确定', color: true, callback: 
-						                	function(){
+						                {txt: '确定', color: true, callback: function(){
 												downlaodStart({
-//													url: "http://192.168.1.133:8082/static/youjianshanquan1.1.wgt"
-//													url: "http://huay.5643.cn/static/youjianshanquan1.1.wgt",
-													url: "http://demo.dcloud.net.cn/test/update/H5EF3C469.wgt"
-												}); //
+													url: path,
+												}); 
 						                    }
 						                }
 						            ]);
@@ -66,11 +64,9 @@
 									console.log("不更新");
 									resolve();
 								}
-								
 							})
 						})
 						.then(function(){
-							console.log("zuihou");
 							// 模拟登陆 待删除
 							_this.userInfo = {};
 							_this.userInfo.unionid = "oogiuwGonIrIb5ht3mlHG1V2J1Gc";
@@ -136,8 +132,6 @@
 								}else{
 									mui.openWindow({url: PAGE.index.url, id: PAGE.index.id});
 								}
-//								
-							
 							}
 //							plus.navigator.setFullscreen(false);
 //							plus.navigator.setStatusBarBackground("#fff");

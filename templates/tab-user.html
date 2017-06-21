@@ -98,7 +98,11 @@
 					.then(function(authService){
 						return app.authLogout(authService);
 					})
-					.then(function(res){
+					.then(function(){
+						return app.request(API.logout, {})
+					})
+					.then(function(data){
+						console.log(data)
 						YDUI.dialog.toast("注销完成，请重新登陆", "none", 1000);
 						setTimeout(function(){
 							plus.webview.getLaunchWebview().evalJS("vm.userInfo={}");

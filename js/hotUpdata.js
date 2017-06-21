@@ -10,10 +10,8 @@ var downlaodStart = function(options){
 				$("#loadValue").html(loadValue);
 			}else if(download.state == 4 && status == 200){
 				YDUI.dialog.loading.close();
-				log("结束")
 			}
 		})
-
 	}
 	new Promise(function(resolve, reject){
 		var download = plus.downloader.createDownload(packageUrl, {filename:"_doc/update/", timeout: 40, retry: 1, retryInterval: 15,}, function(packageObj, status){
@@ -32,11 +30,11 @@ var downlaodStart = function(options){
 		plus.nativeUI.showWaiting("正在安装...");
 		plus.runtime.install(packageSrc,{force: true}, function(){
 	        plus.nativeUI.closeWaiting();
-	        plus.nativeUI.alert("应用资源更新完成，重新打开", function(){
+	        plus.nativeUI.alert("应用资源更新完成，需重新打开", function(){
 	            plus.runtime.restart();
 	        });
 	   	}, function(e){
-	   		reject("安装wgt文件失败["+e.code+"]：" + e.message);
+	   		plus.nativeUI.alert("安装wgt文件失败["+e.code+"]：" + e.message);
 	    });
 	})
 	.catch(function(e){

@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../css/main.css">
 		<style type="text/css">
 			/**/
+			html,body {background: #fff;}
 			.recharge_other {padding: 0 10px 10px; background-color: #fff;}
 			.recharge_other span {float: left; width: 25%; padding: 36px 0 5px; font-size: 14px;color: #2a2a2a; text-align: center;}
 			.recharge_other span.huafei_icon {background: url("../image/huafei_icon.png") no-repeat center 2px; background-size: 28px;}
@@ -20,6 +21,30 @@
 			.tips {position: absolute; top: 100%; left: 22%; font-size: 12px; color: #FF3B30;}
 			.mui-content {background: #fff; }
 			.mui-btn-block {color: #ccc;}
+			/**/
+			.recharge_type {width: 100%; padding: 30px 10px 10px; background-color: #fff; font-size: 16px; color: #2a2a2a;}
+			.recharge_type span {float: left; width:50%;}
+			.recharge_wrap {background-color: #fff; padding: 12px 12px 90px;}
+			.recharge_wrap .mui-btn-outlined {position: relative; padding: 12px 25px; font-size: 18px;}
+			.recharge_wrap .mui-btn-outlined span {float: left;}
+			.recharge_wrap .mui-btn-outlined em {float: right;}
+			.recharge_wrap .mui-btn-outlined:nth-last-child(1) {margin-bottom: 0 !important;}
+			.recharge_wrap .mui-btn-outlined .text_1 {position: absolute;left: 25px; top: 5px; font-size: 18px; color: rgb(204,204,204);}
+			.recharge_wrap .mui-btn-outlined .text_2 {position: absolute;left: 25px; bottom: 3px; font-size: 10px; color: rgb(204,204,204);}
+			.mui-btn-primary p {color: #007aff !important;}
+			/**/
+			.recharge_other {font-size: 0; padding: 10px 10px 4px; background-color: #fff; border-top: 1px solid #ccc; text-align: center;}
+			.recharge_other span {display: inline-block; color: #8a8a8a; width: 25%; padding: 36px 0 5px; font-size: 14px; text-align: center;}
+			.recharge_other span.huafei_icon {background: url("../image/huafei_icon_def.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.huafei_icon.active {color: #1296db; background: url("../image/huafei_icon.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.liuliang_icon {background: url("../image/liuliang_icon_def.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.liuliang_icon.active {color: #1296db; background: url("../image/liuliang_icon.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.fangka_icon {background: url("../image/fangka_icon_def.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.fangka_icon.active {color: #1296db; background: url("../image/fangka_icon.png") no-repeat center 2px; background-size: 30px;}
+			.recharge_other span.jilv_icon {background: url("../image/jilv_icon_def.png") no-repeat center 2px; background-size: 30px;}
+			.foot_nav {position: fixed; width: 100%; bottom: 0;}
+			.clearfix:after{content:"\200B";display:block;height:0;clear:both;}
+		</style>
 		</style>
 	</head>
 	<body >
@@ -31,12 +56,16 @@
 			
 			<div class="mui-content">
 				<div class="from_wrap" style="padding: 10px 0 0 0; margin-bottom: 20px;">
-					<div class="cell clearfix">
+					<div class="cell clearfix" v-if="curProductType == 1 || curProductType ==2">
 						<label style="width: 18%;">手机号:</label>
 						<input type="tel" ref="inputUserNumber" class="" style="width: 81%;" v-model="usernumber" :value="usernumber" @focus="inputFocus('isFocus')" @blur="inputBlur('isFocus')" placeholder="请输入需要兑换的手机号">
 						<em v-if="isFocus && String(usernumber).length>0" class="clear_input" @click="clearInput('usernumber','inputUserNumber')" style="right: 8%;"></em>
 						<!--<em v-else class="open_address_list" @click="openAddressList" style="right: 8%;"></em>-->
 						<p class="tips" :style="{'visibility': !isFocus && String(usernumber).length>=4 && !numberIsTrue?'visible':'hidden'}">请输入正确的手机号</p>
+					</div>
+					<div class="cell clearfix" v-if="curProductType ==3 ">
+						<label style="width: 20%;">我的ID:</label>
+						<input type="tel" disabled="disabled" style="border-color: rgba(0,0,0,0); color: #2a2a2a !important;" style="width: 76%;" v-model="userid" :value="userid">
 					</div>
 				</div>
 				<div class="recharge_type" style="padding-top: 10px;">礼券: {{userInfo.voucher}}</div>
@@ -44,12 +73,28 @@
 				<div class="recharge_wrap">
 					<button type="button" v-if="curProductType == 1" v-for="item in productPhone" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && userInfo.voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
 					<button type="button" v-if="curProductType == 2" v-for="item in productFlow" @click="confirmRecharge(item)" :class="{'mui-btn-primary': numberIsTrue && userInfo.voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined"><span>{{item.name}}</span><em>需礼劵{{item.redeem_point}}</em></button>
+					<button type="button" v-if="curProductType == 3" v-for="item in productCard" @click="confirmRecharge(item)" :class="{'mui-btn-primary': userInfo.voucher>=Number(item.redeem_point)}" class="mui-btn mui-btn-block mui-btn-outlined">
+						<template v-if="item.type > 3">
+							<p class="text_1">永久VIP</p><p class="text_2">立即获得268张房卡，后续每天登入再送2张</p>
+						</template>
+						<template v-else>
+							<span>{{item.name}}</span>
+						</template>
+						<em>需礼劵{{item.redeem_point}}</em>
+						<!--<em v-if="isVip == 0">需礼劵{{item.redeem_point}}</em>
+						<em v-if="isVip == 1">已是永久VIP</em>-->
+					</button>
+					<p v-if="curProductType != 3" style="font-size: 12px;">提示：根据不同的运营商及充值时间、区域，话费、流量到账延迟属正常现象，一般在3小时内，请耐心等待，如超过24小时，请联系友间客服。</p>
 				</div>
-				<div class="recharge_type">更多兑换</div>
-				<div class="recharge_other clearfix">
-					<span class="huafei_icon" v-if="curProductType != 1" @click="curProductType = 1">兑换话费</span>
-					<span class="liuliang_icon" v-if="curProductType != 2" @click="curProductType = 2">兑换流量</span>
+
+				<div class="foot_nav">
+				<div class="recharge_other" style="overflow: hidden;">
+					<span class="fangka_icon" @click="curProductType = 3" :class="{'active': curProductType == 3}">兑换房卡</span>
+					<span class="huafei_icon" @click="curProductType = 1" :class="{'active': curProductType == 1}">兑换话费</span>
+					<span class="liuliang_icon" @click="curProductType = 2" :class="{'active': curProductType == 2}">兑换流量</span>
+					<span class="jilv_icon" @click="mui.openWindow(PAGE['recharge-list'])">兑换记录</span>
 				</div>
+			</div>
 			</div>
 		</div>
 	</body>
@@ -62,40 +107,50 @@
 		// 监听事件
 		window.addEventListener("getUserInfo", function(data){
 			vm.userInfo = event.detail;
-//			setTimeout(function(){
-//				if(mui('#refreshContainer').pullRefresh()){
-//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
-//				}
-//			}, 500)
 		})	
 		var vm = new Vue({
 			el: "#wrap",
 			data: {
 				usernumber: app.getState(LOCAL.lastNumber), //用户输入的ID v-model
 				userInfo: app.getState(LOCAL.keys),
+				userid: 0,
 //				voucher: 0, //用户礼券
 				isFocus: false,
-				curProductType: 1, // type 1 话费 type 2 流量
+				curProductType: 3, // type 1 话费 type 2 流量 3房卡
 				productPhone: [], // 话费
 				productFlow: [], // 流量
+				productCard: [], // 房卡
+				isOnece: true,
+
 			},
 			created: function(){
 				var _this = this;
 				mui.init();
-//				_this.voucher = "voucher" in _this.userInfo?_this.userInfo.voucher:0;
-//				_this.usernumber = "mobile" in _this.userInfo?_this.userInfo.mobile:"";
-//				app.setState(LOCAL.lastNumber, 18959288888)
 				_this.usernumber = typeof _this.usernumber != "object"?_this.usernumber:("mobile" in _this.userInfo?_this.userInfo.mobile:"");
-				
-//				console.log(_this.voucher)
+//				_this.voucher = _this.userInfo.voucher
+				_this.userid =  _this.userInfo.uid;
 				_this.getProductList();
 				mui.plusReady(function(){
-					_this.curProductType =  (plus.webview.currentWebview().title == "兑换话费"?1:2);
+					var title = plus.webview.currentWebview().title;
+					if(title == "兑换话费"){
+						_this.curProductType = 1;
+					}else if(title == "兑换流量"){
+						_this.curProductType = 2;
+					}else{
+						_this.curProductType = 3;
+					}
 				})
 			},
 			computed: {
 				title: function(){
-					return this.curProductType == 1?"兑换话费":"兑换流量";
+					switch(this.curProductType){
+						case 1:
+						return "兑换话费";
+						case 2:
+						return "兑换流量";
+						case 3:
+						return "兑换房卡";
+					}
 				},
 				numberIsTrue: function(){
 					return /^[1][356789][0-9]{9}$/.test(this.usernumber);
@@ -103,7 +158,6 @@
 			},
 			methods: {
 				inputFocus: function(isFocusBool){
-					// isFocusBool String
 					var _this = this;
 					setTimeout(function(){
 						_this[isFocusBool] = true;
@@ -130,11 +184,14 @@
 //							_this.items = data;
 						_this.productPhone = [];
 						_this.productFlow = [];
+						_this.productCard = []
 						data.forEach(function(item, index){
 							if(item.type == "1"){
 								_this.productPhone.push(item);
-							}else{
+							}else if(item.type == "2"){
 								_this.productFlow.push(item);
+							}else{
+								_this.productCard.push(item);
 							}
 						})
 					})
@@ -144,7 +201,7 @@
 				},
 				openAddressList: function(){
 					var _this = this;
-					
+
 					new Promise(function(reject, resolve){
 						plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, reject, resolve);
 					})
@@ -170,42 +227,68 @@
 					// YDUI.dialog.toast('鼠标不错哟！', 'success', 1000);
 					// YDUI.dialog.alert("您还没有成为友间麻圈的会员哦");
 					// YDUI.dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {})
+					// 去抖
 					var _this = this;
-					if(!_this.numberIsTrue){
-						setTimeout(function(){
-							YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
-						}, 600)
-					}else{
-						if(_this.userInfo.voucher<Number(item.redeem_point)){
-							return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
+					if (!_this.isOnece) return;
+					_this.isOnece = false;	
+					setTimeout(function(){
+						_this.isOnece = true;	
+					}, 1000);
+					
+					//  判断是否输入正确的手机号
+					if(_this.curProductType != 3){
+						if(!_this.numberIsTrue){
+							return YDUI.dialog.toast('请输入正确的手机号码', 'none', 1000);
 						}
-						MASKCONFIRM('recharge.html', "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券")
-						.then(function(){
-							return app.request(API.recharge, {
-								uid: _this.userInfo.uid,
-								unionid: _this.userInfo.dc_unionid,
-								product_id: item.id, 
-								mobile: _this.usernumber,
-							}, "post");
-						})
-						.then(function(data){
-							if(!data){
-								YDUI.dialog.toast(data, 'none', 1000);
-								return;
-							}
-							if(data.code != 1){
-								YDUI.dialog.toast(data.message, 'error', 2000);
-								return;
-							}
-							// 更新
-							EVENT.getUserInfo();
-							YDUI.dialog.toast('兑换成功', 'success', 1500);
-						})
-						.catch(function(e){
-							alert("e:"+e)
-						})
-						
 					}
+					//  判断用户是否有足够的礼券
+					if(_this.userInfo.voucher<Number(item.redeem_point)){
+						return YDUI.dialog.toast('您的礼券不足，无法兑换此物品', 'none', 1000);
+					}
+					// 
+					if(item.type == 3 && _this.isVip == 1){
+						return YDUI.dialog.toast('你已成为永久VIP', 'none', 1000);
+					}
+					new Promise(function(resolve, reject){
+						var text;
+						if (_this.curProductType != 3) {
+							text = "手机号码："+_this.usernumber+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券";
+						}else{
+							text = "用户的ID："+_this.userid+"<br>兑换物品："+item.name+"<br>需要支付："+item.redeem_point+"礼券";
+						}
+						YDUI.dialog.confirm('', text, [
+			                {txt: '取消', color: false, callback: function(){}},
+			                {txt: '确定', color: true, callback: resolve}
+			            ]);
+					})
+					.then(function(){
+						// _this.curProductType!=3?API.recharge:API.rechargeCard
+						return app.request(_this.curProductType!=3?API.recharge:API.rechargeCard, {
+							uid: _this.userid,
+							product_id: item.id, 
+							mobile: _this.usernumber,
+							user_id: _this.userid,
+						}, "post")
+					})
+					.then(function(data){
+						if(!data){
+							return YDUI.dialog.toast(data, 'none', 1000);
+						}
+						if(data.code != 1){
+							if(data.code==100){
+								setTimeout(function(){
+									window.location.reload();
+								}, 1500);
+							}
+						  return YDUI.dialog.toast(data.message, 'error', 2000);
+						}
+						// 更新
+						EVENT.getUserInfo();
+						YDUI.dialog.toast('兑换成功', 'success', 1500);
+					})
+					.catch(function(e){
+						alert("e:"+e)
+					})
 				},
 				
 				
